@@ -18,11 +18,23 @@
 
 var OutlineStore = require('../stores/OutlineStore');
 var Node = require('./Node.react');
+var _ = require('underscore');
 
-function getStateFromStores() {
+var getStateFromStores = function () {
   return {
     nodes: OutlineStore.getAll(),
   };
+}
+
+var getNode = function(node, key) {
+  console.log(arguments);
+  return <Node
+            key={key}
+            time={node.time}
+            place={node.place}
+            creator={node.creator}
+            attendees={node.attendees}
+          />
 }
 
 var React = require('react');
@@ -38,7 +50,8 @@ var Outline = React.createClass({
   },
 
   render: function() {
-    var nodes = this.state.nodes;
+    var nodes = _.map(this.state.nodes, getNode)
+
     return (
       <div class="row clearfix">
         <div class="panel panel-primary filterable">
@@ -55,20 +68,12 @@ var Outline = React.createClass({
                     </tr>
                 </thead>
                 <tbody>
-                  for(var key in nodes) {
-                    <Node
-                      key={key}
-                      time={nodes[key].time}
-                      place={nodes[key].place}
-                      creator={nodes[key].creator}
-                      attendees={nodes[key].attendees}
-                    />
-                  }
+                  {nodes}
                 </tbody>
             </table>
         </div>
-      </div>
       <a id="add_row" class="btn btn-default pull-right">Add Row</a>
+      </div>
     );
 
   },

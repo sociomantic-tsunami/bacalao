@@ -29,14 +29,12 @@ var Node = React.createClass({
   },
 
   render: function() {
-    var node = this.props.node;
     return (
-      <SelectedMarker currNodeKey={node.key} selected={selected} />
       <tr>
           <td>{this.time()}</td>
-          <td>{node.place}</td>
+          <td>{this.props.place}</td>
           <td></td>
-          <td>@mdo</td>
+          <td></td>
       </tr>
     );
   },
@@ -44,7 +42,7 @@ var Node = React.createClass({
   time: function() {
     var time = new Date(this.props.time * 1000);
     return time.toGMTString();
-  }
+  },
 
   _onClick: function(event) {
     if (typeof this.props.node.key != 'undefined') {

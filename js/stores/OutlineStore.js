@@ -48,7 +48,6 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           attendees : [action.creator]
         }
         OutlineStore.emitChange();
-      }
       break;
 
     case "JOIN_LUNCH":
