@@ -18,29 +18,29 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {
 
-  selectNode: function(key) {
-    AppDispatcher.handleServerAction({
-      type: "SELECT_NODE",
-      key: key
+  createLunch : function() {
+    AppDispatcher.handleViewAction({
+      type: "CREATE_LUNCH",
+      time : action.time,
+      place : action.place,
+      creator : action.creator
     });
   },
 
-  nextVisibleNode: function() {
-    AppDispatcher.handleServerAction({
-      type: "NEXT_VISIBLE_NODE"
+  joinLunch : function(key, attendee) {
+    AppDispatcher.handleViewAction({
+      type: "JOIN_LUNCH",
+      key: key,
+      attendee : attendee
     });
   },
 
-  toggleCollapseNode: function(key) {
-    AppDispatcher.handleServerAction({
-      type: "TOGGLE_COLLAPSE_NODE"
+  leaveLunch : function(key, attendee) {
+    AppDispatcher.handleViewAction({
+      type: "LEAVE_LUNCH",
+      key: key,
+      attendee : attendee
     });
   },
-
-  previousVisibleNode: function() {
-    AppDispatcher.handleServerAction({
-      type: "PREVIOUS_VISIBLE_NODE"
-    });
-  }
 };
 

@@ -17,17 +17,6 @@
  */
 
 var NodeActionCreators = require('../actions/NodeActionCreators');
-var SelectedMarker = require('./SelectedMarker.react');
-
-function getNode(node, selected) {
-  return (
-    <Node
-      key={node.key}
-      node={node}
-      selected={selected}
-    />
-  );
-}
 
 var React = require('react');
 
@@ -41,38 +30,21 @@ var Node = React.createClass({
 
   render: function() {
     var node = this.props.node;
-    var selected = this.props.selected;
-
-    if (typeof node.children != 'undefined') {
-      if (typeof node.collapsed != 'undefined' && node.collapsed == true) {
-        return (
-          <li className="node-item" onKeyDown={this._onToggleCollapseNode}>
-            <SelectedMarker currNodeKey={node.key} selected={selected} />
-            <div className="node-content" onClick={this._onClick}>+{node.key} - {node.content}</div>
-          </li>
-        );
-      }
-      var nodeTreeItems = node.children.map(function(x) { return getNode(x, selected); });
-      return (
-        <li className="node-item">
-          <SelectedMarker currNodeKey={node.key} selected={selected} />
-          <div className="node-content" onClick={this._onClick}>{node.key} - {node.content}</div>
-          <div className="children-section">
-            <ul className="node-list" ref="nodeList">
-              {nodeTreeItems}
-            </ul>
-          </div>
-        </li>
-      );
-    } else {
-      return (
-        <li className="node-item">
-          <SelectedMarker currNodeKey={node.key} selected={selected} />
-          <div className="node-content" onClick={this._onClick}>{node.key} - {node.content}</div>
-        </li>
-      );
-    }
+    return (
+      <SelectedMarker currNodeKey={node.key} selected={selected} />
+      <tr>
+          <td>{this.time()}</td>
+          <td>{node.place}</td>
+          <td></td>
+          <td>@mdo</td>
+      </tr>
+    );
   },
+
+  time: function() {
+    var time = new Date(this.props.time * 1000);
+    return time.toGMTString();
+  }
 
   _onClick: function(event) {
     if (typeof this.props.node.key != 'undefined') {

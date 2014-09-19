@@ -4,8 +4,7 @@ var merge = require('react/lib/merge');
 
 var CHANGE_EVENT = 'change';
 
-var _nodes = {};
-var _selected = -1;
+var _nodes = [];
 
 var OutlineStore = merge(EventEmitter.prototype, {
 
@@ -26,10 +25,6 @@ var OutlineStore = merge(EventEmitter.prototype, {
 
   getAll: function() {
     return _nodes;
-  },
-
-  getSelected: function() {
-    return _selected;
   }
 
 });
@@ -45,31 +40,31 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       OutlineStore.emitChange();
       break;
 
-    case "SELECT_NODE":
-      _selected = action.key;
-      OutlineStore.emitChange();
-      break;
-
-    case "NEXT_VISIBLE_NODE":
-      if (typeof _selected != 'undefined') {
-        _selected = _selected + 1;
+    case "CREATE_LUNCH":
+        _nodes[Date.now()] = {
+          time : action.time,
+          place : action.place,
+          creator : action.creator,
+          attendees : [action.creator]
+        }
+        OutlineStore.emitChange();
       }
-      console.log('just simple increase:' + _selected);
-      OutlineStore.emitChange();
       break;
 
-    case "PREVIOUS_VISIBLE_NODE":
-      if (typeof _selected != 'undefined') {
-        _selected = _selected - 1;
+    case "JOIN_LUNCH":
+      if(_nodes[action.key]) {
+        _nodes[action.key].attendees.push(action.attendee);
+        OutlineStore.emitChange();
       }
-      console.log('just simple decrease:' + _selected);
-      OutlineStore.emitChange();
       break;
 
-    case "TOGGLE_COLLAPSE_NODE":
-      _nodes.collapsed = !_nodes.collapsed;
-      console.log('toggling collapse on key:' + _selected);
-      OutlineStore.emitChange();
+    case "LEAVE_LUNCH":
+      if(_nodes[action.key]) {
+        _nodes[action.key].attendees.filter(function(el) {
+          return el !== action.attendee;
+        });
+        OutlineStore.emitChange();
+      }
       break;
 
     default:

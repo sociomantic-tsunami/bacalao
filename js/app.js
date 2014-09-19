@@ -29,5 +29,5 @@ OutlineWebAPIUtils.getAllNodes();
 
 React.renderComponent(
   <App />,
-  document.getElementById('react')
+  document.getElementsByClassName('js-react')[0]
 );

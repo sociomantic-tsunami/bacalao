@@ -22,7 +22,6 @@ var Node = require('./Node.react');
 function getStateFromStores() {
   return {
     nodes: OutlineStore.getAll(),
-    selected: OutlineStore.getSelected(),
   };
 }
 
@@ -39,16 +38,37 @@ var Outline = React.createClass({
   },
 
   render: function() {
-    var rootNode = this.state.nodes;
-    var selected = this.state.selected;
+    var nodes = this.state.nodes;
     return (
-      <div className="outline-section">
-        <Node
-          key={rootNode.key}
-          node={rootNode}
-          selected={selected}
-        />
+      <div class="row clearfix">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Events</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Time" disabled /></th>
+                        <th><input type="text" class="form-control" placeholder="Location" disabled /></th>
+                        <th><input type="text" class="form-control" placeholder="Attendees" disabled /></th>
+                        <th><input type="text" class="form-control" placeholder="" disabled /></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  for(var key in nodes) {
+                    <Node
+                      key={key}
+                      time={nodes[key].time}
+                      place={nodes[key].place}
+                      creator={nodes[key].creator}
+                      attendees={nodes[key].attendees}
+                    />
+                  }
+                </tbody>
+            </table>
+        </div>
       </div>
+      <a id="add_row" class="btn btn-default pull-right">Add Row</a>
     );
 
   },
