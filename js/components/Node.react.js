@@ -17,6 +17,7 @@
  */
 
 var NodeActionCreators = require('../actions/NodeActionCreators');
+var EmployeeUtils = require('../utils/EmployeeUtils');
 
 var React = require('react');
 
@@ -33,8 +34,7 @@ var Node = React.createClass({
       <tr>
           <td>{this.time()}</td>
           <td>{this.props.place}</td>
-          <td></td>
-          <td></td>
+          <td>{this.organizer(this.props.creator)}</td>
       </tr>
     );
   },
@@ -42,6 +42,10 @@ var Node = React.createClass({
   time: function() {
     var time = new Date(this.props.time * 1000);
     return time.toGMTString();
+  },
+
+  organizer : function() {
+    EmployeeUtils.getFullName(getFullName);
   },
 
   _onClick: function(event) {

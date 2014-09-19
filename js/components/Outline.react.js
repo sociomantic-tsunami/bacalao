@@ -27,7 +27,6 @@ var getStateFromStores = function () {
 }
 
 var getNode = function(node, key) {
-  console.log(arguments);
   return <Node
             key={key}
             time={node.time}
@@ -61,10 +60,10 @@ var Outline = React.createClass({
             <table class="table">
                 <thead>
                     <tr class="filters">
-                        <th><input type="text" class="form-control" placeholder="Time" disabled /></th>
-                        <th><input type="text" class="form-control" placeholder="Location" disabled /></th>
-                        <th><input type="text" class="form-control" placeholder="Attendees" disabled /></th>
-                        <th><input type="text" class="form-control" placeholder="" disabled /></th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Attendees</th>
+                        <th>Organizer</th>
                     </tr>
                 </thead>
                 <tbody>
