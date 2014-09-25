@@ -18,8 +18,13 @@
 
 var NodeActionCreators = require('../actions/NodeActionCreators');
 var EmployeeUtils = require('../utils/EmployeeUtils');
-
 var React = require('react');
+var _ = require('underscore');
+var Tooltip = require('react-bootstrap').Tooltip;
+var Badge = require('react-bootstrap').Badge;
+var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
+
+
 
 var ReactPropTypes = React.PropTypes;
 
@@ -30,10 +35,21 @@ var Node = React.createClass({
   },
 
   render: function() {
+    var attendees = _.chain(this.props.attendees)
+     .map(EmployeeUtils.getFullName)
+     .reduce(function(memo, name) { return memo + ", " + name})
+     .value();
+
+    console.log(attendees);
     return (
       <tr>
           <td>{this.time()}</td>
           <td>{this.props.place}</td>
+          <td>
+          <OverlayTrigger placement="left" overlay={<Tooltip>{attendees}</Tooltip>}>
+            <Badge>{this.props.attendees.length}</Badge>
+          </OverlayTrigger>
+          </td>
           <td>{this.organizer(this.props.creator)}</td>
       </tr>
     );
@@ -44,8 +60,8 @@ var Node = React.createClass({
     return time.toGMTString();
   },
 
-  organizer : function() {
-    EmployeeUtils.getFullName(getFullName);
+  organizer : function(shortName) {
+    return EmployeeUtils.getFullName(shortName);
   },
 
   _onClick: function(event) {

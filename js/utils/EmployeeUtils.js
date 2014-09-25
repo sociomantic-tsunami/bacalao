@@ -1,24 +1,15 @@
 var _ = require('underscore')
-var employeeJSON = fs.readFileSync('../employees.json');
-var employees = [];
-
-
-try {
-    employees = JSON.parse(employeeJSON);
-} catch(e) {
-    console.error('employees.json is either corrupt or doesn\'t exist');
-}
-
+var employees = require('../employees.json');
 
 module.exports = {
 
   getFullName: function(shortName) {
-    employee = _.where(employees, { short : shortName });
+    var employee = _.where(employees, { short : shortName });
 
-    if(!employee) {
+    if(employee.length === 0) {
         return shortName
     } else {
-        return employee.name;
+        return employee[0].name;
     }
   }
 

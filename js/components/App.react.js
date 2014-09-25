@@ -18,7 +18,7 @@
 
 var Outline = require('./Outline.react');
 var NodeActionCreators = require('../actions/NodeActionCreators');
-var React = require('react');
+var React = require('react/addons');
 var key = require('keymaster');
 
 var App = React.createClass({
@@ -39,8 +39,16 @@ var App = React.createClass({
   },
 
   render: function() {
+    var cx = React.addons.classSet;
+    var classes = cx({
+      'container': true
+    });
+
     return (
+      <div className="{classes}">
+        <h1>Bacalao</h1>
         <Outline />
+      </div>
     );
   }
 

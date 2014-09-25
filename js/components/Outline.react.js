@@ -52,14 +52,14 @@ var Outline = React.createClass({
     var nodes = _.map(this.state.nodes, getNode)
 
     return (
-      <div class="row clearfix">
-        <div class="panel panel-primary filterable">
-            <div class="panel-heading">
-                <h3 class="panel-title">Events</h3>
+      <div className="row clearfix">
+        <div className="panel panel-primary filterable">
+            <div className="panel-heading">
+                <h3 className="panel-title">Events</h3>
             </div>
-            <table class="table">
+            <table className="table">
                 <thead>
-                    <tr class="filters">
+                    <tr className="filters">
                         <th>Time</th>
                         <th>Location</th>
                         <th>Attendees</th>
@@ -71,7 +71,7 @@ var Outline = React.createClass({
                 </tbody>
             </table>
         </div>
-      <a id="add_row" class="btn btn-default pull-right">Add Row</a>
+      <a id="add_row" className="btn btn-default pull-right">Add Row</a>
       </div>
     );
 
