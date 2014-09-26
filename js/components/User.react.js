@@ -31,7 +31,7 @@ var User = React.createClass({
     if(username && username.length && username.length > 0) {
       UserActionCreators.login(username);
     } else {
-
+      console.error('invalid username');
     }
   }
 
