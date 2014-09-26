@@ -40,7 +40,7 @@ var Node = React.createClass({
      .reduce(function(memo, name) { return memo + ", " + name})
      .value();
 
-    console.log(attendees);
+
     return (
       <tr>
           <td>{this.time()}</td>
