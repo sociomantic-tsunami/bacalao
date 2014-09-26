@@ -1,20 +1,4 @@
-/**
- * Copyright 2013-2014 Atlassian
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @jsx React.DOM
- */
+/** @jsx React.DOM */
 
 var NodeActionCreators = require('../actions/NodeActionCreators');
 var EmployeeUtils = require('../utils/EmployeeUtils');
@@ -22,6 +6,7 @@ var React = require('react');
 var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
+var Button = require('react-bootstrap').Button;
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 
 
@@ -39,28 +24,31 @@ var Node = React.createClass({
      .map(EmployeeUtils.getFullName)
      .reduce(function(memo, name) { return memo + ", " + name})
      .value();
+    var hasJoined;
 
 
     return (
       <tr>
-          <td>{this.time()}</td>
+          <td>{this.getTime()}</td>
           <td>{this.props.place}</td>
           <td>
           <OverlayTrigger placement="left" overlay={<Tooltip>{attendees}</Tooltip>}>
             <Badge>{this.props.attendees.length}</Badge>
           </OverlayTrigger>
           </td>
-          <td>{this.organizer(this.props.creator)}</td>
+          <td>{this.getOrganizer(this.props.creator)}</td>
+          <td><Button bsSize="small" bsStyle="info">Join</Button></td>
+
       </tr>
     );
   },
 
-  time: function() {
+  getTime: function() {
     var time = new Date(this.props.time * 1000);
     return time.toGMTString();
   },
 
-  organizer : function(shortName) {
+  getOrganizer : function(shortName) {
     return EmployeeUtils.getFullName(shortName);
   },
 
