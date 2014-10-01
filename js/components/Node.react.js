@@ -8,6 +8,7 @@ var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
 var Button = require('react-bootstrap').Button;
+var moment = require('moment')
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 
 
@@ -50,8 +51,8 @@ var Node = React.createClass({
   },
 
   getTime: function() {
-    var time = new Date(this.props.time * 1000);
-    return time.toGMTString();
+    var time = moment.unix(this.props.time).fromNow();
+    return time;
   },
 
   getOrganizer : function(shortName) {
