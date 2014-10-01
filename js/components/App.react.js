@@ -5,7 +5,7 @@ var Outline = require('./Outline.react');
 var User = require('./User.react');
 var NodeActionCreators = require('../actions/NodeActionCreators');
 var React = require('react/addons');
-var key = require('keymaster');
+// var key = require('keymaster');
 var OutlineStore = require('../stores/OutlineStore');
 var UserStore = require('../stores/UserStore');
 
@@ -26,19 +26,6 @@ var App = React.createClass({
   componentDidMount: function() {
     OutlineStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
-
-    // key('j', function() {
-    //   NodeActionCreators.nextVisibleNode();
-    // });
-
-    // key('k', function() {
-    //   NodeActionCreators.previousVisibleNode();
-    // });
-
-    // key('space', function() {
-    //   NodeActionCreators.toggleCollapseNode();
-    // });
-
   },
 
   render: function() {
@@ -53,7 +40,10 @@ var App = React.createClass({
         <User
           user={this.state.user}
         />
-        <Outline nodes={this.state.nodes}/>
+        <Outline 
+          nodes={this.state.nodes}  
+          user={this.state.user}
+        />
       </div>
     );
   },

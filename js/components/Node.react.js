@@ -3,6 +3,7 @@
 var NodeActionCreators = require('../actions/NodeActionCreators');
 var EmployeeUtils = require('../utils/EmployeeUtils');
 var React = require('react');
+var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
@@ -11,12 +12,15 @@ var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 
 
 
-var ReactPropTypes = React.PropTypes;
-
 var Node = React.createClass({
 
-  props: {
-    node: ReactPropTypes.object
+  propTypes: {
+    key: ReactPropTypes.string.isRequired,
+    user: ReactPropTypes.object.isRequired,
+    time: ReactPropTypes.number.isRequired,
+    place: ReactPropTypes.string.isRequired,
+    creator: ReactPropTypes.string.isRequired,
+    attendees: ReactPropTypes.array.isRequired
   },
 
   render: function() {
@@ -24,8 +28,10 @@ var Node = React.createClass({
      .map(EmployeeUtils.getFullName)
      .reduce(function(memo, name) { return memo + ", " + name})
      .value();
-    var hasJoined;
 
+    var button = this.hasUserJoined() ? 
+      <Button bsSize="small" bsStyle="danger">Leave</Button> :
+      <Button bsSize="small" bsStyle="info">Join</Button>;
 
     return (
       <tr>
@@ -37,7 +43,7 @@ var Node = React.createClass({
           </OverlayTrigger>
           </td>
           <td>{this.getOrganizer(this.props.creator)}</td>
-          <td><Button bsSize="small" bsStyle="info">Join</Button></td>
+          <td>{button}</td>
 
       </tr>
     );
@@ -50,6 +56,14 @@ var Node = React.createClass({
 
   getOrganizer : function(shortName) {
     return EmployeeUtils.getFullName(shortName);
+  },
+
+  hasUserJoined : function() {
+    if(this.props.user.loggedIn === false) {
+      return false;
+    } 
+
+    return _.contains(this.props.attendees, this.props.user.username);
   },
 
   _onClick: function(event) {
