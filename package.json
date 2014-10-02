@@ -1,7 +1,8 @@
 {
-  "name": "out-of-line",
+  "name": "bacalao",
+  "private": true,
   "version": "0.0.1",
-  "description": "Outline Editor that uses Reactjs and the Flux architecture",
+  "description": "",
   "main": "js/app.js",
   "dependencies": {
     "keymaster": "~1.6.2",
@@ -27,7 +28,7 @@
     "collect-static": "collect-static . ./static",
     "test": "jest"
   },
-  "author": "",
+  "author": "Daniel Norman",
   "browserify": {
     "transform": [
       "reactify",
