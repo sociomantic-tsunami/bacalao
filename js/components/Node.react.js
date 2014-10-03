@@ -30,9 +30,10 @@ var Node = React.createClass({
      .reduce(function(memo, name) { return memo + ", " + name})
      .value();
 
+    //TODO abstract the join/leave buttons to their own components(reusable with some props)
     var button = this.hasUserJoined() ? 
-      <Button bsSize="small" bsStyle="danger">Leave</Button> :
-      <Button bsSize="small" bsStyle="info">Join</Button>;
+      <Button bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
+      <Button bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
 
     return (
       <tr>
@@ -50,6 +51,7 @@ var Node = React.createClass({
     );
   },
 
+
   getTime: function() {
     var time = moment.unix(this.props.time).fromNow();
     return time;
@@ -65,6 +67,14 @@ var Node = React.createClass({
     } 
 
     return _.contains(this.props.attendees, this.props.user.username);
+  },
+
+  _onUserJoin: function(event) {
+  
+  },
+
+  _onUserLeave: function(event) {
+  
   },
 
   _onClick: function(event) {
