@@ -1,3 +1,4 @@
 {
-  "dburi": "mongodb://..."
+  "dburi": "mongodb://...",
+  "port" : 8080
 }

@@ -31,8 +31,8 @@ server.get(/\/.*/, restify.serveStatic({
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function callback () {
     console.log("Connceted to db: ", mongoose.connection.host);
-    server.listen(3000, function () {
-        console.log("Server started @ 3000");
+    server.listen(config.port, function () {
+        console.log("Server started @ " + config.port);
     });
 });
 
