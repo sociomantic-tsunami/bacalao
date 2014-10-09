@@ -36,12 +36,12 @@ var App = React.createClass({
 
     return (
       <div className="{classes}">
-        <h1>Bacalao</h1>
+        <h1>wip</h1>
         <User
           user={this.state.user}
         />
-        <Outline 
-          nodes={this.state.nodes}  
+        <Outline
+          nodes={this.state.nodes}
           user={this.state.user}
         />
       </div>

@@ -18,6 +18,16 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
 
+
+server.get("/api/events", routes.getEvents);
+server.post("/api/event", routes.createEvent);
+
+server.get(/\/.*/, restify.serveStatic({
+  directory: '../dist/',
+  default: 'index.html'
+}));
+
+
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function callback () {
     console.log("Connceted to db: ", mongoose.connection.host);
@@ -26,9 +36,6 @@ mongoose.connection.once('open', function callback () {
     });
 });
 
-
-server.get("/events", routes.getEvents);
-server.post("/event", routes.createEvent);
 
 
 mongoose.connect(config.dburi);

@@ -3,7 +3,7 @@ var Models = require('./models/models'),
     Event = Models.Event;
 
 exports.getEvents = function (req, res, next) {
-    
+
     Event.find(function (err, Events) {
       if (err) return console.error(err);
       console.log(Events)
@@ -18,7 +18,7 @@ exports.getEvents = function (req, res, next) {
 
 exports.createEvent = function (req, res, next) {
     var paramsToSave = _.pick(req.params, 'title', 'venue', 'creator');
-    var newEvent = new Event(paramsToSave
+    var newEvent = new Event(paramsToSave);
     newEvent.save(function (err, newEvent) {
       if (err) return next(err);
       console.log(newEvent)
