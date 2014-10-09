@@ -70,11 +70,11 @@ var Node = React.createClass({
   },
 
   _onUserJoin: function(event) {
-  
+    console.log('_onUserJoin');
   },
 
   _onUserLeave: function(event) {
-  
+    console.log('_onUserLeave');
   },
 
   _onClick: function(event) {

@@ -6,6 +6,9 @@ var config = require('../config.json'),
     ObjectId = Schema.ObjectID;
 
 
+restify.defaultResponseHeaders = function(data) {
+  this.header('Content-Type', 'application/json; charset=utf-8');
+};
 
 var server = restify.createServer();
 
@@ -25,6 +28,7 @@ mongoose.connection.once('open', function callback () {
 
 
 server.get("/events", routes.getEvents);
+server.post("/event", routes.createEvent);
 
 
 mongoose.connect(config.dburi);
