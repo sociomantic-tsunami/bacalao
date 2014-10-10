@@ -14,27 +14,12 @@ var User = React.createClass({
   },
 
   render: function() {
-    if(this.props.user.loggedIn) {
-      return (
-        <span>Logged in as {this.props.user.username}</span>
-      );
-    } else {
-      return (
-        <UserLogin
-          onLogin={this._onLogin}
-        />
-      );
-    }
+    return <button onClick={this._onClick}>FB Login</button>
   },
 
-  _onLogin: function(username) {
-    if(username && username.length && username.length > 0) {
-      UserActionCreators.login(username);
-    } else {
-      console.error('invalid username');
-    }
+  _onClick: function() {
+    UserActionCreators.loginFB();
   }
-
 
 });
 

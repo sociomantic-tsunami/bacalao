@@ -1,12 +1,13 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var SocialLoginUtils = require('../utils/SocialLoginUtils');
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
+var _ = require('underscore');
 
 var CHANGE_EVENT = 'change';
 
 var _user = {
   loggedIn : false,
-  username : '',
 };
 
 var UserStore = merge(EventEmitter.prototype, {
@@ -38,9 +39,9 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "LOGIN":
+    case "LOGGED_IN_FB":
       _user.loggedIn = true;
-      _user.username = action.username;
+      _.extend(_user, action.user);
       UserStore.emitChange();
       break;
 

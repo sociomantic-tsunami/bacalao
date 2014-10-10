@@ -1,12 +1,14 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var SocialLoginUtils = require('../utils/SocialLoginUtils');
+
 
 module.exports = {
 
-  login : function(username) {
+  loginFB : function(username) {
     AppDispatcher.handleViewAction({
-      type: "LOGIN",
-      username : username
+      type: "LOGIN_FB"
     });
+    SocialLoginUtils.loginFB();
   }
 
 };
