@@ -1,6 +1,7 @@
 var Models = require('./models/models'),
     _ = require('underscore'),
     Event = Models.Event;
+    User = Models.User;
 
 exports.getEvents = function (req, res, next) {
 
@@ -25,5 +26,27 @@ exports.createEvent = function (req, res, next) {
       res.send(newEvent);
       return next();
     });
+
+}
+
+
+exports.createUser = function (req, res, next) {
+    var fields = 'firstName lastName middleName gender email picture service serviceUserId accessToken tokenExpiration'.split(' ');
+    var paramsToSave = _.pick(req.params, fields);
+    var user = new User(paramsToSave);
+
+    // res.send(user);
+    // return next();
+    // DEBUG END
+
+    var query = User.findOne({ serviceUserId : paramsToSave.serviceUserId });
+
+
+    // user.save(function (err, user) {
+    //   if (err) return next(err);
+    //   console.log(user)
+    //   res.send(user);
+    //   return next();
+    // });
 
 }

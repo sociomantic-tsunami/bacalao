@@ -16,11 +16,13 @@ var server = restify.createServer();
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+server.use(restify.requestLogger());
 
 
 
 server.get("/api/events", routes.getEvents);
 server.post("/api/event", routes.createEvent);
+server.post("/api/user", routes.createUser);
 
 server.get(/\/.*/, restify.serveStatic({
   directory: '../dist/',

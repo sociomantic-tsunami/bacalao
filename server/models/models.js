@@ -11,13 +11,26 @@ var eventSchema = new Schema({
 });
 
 
+var services = 'facebook window google'.split(' ');
+var gender = 'male female'.split(' ');
+
+
 var userSchema = new Schema({
   firstName:  String,
+  middleName:  String,
   lastName:  String,
-  token:  String,
+  gender:  { type: String, enum: gender },
+  email:  String,
+  picture: String,
+  service: { type: String, enum: services },
+  serviceUserId: String,
+  accessToken:  String,
+  tokenExpiration:  Date,
   creationDate: { type: Date, default: Date.now }
 });
 
 module.exports.Event = mongoose.model('Event', eventSchema);
 module.exports.User = mongoose.model('User', userSchema);
+
+
 
