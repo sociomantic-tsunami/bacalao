@@ -12,7 +12,10 @@
     "react-bootstrap": "~0.12.0",
     "restify": "~2.8.2",
     "underscore": "~1.7.0",
-    "xhr": "^1.16.1"
+    "xhr": "^1.16.1",
+    "superagent": "~0.20.0",
+    "q": "~1.0.1",
+    "bunyan": "~1.1.3"
   },
   "devDependencies": {
     "browserify": "~4.2.2",

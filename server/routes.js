@@ -1,6 +1,7 @@
 var Models = require('./models/models'),
     _ = require('underscore'),
     Mongoose = require('mongoose'),
+    authValidator = require('./utils/authValidator'),
     Event = Models.Event,
     User = Models.User;
 
@@ -36,20 +37,21 @@ exports.createUser = function (req, res, next) {
     var paramsToSave = _.pick(req.params, fields);
     var user = new User(paramsToSave);
 
-    // res.send(user);
-    // return next();
-    // DEBUG END
-
-    // var query = new Mongoose.Query()
-    User.findOneAndUpdate(
-      { serviceUserId : paramsToSave.serviceUserId },
-      paramsToSave, 
-      { upsert : true }, 
-      function (err, user) {
-        if (err) return next(err);
-        console.log(user)
-        res.send(user);
-        return next();
+    authValidator.validateToken(paramsToSave.accessToken)
+    .then(function() {
+      User.findOneAndUpdate(
+        { serviceUserId : paramsToSave.serviceUserId },
+        paramsToSave,
+        { upsert : true },
+        function (err, user) {
+          if (err) return next(err);
+          res.send(user);
+          return next();
+      });
+    }, function(error) {
+      res.send(401);
+      req.log.warn(error);
+      return next();
     });
 
 }

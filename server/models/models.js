@@ -29,8 +29,12 @@ var userSchema = new Schema({
   created: { type: Date, default: Date.now }
 });
 
+
+
 module.exports.Event = mongoose.model('Event', eventSchema);
 module.exports.User = mongoose.model('User', userSchema);
+
+
 
 
 

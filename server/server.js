@@ -2,6 +2,7 @@ var config = require('../config.json'),
     restify = require('restify'),
     mongoose = require('mongoose'),
     routes = require('./routes'),
+    logger = require('./utils/logger'),
     Schema = mongoose.Schema;
     ObjectId = Schema.ObjectID;
 
@@ -10,7 +11,17 @@ restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
 };
 
-var server = restify.createServer();
+// create server instance
+var server = restify.createServer({
+  name: config.name,
+  log: logger
+});
+
+// log every request
+server.pre(function (request, response, next) {
+    request.log.info({ req: request }, 'REQUEST');
+    next();
+});
 
 
 server.use(restify.acceptParser(server.acceptable));
