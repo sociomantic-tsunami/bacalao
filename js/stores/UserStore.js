@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var SocialLoginUtils = require('../utils/SocialLoginUtils');
+var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
 var _ = require('underscore');
@@ -39,13 +40,18 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "LOGGED_IN_FB":
+    case ActionTypes.LOAD_USER:
+      _.extend(_user, action.user);
+      UserStore.emitChange();
+      break;
+
+    case ActionTypes.LOGGED_IN_FB:
       _.extend(_user, action.user);
       UserStore.emitChange();
       break;
 
 
-    case "LOGGED_IN_API":
+    case ActionTypes.LOGGED_IN_API:
       _user.loggedIn = true;
       //TODO update _id
       if(_user.serviceUserId === action.user.serviceUserId) {
@@ -57,7 +63,7 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
 
-    // case "TEST":
+    // case ActionTypes.TEST:
     //   if(_nodes[action.key]) {
     //     _nodes[action.key].attendees.filter(function(el) {
     //       return el !== action.attendee;

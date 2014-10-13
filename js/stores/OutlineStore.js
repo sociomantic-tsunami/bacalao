@@ -1,4 +1,5 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
 
@@ -35,12 +36,12 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case "RECEIVE_RAW_NODES":
+    case ActionTypes.RECEIVE_RAW_NODES:
       _nodes = action.rawNodes;
       OutlineStore.emitChange();
       break;
 
-    case "CREATE_LUNCH":
+    case ActionTypes.CREATE_LUNCH:
         _nodes[Date.now()] = {
           time : action.time,
           place : action.place,
@@ -50,14 +51,14 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         OutlineStore.emitChange();
       break;
 
-    case "JOIN_LUNCH":
+    case ActionTypes.JOIN_LUNCH:
       if(_nodes[action.key]) {
         _nodes[action.key].attendees.push(action.attendee);
         OutlineStore.emitChange();
       }
       break;
 
-    case "LEAVE_LUNCH":
+    case ActionTypes.LEAVE_LUNCH:
       if(_nodes[action.key]) {
         _nodes[action.key].attendees.filter(function(el) {
           return el !== action.attendee;

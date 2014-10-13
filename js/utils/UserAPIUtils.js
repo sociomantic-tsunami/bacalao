@@ -7,7 +7,7 @@ module.exports = {
 
 
   login: function(user) {
-    console.log(UserServerActionCreators);
+    debugger;
     request
       .post(Constants.Endpoints.LOGIN)
       .type('json')

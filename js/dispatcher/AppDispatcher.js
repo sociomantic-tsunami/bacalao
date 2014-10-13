@@ -44,6 +44,15 @@ var AppDispatcher = copyProperties(new Dispatcher(), {
       action: action
     };
     this.dispatch(payload);
+  },
+
+
+  handleInitAction: function(action) {
+    var payload = {
+      source: 'INIT_ACTION',
+      action: action
+    };
+    this.dispatch(payload);
   }
 
 });
