@@ -26,7 +26,7 @@ var userSchema = new Schema({
   serviceUserId: String,
   accessToken:  String,
   tokenExpiration:  Date,
-  creationDate: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now }
 });
 
 module.exports.Event = mongoose.model('Event', eventSchema);

@@ -33,6 +33,10 @@ server.get(/\/.*/, restify.serveStatic({
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function callback () {
     console.log("Connceted to db: ", mongoose.connection.host);
+    if(!config.port) {
+      console.log("no server port defined in the config");
+    	process.exit(1);
+    }
     server.listen(config.port, function () {
         console.log("Server started @ " + config.port);
     });

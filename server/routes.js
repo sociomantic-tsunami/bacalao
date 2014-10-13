@@ -1,6 +1,7 @@
 var Models = require('./models/models'),
     _ = require('underscore'),
-    Event = Models.Event;
+    Mongoose = require('mongoose'),
+    Event = Models.Event,
     User = Models.User;
 
 exports.getEvents = function (req, res, next) {
@@ -31,7 +32,7 @@ exports.createEvent = function (req, res, next) {
 
 
 exports.createUser = function (req, res, next) {
-    var fields = 'firstName lastName middleName gender email picture service serviceUserId accessToken tokenExpiration'.split(' ');
+    var fields = '_id firstName lastName middleName gender email picture service serviceUserId accessToken tokenExpiration'.split(' ');
     var paramsToSave = _.pick(req.params, fields);
     var user = new User(paramsToSave);
 
@@ -39,14 +40,16 @@ exports.createUser = function (req, res, next) {
     // return next();
     // DEBUG END
 
-    var query = User.findOne({ serviceUserId : paramsToSave.serviceUserId });
-
-
-    // user.save(function (err, user) {
-    //   if (err) return next(err);
-    //   console.log(user)
-    //   res.send(user);
-    //   return next();
-    // });
+    // var query = new Mongoose.Query()
+    User.findOneAndUpdate(
+      { serviceUserId : paramsToSave.serviceUserId },
+      paramsToSave, 
+      { upsert : true }, 
+      function (err, user) {
+        if (err) return next(err);
+        console.log(user)
+        res.send(user);
+        return next();
+    });
 
 }
