@@ -35,23 +35,34 @@ exports.createEvent = function (req, res, next) {
 exports.createUser = function (req, res, next) {
     var fields = '_id firstName lastName middleName gender email picture service serviceUserId accessToken tokenExpiration'.split(' ');
     var paramsToSave = _.pick(req.params, fields);
-    var user = new User(paramsToSave);
+    paramsToSave.tokenExpiration = new Date(paramsToSave.tokenExpiration * 1000);
+    paramsToSave.updated = new Date();
+
+
 
     authValidator.validateToken(paramsToSave.accessToken)
-    .then(function() {
-      User.findOneAndUpdate(
-        { serviceUserId : paramsToSave.serviceUserId },
-        paramsToSave,
-        { upsert : true },
-        function (err, user) {
-          if (err) return next(err);
-          res.send(user);
-          return next();
-      });
-    }, function(error) {
-      res.send(401);
-      req.log.warn(error);
-      return next();
-    });
+      .then(function() {
+        if(paramsToSave._id) {
+          var conditions = { _id : paramsToSave._id };
+          paramsToSave.updated = new Date();
+          return User.update(conditions, paramsToSave);
+        } else {
+          return User.create(paramsToSave);
+        }
+      })
+      .fail(function(error) {
+        console.log('fail...');
+        res.send(401);
+        req.log.warn(error);
+        return next(error);
+      }).done(function(user) {
+        req.log.info(arguments);
+        if(user._id) {
+          res.send(_.pick(user, '_id', 'serviceUserId'));
+        } else {
+          res.send(200);
+        }
+        return next();
+      })
 
 }

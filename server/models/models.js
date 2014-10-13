@@ -26,8 +26,10 @@ var userSchema = new Schema({
   serviceUserId: String,
   accessToken:  String,
   tokenExpiration:  Date,
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  updated: Date
 });
+
 
 
 

@@ -1,5 +1,5 @@
 var hello = require('../../bower_components/hello/dist/hello.all.min');
-var UserServerActionCreators = require('../actions/UserServerActionCreators');
+var UserSocialActionCreators = require('../actions/UserSocialActionCreators');
 var _ = require('underscore');
 
 
@@ -30,7 +30,7 @@ module.exports = {
                     gender: r.gender,
                     picture: r.picture
                 });
-                UserServerActionCreators.loggedIn(user)
+                UserSocialActionCreators.loggedInFB(user);
             });
         });
     },

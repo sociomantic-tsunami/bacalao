@@ -8,7 +8,8 @@ module.exports = {
     JOIN_LUNCH: null,
     LEAVE_LUNCH: null,
     LOGIN_FB: null,
-    LOGGED_IN_FB: null
+    LOGGED_IN_FB: null,
+    LOGGED_IN_API: null
   }),
 
 

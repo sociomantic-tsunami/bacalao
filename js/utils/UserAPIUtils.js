@@ -1,22 +1,28 @@
 var UserServerActionCreators = require('../actions/UserServerActionCreators');
 var Constants = require('../constants/Constants');
-var xhr = require('xhr');
+var request = require('superagent');
 
 
 module.exports = {
 
 
   login: function(user) {
-    console.log(user);
-    console.log('UserAPIUtils');
+    console.log(UserServerActionCreators);
+    request
+      .post(Constants.Endpoints.LOGIN)
+      .type('json')
+      .set('Accept', 'application/json')
+      .send(user)
+      .on('error', function(err) {
+        console.error('API Login Error', err);
+      })
+      .end(function(res) {
+        console.log(res.body);
+        // console.log(UserServerActionCreators.loggedInAPI);
+        UserServerActionCreators.loggedInAPI(res.body)
+      });
 
-    xhr({
-        json: user,
-        uri: Constants.Endpoints.LOGIN,
-        method: "POST",
-    }, function(err, resp, body) {
-        console.log(arguments);
-    });
+
     // var rawMessages = JSON.parse(localStorage.getItem('messages'));
     // var timestamp = Date.now();
     // var id = 'm_' + timestamp;

@@ -1,16 +1,18 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher'),
+    UserApiUtils = require('../utils/UserApiUtils'),
     Constants = require('../constants/Constants'),
     ActionTypes = Constants.ActionTypes;
 
 
 module.exports = {
 
-  loggedInAPI : function(user) {
+  loggedInFB : function(user) {
     AppDispatcher.handleViewAction({
-      type: ActionTypes.LOGGED_IN_API,
+      type: ActionTypes.LOGGED_IN_FB,
       user : user
     });
 
+    UserApiUtils.login(user);
   }
 
 };

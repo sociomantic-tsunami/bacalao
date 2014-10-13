@@ -40,9 +40,20 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
   switch(action.type) {
 
     case "LOGGED_IN_FB":
-      _user.loggedIn = true;
       _.extend(_user, action.user);
       UserStore.emitChange();
+      break;
+
+
+    case "LOGGED_IN_API":
+      _user.loggedIn = true;
+      //TODO update _id
+      if(_user.serviceUserId === action.user.serviceUserId) {
+        _user._id = action.user._id;
+      }
+      UserStore.emitChange();
+
+      localStorage.setItem('user', JSON.stringify(_user));
       break;
 
 
