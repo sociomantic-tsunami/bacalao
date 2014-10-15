@@ -24,6 +24,13 @@ server.pre(function (request, response, next) {
 });
 
 
+server.on('uncaughtException', function (request, response, route, error) {
+  req.log.error(error);
+  reponse.send(500);
+});
+
+
+
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());

@@ -4,7 +4,7 @@ module.exports = {
 
   ActionTypes: keyMirror({
     RECEIVE_RAW_NODES: null,
-    LOAD_USER: null,
+    INIT_USER: null,
     CREATE_LUNCH: null,
     JOIN_LUNCH: null,
     LEAVE_LUNCH: null,

@@ -1,8 +1,8 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher'),
     UserApiUtils = require('../utils/UserApiUtils'),
     Constants = require('../constants/Constants'),
-    ActionTypes = Constants.ActionTypes;
-
+    ActionTypes = Constants.ActionTypes,
+    UserStore = require('../stores/UserStore');
 
 module.exports = {
 
@@ -12,7 +12,7 @@ module.exports = {
       user : user
     });
 
-    UserApiUtils.login(user);
+    UserApiUtils.login(UserStore.getUser());
   }
 
 };

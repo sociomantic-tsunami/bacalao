@@ -23,12 +23,12 @@ var userSchema = new Schema({
   email:  String,
   picture: String,
   service: { type: String, enum: services },
-  serviceUserId: String,
+  serviceUserId: { type: String, index: true },
   accessToken:  String,
   tokenExpiration:  Date,
   created: { type: Date, default: Date.now },
   updated: Date
-});
+}, { autoIndex: false });
 
 
 

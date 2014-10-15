@@ -7,7 +7,6 @@ module.exports = {
 
 
   login: function(user) {
-    debugger;
     request
       .post(Constants.Endpoints.LOGIN)
       .type('json')
@@ -18,7 +17,6 @@ module.exports = {
       })
       .end(function(res) {
         console.log(res.body);
-        // console.log(UserServerActionCreators.loggedInAPI);
         UserServerActionCreators.loggedInAPI(res.body)
       });
 

@@ -3,7 +3,9 @@ var Models = require('./models/models'),
     Mongoose = require('mongoose'),
     authValidator = require('./utils/authValidator'),
     Event = Models.Event,
-    User = Models.User;
+    User = Models.User,
+    Q = require('q');
+
 
 exports.getEvents = function (req, res, next) {
 
@@ -42,25 +44,26 @@ exports.createUser = function (req, res, next) {
 
     authValidator.validateToken(paramsToSave.accessToken)
       .then(function() {
-        if(paramsToSave._id) {
-          var conditions = { _id : paramsToSave._id };
-          paramsToSave.updated = new Date();
-          return User.update(conditions, paramsToSave);
-        } else {
-          return User.create(paramsToSave);
+        if(!paramsToSave._id && !paramsToSave.serviceUserId ) {
+          throw new Error('A serviceUserId or _id must be supplied');
         }
+
+        // TODO - does it make sense to use _id - a user could spoof someone else's _id with a valid token
+        var conditions = (paramsToSave._id) ? { _id : paramsToSave._id } : { serviceUserId : paramsToSave.serviceUserId };
+        paramsToSave.updated = new Date();
+        return User.findOneAndUpdate(conditions, _.omit(paramsToSave,'_id'), { upsert : true }).exec();
+        // same as Q.nfcall(User.update,...) with context binding
+        // https://github.com/kriskowal/q#adapting-node
+        // return Q.ninvoke(User, 'update', conditions, paramsToSave, { upsert : true });
       })
       .fail(function(error) {
-        console.log('fail...');
         res.send(401);
         req.log.warn(error);
         return next(error);
       }).done(function(user) {
-        req.log.info(arguments);
-        if(user._id) {
-          res.send(_.pick(user, '_id', 'serviceUserId'));
-        } else {
-          res.send(200);
+        if(user) {
+          req.log.info('Created/Updated User _id:' + user._id );
+          res.send({ _id: user._id, serviceUserId: user.serviceUserId });
         }
         return next();
       })

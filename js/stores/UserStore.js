@@ -40,7 +40,7 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case ActionTypes.LOAD_USER:
+    case ActionTypes.INIT_USER:
       _.extend(_user, action.user);
       UserStore.emitChange();
       break;
@@ -53,7 +53,6 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.LOGGED_IN_API:
       _user.loggedIn = true;
-      //TODO update _id
       if(_user.serviceUserId === action.user.serviceUserId) {
         _user._id = action.user._id;
       }
