@@ -13,7 +13,7 @@ var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 
 
 
-var Node = React.createClass({
+var EventRow = React.createClass({
 
   propTypes: {
     key: ReactPropTypes.string.isRequired,
@@ -31,7 +31,7 @@ var Node = React.createClass({
      .value();
 
     //TODO abstract the join/leave buttons to their own components(reusable with some props)
-    var button = this.hasUserJoined() ? 
+    var button = this.hasUserJoined() ?
       <Button bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
       <Button bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
 
@@ -64,7 +64,7 @@ var Node = React.createClass({
   hasUserJoined : function() {
     if(this.props.user.loggedIn === false) {
       return false;
-    } 
+    }
 
     return _.contains(this.props.attendees, this.props.user.username);
   },
@@ -76,12 +76,6 @@ var Node = React.createClass({
   _onUserLeave: function(event) {
     console.log('_onUserLeave');
   },
-
-  _onClick: function(event) {
-    if (typeof this.props.node.key != 'undefined') {
-      NodeActionCreators.selectNode(this.props.node.key);
-    }
-  }
 });
 
-module.exports = Node;
+module.exports = EventRow;

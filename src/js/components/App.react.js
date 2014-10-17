@@ -12,7 +12,7 @@ require('../../sass/app.scss');
 
 var getAppState = function () {
   return {
-    nodes: OutlineStore.getAll(),
+    events: OutlineStore.getAll(),
     user: UserStore.getUser()
   };
 }
@@ -39,7 +39,7 @@ var App = React.createClass({
           user={this.state.user}
         />
         <Outline
-          nodes={this.state.nodes}
+          events={this.state.events}
           user={this.state.user}
         />
       </div>

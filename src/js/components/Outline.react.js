@@ -2,13 +2,13 @@
 
 
 var React = require('react');
-var Node = require('./Node.react');
+var Row = require('./EventRow.react');
 var _ = require('underscore');
 var ReactPropTypes = React.PropTypes;
 
 
-var getNode = function(user, node, key) {
-  return <Node
+var getRow = function(user, node, key) {
+  return <Row
             key={key}
             user={user}
             time={node.time}
@@ -22,12 +22,12 @@ var getNode = function(user, node, key) {
 var Outline = React.createClass({
 
   propTypes: {
-   nodes: ReactPropTypes.object.isRequired,
+   events: ReactPropTypes.object.isRequired,
    user: ReactPropTypes.object.isRequired
   },
 
   render: function() {
-    var nodes = _.map(this.props.nodes, _.partial(getNode, this.props.user));
+    var rows = _.map(this.props.events, _.partial(getRow, this.props.user));
 
     return (
       <div className="row clearfix">
@@ -46,7 +46,7 @@ var Outline = React.createClass({
                     </tr>
                 </thead>
                 <tbody>
-                  {nodes}
+                  {rows}
                 </tbody>
             </table>
         </div>
