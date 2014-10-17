@@ -50,11 +50,15 @@ var Outline = React.createClass({
                 </tbody>
             </table>
         </div>
-      <a id="add_row" className="btn btn-default pull-right">Add Row</a>
+      <a id="add_row" onClick={this._onNewEvent} className="btn btn-default pull-right">Add Row</a>
       </div>
     );
 
   },
+
+  _onNewEvent: function(e) {
+    console.log(e);
+  }
 
 
 });

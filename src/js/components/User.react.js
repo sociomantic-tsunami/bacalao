@@ -14,12 +14,26 @@ var User = React.createClass({
   },
 
   render: function() {
-    return <button onClick={this._onClick}>FB Login</button>
+    if(this.props.user.loggedIn) {
+        return (
+            <div>
+                <span>Hello {this.props.user.firstName}</span>
+                <button onClick={this._onLogout}>Logout</button>
+            </div>
+            );
+    } else {
+        return (<button onClick={this._onLogin}>FB Login</button>);
+    }
   },
 
-  _onClick: function() {
+  _onLogin: function() {
     UserActionCreators.loginFB();
-  }
+  },
+
+  _onLogout: function() {
+    // do something...
+    UserActionCreators.logoutFB()
+  },
 
 });
 

@@ -36,6 +36,15 @@ module.exports = {
     },
 
     loginFB: function() {
-        hello('facebook').login();
+        // returns promise
+        return hello('facebook').login();
+    },
+
+
+    logoutFB: function() {
+        // returns promise
+        return hello('facebook').logout().then(function() {
+            UserSocialActionCreators.loggedOutFB();
+        });
     }
 };

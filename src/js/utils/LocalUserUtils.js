@@ -17,6 +17,10 @@ module.exports = {
       type: ActionTypes.INIT_USER,
       user: user
     });
+  },
+
+  logout: function() {
+    localStorage.removeItem('user');
   }
 };
 

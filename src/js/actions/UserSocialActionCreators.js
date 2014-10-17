@@ -12,7 +12,21 @@ module.exports = {
       user : user
     });
 
+
+    // read from the store the full user object
+    // including the _id isn't in the response from the FB API
     UserApiUtils.login(UserStore.getUser());
+  },
+
+
+  /**
+   * Once the user successfully logged out of FB
+   */
+  loggedOutFB : function() {
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.LOGGED_OUT_FB
+    });
+
   }
 
 };

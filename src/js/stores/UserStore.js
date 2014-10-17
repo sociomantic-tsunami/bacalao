@@ -51,6 +51,15 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
 
+    case ActionTypes.LOGGED_OUT_FB:
+      _user = {
+        loggedIn: false
+      };
+      localStorage.removeItem('user', JSON.stringify(_user));
+      UserStore.emitChange();
+      break;
+
+
     case ActionTypes.LOGGED_IN_API:
       _user.loggedIn = true;
       if(_user.serviceUserId === action.user.serviceUserId) {
