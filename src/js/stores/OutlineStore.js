@@ -3,6 +3,8 @@ var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
 var UserStore = require('./UserStore');
+var _ = require('underscore');
+var moment = require('moment');
 
 var CHANGE_EVENT = 'change';
 
@@ -23,6 +25,10 @@ var OutlineStore = merge(EventEmitter.prototype, {
 
   getAll: function() {
     return _nodes;
+  },
+
+  getLastAdded: function() {
+    return _nodes[_nodes.length -1];
   }
 
 });
@@ -40,7 +46,8 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.CREATE_LUNCH:
         _nodes.push({
-          time: action.time,
+          cid: _.uniqueId('event_'),
+          time: moment(action.time, 'HH:mm'),
           venue: action.venue,
           maxAttendees: action.maxAttendees,
           creator : UserStore.getUserId(),

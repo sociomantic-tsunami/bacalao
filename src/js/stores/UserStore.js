@@ -1,5 +1,4 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var SocialLoginUtils = require('../utils/SocialLoginUtils');
 var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');

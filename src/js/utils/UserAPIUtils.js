@@ -7,6 +7,7 @@ module.exports = {
 
 
   login: function(user) {
+
     request
       .post(Constants.Endpoints.LOGIN)
       .type('json')

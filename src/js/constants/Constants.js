@@ -18,7 +18,8 @@ module.exports = {
 
 
   Endpoints: {
-    LOGIN: '/api/user'
+    LOGIN: '/api/user',
+    EVENT: '/api/event'
   }
 
   // PayloadSources: keyMirror({

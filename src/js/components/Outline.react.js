@@ -9,7 +9,6 @@ var React = require('react'),
 
 
 var getRow = function(user, node) {
-  console.log(node);
   return <Row
             key={node._id}
             user={user}
