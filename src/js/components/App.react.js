@@ -8,6 +8,7 @@ var React = require('react/addons');
 // var key = require('keymaster');
 var OutlineStore = require('../stores/OutlineStore');
 var UserStore = require('../stores/UserStore');
+require('../../sass/app.scss');
 
 var getAppState = function () {
   return {
@@ -30,12 +31,9 @@ var App = React.createClass({
 
   render: function() {
     var cx = React.addons.classSet;
-    var classes = cx({
-      'container': true
-    });
 
     return (
-      <div className="{classes}">
+      <div className="">
         <h1>wip</h1>
         <User
           user={this.state.user}

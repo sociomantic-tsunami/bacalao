@@ -43,7 +43,7 @@ server.post("/api/event", routes.createEvent);
 server.post("/api/user", routes.createUser);
 
 server.get(/\/.*/, restify.serveStatic({
-  directory: '../dist/',
+  directory: '../public/',
   default: 'index.html'
 }));
 

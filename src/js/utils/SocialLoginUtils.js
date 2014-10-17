@@ -1,4 +1,4 @@
-var hello = require('../../bower_components/hello/dist/hello.all.min');
+var hello = require('../lib/hello.all.min');
 var UserSocialActionCreators = require('../actions/UserSocialActionCreators');
 var _ = require('underscore');
 

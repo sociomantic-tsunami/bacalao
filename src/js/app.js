@@ -1,6 +1,6 @@
 /**
  * Entrypoint to the client side application
- * 
+ *
  * Bootstrapping of data and initialization of the main app view.
  * @jsx React.DOM
  */
@@ -13,7 +13,7 @@ var OutlineWebAPIUtils = require('./utils/OutlineWebAPIUtils');
 var React = require('react');
 var SocialLoginUtils = require('./utils/SocialLoginUtils');
 var LocalUserUtils = require('./utils/LocalUserUtils');
-var hello = require('../bower_components/hello/dist/hello.all.min');
+var hello = require('./lib/hello.all.min');
 
 window.React = React;
 
