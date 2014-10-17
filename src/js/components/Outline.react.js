@@ -1,18 +1,20 @@
 /** @jsx React.DOM */
 
 
-var React = require('react');
-var Row = require('./EventRow.react');
-var _ = require('underscore');
-var ReactPropTypes = React.PropTypes;
+var React = require('react'),
+    Row = require('./EventRow.react'),
+    NewEventRow = require('./NewEventRow.react'),
+    _ = require('underscore'),
+    ReactPropTypes = React.PropTypes;
 
 
-var getRow = function(user, node, key) {
+var getRow = function(user, node) {
+  console.log(node);
   return <Row
-            key={key}
+            key={node._id}
             user={user}
             time={node.time}
-            place={node.place}
+            venue={node.venue}
             creator={node.creator}
             attendees={node.attendees}
           />
@@ -22,7 +24,7 @@ var getRow = function(user, node, key) {
 var Outline = React.createClass({
 
   propTypes: {
-   events: ReactPropTypes.object.isRequired,
+   events: ReactPropTypes.array.isRequired,
    user: ReactPropTypes.object.isRequired
   },
 
@@ -39,7 +41,7 @@ var Outline = React.createClass({
                 <thead>
                     <tr className="filters">
                         <th>Time</th>
-                        <th>Location</th>
+                        <th>Venue</th>
                         <th>Attendees</th>
                         <th>Organizer</th>
                         <th></th>
@@ -47,6 +49,7 @@ var Outline = React.createClass({
                 </thead>
                 <tbody>
                   {rows}
+                  <NewEventRow></NewEventRow>
                 </tbody>
             </table>
         </div>

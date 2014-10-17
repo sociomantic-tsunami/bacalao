@@ -1,20 +1,23 @@
-module.exports = {
-  1411121978558 : {
+module.exports = [
+  {
+    _id: 'a1234124124',
     time : 1411128000,
-    place : 'Hamy',
+    venue : 'Hamy',
     creator : 'DNO',
     attendees : ['DNO', 'OWE']
   },
-  1411121978560 : {
+  {
+    _id: 'a12341asgas4',
     time : 1411126200,
-    place : 'Miss Saigon',
+    venue : 'Miss Saigon',
     creator : 'JFA',
     attendees : ['JFA', 'NBR']
   },
-  1411121978564 : {
+  {
+    _id: 'a1234asgsgas4',
     time : 1411126200,
-    place : 'Lidl',
+    venue : 'Lidl',
     creator : 'AED',
     attendees : ['AED', 'ZNA']
-  },
-};
+  }
+]

@@ -19,12 +19,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 module.exports = {
 
   createLunch : function() {
-    AppDispatcher.handleViewAction({
-      type: "CREATE_LUNCH",
-      time : action.time,
-      place : action.place,
-      creator : action.creator
-    });
+
   },
 
   joinLunch : function(key, attendee) {

@@ -30,6 +30,10 @@ var UserStore = merge(EventEmitter.prototype, {
 
   getUser: function() {
     return _user;
+  },
+
+  getUserId: function() {
+    return _user._id || false;
   }
 
 });

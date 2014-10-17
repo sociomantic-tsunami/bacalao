@@ -18,10 +18,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 
 module.exports = {
 
-  receiveAll: function(rawNodes) {
+  receiveAll: function(rawEvents) {
     AppDispatcher.handleServerAction({
-      type: "RECEIVE_RAW_NODES",
-      rawNodes: rawNodes
+      type: "RECEIVE_RAW_EVENTS",
+      rawEvents: rawEvents
     });
   },
 

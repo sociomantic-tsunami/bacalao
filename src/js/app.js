@@ -22,7 +22,7 @@ LocalUserUtils.init();
 OutlineStartingData.init();
 SocialLoginUtils.init();
 
-OutlineWebAPIUtils.getAllNodes();
+OutlineWebAPIUtils.getAllEvents();
 
 React.renderComponent(
   <App />,

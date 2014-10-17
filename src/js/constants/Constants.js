@@ -3,7 +3,7 @@ var keyMirror = require('react/lib/keyMirror');
 module.exports = {
 
   ActionTypes: keyMirror({
-    RECEIVE_RAW_NODES: null,
+    RECEIVE_RAW_EVENTS: null,
     INIT_USER: null,
     CREATE_LUNCH: null,
     JOIN_LUNCH: null,

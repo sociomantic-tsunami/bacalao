@@ -18,12 +18,12 @@ var OutlineServerActionCreators = require('../actions/OutlineServerActionCreator
 
 module.exports = {
 
-  getAllNodes: function() {
+  getAllEvents: function() {
     // simulate retrieving data from a database
-    var rawNodes = JSON.parse(localStorage.getItem('nodes'));
+    var rawEvents = JSON.parse(localStorage.getItem('events'));
 
     // simulate success callback
-    OutlineServerActionCreators.receiveAll(rawNodes);
+    OutlineServerActionCreators.receiveAll(rawEvents);
   }
 
 };

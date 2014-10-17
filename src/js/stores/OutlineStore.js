@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
+var UserStore = require('./UserStore');
 
 var CHANGE_EVENT = 'change';
 
@@ -20,10 +21,6 @@ var OutlineStore = merge(EventEmitter.prototype, {
     this.on(CHANGE_EVENT, callback);
   },
 
-  get: function(id) {
-    return _nodes[id];
-  },
-
   getAll: function() {
     return _nodes;
   }
@@ -36,35 +33,36 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
 
   switch(action.type) {
 
-    case ActionTypes.RECEIVE_RAW_NODES:
-      _nodes = action.rawNodes;
+    case ActionTypes.RECEIVE_RAW_EVENTS:
+      _nodes = action.rawEvents;
       OutlineStore.emitChange();
       break;
 
     case ActionTypes.CREATE_LUNCH:
-        _nodes[Date.now()] = {
-          time : action.time,
-          place : action.place,
-          creator : action.creator,
-          attendees : [action.creator]
-        }
+        _nodes.push({
+          time: action.time,
+          venue: action.venue,
+          maxAttendees: action.maxAttendees,
+          creator : UserStore.getUserId(),
+          attendees : [UserStore.getUserId()]
+        })
         OutlineStore.emitChange();
       break;
 
     case ActionTypes.JOIN_LUNCH:
-      if(_nodes[action.key]) {
-        _nodes[action.key].attendees.push(action.attendee);
-        OutlineStore.emitChange();
-      }
+      // if(_nodes[action.key]) {
+      //   _nodes[action.key].attendees.push(action.attendee);
+      //   OutlineStore.emitChange();
+      // }
       break;
 
     case ActionTypes.LEAVE_LUNCH:
-      if(_nodes[action.key]) {
-        _nodes[action.key].attendees.filter(function(el) {
-          return el !== action.attendee;
-        });
-        OutlineStore.emitChange();
-      }
+      // if(_nodes[action.key]) {
+      //   _nodes[action.key].attendees.filter(function(el) {
+      //     return el !== action.attendee;
+      //   });
+        // OutlineStore.emitChange();
+      // }
       break;
 
     default:

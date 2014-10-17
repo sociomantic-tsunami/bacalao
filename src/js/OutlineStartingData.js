@@ -1,10 +1,10 @@
-var nodes = require('./StartingData');
+var events = require('./StartingData');
 
 module.exports = {
 
   init: function() {
-    localStorage.removeItem('nodes');
-    localStorage.setItem('nodes', JSON.stringify(nodes));
+    localStorage.removeItem('events');
+    localStorage.setItem('events', JSON.stringify(events));
   }
 };
 

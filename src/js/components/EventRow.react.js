@@ -19,7 +19,7 @@ var EventRow = React.createClass({
     key: ReactPropTypes.string.isRequired,
     user: ReactPropTypes.object.isRequired,
     time: ReactPropTypes.number.isRequired,
-    place: ReactPropTypes.string.isRequired,
+    venue: ReactPropTypes.string.isRequired,
     creator: ReactPropTypes.string.isRequired,
     attendees: ReactPropTypes.array.isRequired
   },
@@ -38,7 +38,7 @@ var EventRow = React.createClass({
     return (
       <tr>
           <td>{this.getTime()}</td>
-          <td>{this.props.place}</td>
+          <td>{this.props.venue}</td>
           <td>
           <OverlayTrigger placement="left" overlay={<Tooltip>{attendees}</Tooltip>}>
             <Badge>{this.props.attendees.length}</Badge>
@@ -66,7 +66,7 @@ var EventRow = React.createClass({
       return false;
     }
 
-    return _.contains(this.props.attendees, this.props.user.username);
+    return _.contains(this.props.attendees, this.props.user._id);
   },
 
   _onUserJoin: function(event) {
