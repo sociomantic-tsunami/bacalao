@@ -62,6 +62,11 @@ var EventRow = React.createClass({
     return time;
   },
 
+
+  getOrganizer : function(userId) {
+    return userId;
+  },
+
   hasUserJoined : function() {
     if(this.props.user.loggedIn === false) {
       return false;
