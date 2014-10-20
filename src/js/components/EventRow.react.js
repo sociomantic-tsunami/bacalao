@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var NodeActionCreators = require('../actions/NodeActionCreators');
-var EmployeeUtils = require('../utils/EmployeeUtils');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
@@ -27,7 +26,6 @@ var EventRow = React.createClass({
 
   render: function() {
     var attendees = _.chain(this.props.attendees)
-     .map(EmployeeUtils.getFullName)
      .reduce(function(memo, name) { return memo + ", " + name})
      .value();
 
@@ -62,10 +60,6 @@ var EventRow = React.createClass({
   getTime: function() {
     var time = moment(this.props.time).fromNow();
     return time;
-  },
-
-  getOrganizer : function(shortName) {
-    return EmployeeUtils.getFullName(shortName);
   },
 
   hasUserJoined : function() {
