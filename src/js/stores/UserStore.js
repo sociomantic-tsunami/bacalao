@@ -27,6 +27,11 @@ var UserStore = merge(EventEmitter.prototype, {
     return _user.loggedIn;
   },
 
+  getToken: function() {
+    return _user.accessToken || false;
+  },
+
+
   getUser: function() {
     return _.clone(_user);
   },

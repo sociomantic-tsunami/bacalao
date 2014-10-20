@@ -8,8 +8,7 @@ module.exports = {
 
     createEvent: function(event) {
         AppDispatcher.handleViewAction({
-
-          type: ActionTypes.CREATE_LUNCH,
+          type: ActionTypes.CREATE_EVENT,
           time: event.time,
           venue: event.venue,
           maxAttendees: event.maxAttendees

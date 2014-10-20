@@ -17,7 +17,6 @@ module.exports = {
         console.error('API Login Error', err);
       })
       .end(function(res) {
-        console.log(res.body);
         UserServerActionCreators.loggedInAPI(res.body)
       });
 

@@ -40,14 +40,27 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
   switch(action.type) {
 
     case ActionTypes.RECEIVE_RAW_EVENTS:
-      _nodes = action.rawEvents;
+      _nodes = _.map(action.rawEvents, function(node) {
+        node.time = new Date(node.time);
+        return node;
+      });
       OutlineStore.emitChange();
       break;
 
-    case ActionTypes.CREATE_LUNCH:
+    case ActionTypes.CREATED_EVENT:
+      for (var i = _nodes.length - 1; i >= 0; i--) {
+        if(_nodes[i].cid === action.event.cid) {
+          _.defaults(_nodes[i], action);
+          break;
+        }
+      };
+      OutlineStore.emitChange();
+      break;
+
+    case ActionTypes.CREATE_EVENT:
         _nodes.push({
           cid: _.uniqueId('event_'),
-          time: moment(action.time, 'HH:mm'),
+          time: moment(action.time, 'HH:mm').toDate(),
           venue: action.venue,
           maxAttendees: action.maxAttendees,
           creator : UserStore.getUserId(),

@@ -5,10 +5,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 
 module.exports = {
 
-  loggedInAPI : function(user) {
+  createdEvent : function(event) {
     AppDispatcher.handleServerAction({
-      type: ActionTypes.LOGGED_IN_API,
-      user : user
+      type: ActionTypes.CREATED_EVENT,
+      event: event
     });
 
   }

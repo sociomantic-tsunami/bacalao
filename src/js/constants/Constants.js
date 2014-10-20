@@ -5,7 +5,7 @@ module.exports = {
   ActionTypes: keyMirror({
     RECEIVE_RAW_EVENTS: null,
     INIT_USER: null,
-    CREATE_LUNCH: null,
+    CREATE_EVENT: null,
     JOIN_LUNCH: null,
     LEAVE_LUNCH: null,
     LOGIN_FB: null,

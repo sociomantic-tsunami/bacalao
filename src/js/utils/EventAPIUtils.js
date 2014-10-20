@@ -1,4 +1,4 @@
-// var UserServerActionCreators = require('../actions/UserServerActionCreators');
+var EventServerActionCreators = require('../actions/EventServerActionCreators');
 var Constants = require('../constants/Constants');
 var request = require('superagent');
 
@@ -7,17 +7,18 @@ module.exports = {
 
 
   createEvent: function(event) {
+    var sessionId = sessionStorage.getItem('sessionId') || 'debugSession';
+
     request
       .post(Constants.Endpoints.EVENT)
       .type('json')
-      // .set('Accept', 'application/json')
+      .set('sessionid', sessionId)
       .send(event)
       .on('error', function(err) {
         console.error('API Login Error', err);
       })
       .end(function(res) {
-        console.log(res.body);
-        // UserServerActionCreators.loggedInAPI(res.body)
+        EventServerActionCreators.createdEvent(res.body)
       });
   }
 

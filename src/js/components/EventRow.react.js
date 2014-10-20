@@ -18,7 +18,7 @@ var EventRow = React.createClass({
   propTypes: {
     key: ReactPropTypes.string.isRequired,
     user: ReactPropTypes.object.isRequired,
-    time: ReactPropTypes.number.isRequired,
+    time: ReactPropTypes.object.isRequired,
     venue: ReactPropTypes.string.isRequired,
     creator: ReactPropTypes.string.isRequired,
     attendees: ReactPropTypes.array.isRequired
@@ -53,7 +53,7 @@ var EventRow = React.createClass({
 
 
   getTime: function() {
-    var time = moment.unix(this.props.time).fromNow();
+    var time = moment(this.props.time).fromNow();
     return time;
   },
 
