@@ -17,6 +17,7 @@ var User = React.createClass({
     if(this.props.user.loggedIn) {
         return (
             <div>
+                <img src={this._getImgSrc()} />
                 <span>Hello {this.props.user.firstName}</span>
                 <button onClick={this._onLogout}>Logout</button>
             </div>
@@ -24,6 +25,10 @@ var User = React.createClass({
     } else {
         return (<button onClick={this._onLogin}>FB Login</button>);
     }
+  },
+
+  _getImgSrc: function() {
+    return "http://graph.facebook.com/" + this.props.user.serviceUserId + "/picture";
   },
 
   _onLogin: function() {

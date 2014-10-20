@@ -16,6 +16,7 @@ var getRow = function(user, node) {
             venue={node.venue}
             creator={node.creator}
             attendees={node.attendees}
+            maxAttendees={node.maxAttendees}
           />
 }
 

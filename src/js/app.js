@@ -9,7 +9,7 @@
 
 var App = require('./components/App.react');
 var OutlineStartingData = require('./OutlineStartingData');
-var OutlineWebAPIUtils = require('./utils/OutlineWebAPIUtils');
+var EventAPIUtils = require('./utils/EventAPIUtils');
 var React = require('react');
 var SocialLoginUtils = require('./utils/SocialLoginUtils');
 var LocalUserUtils = require('./utils/LocalUserUtils');
@@ -22,7 +22,7 @@ LocalUserUtils.init();
 OutlineStartingData.init();
 SocialLoginUtils.init();
 
-OutlineWebAPIUtils.getAllEvents();
+EventAPIUtils.getAllEvents();
 
 React.renderComponent(
   <App />,

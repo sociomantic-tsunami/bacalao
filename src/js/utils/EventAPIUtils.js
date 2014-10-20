@@ -1,9 +1,24 @@
 var EventServerActionCreators = require('../actions/EventServerActionCreators');
-var Constants = require('../constants/Constants');
-var request = require('superagent');
+    Constants = require('../constants/Constants'),
+    request = require('superagent'),
+    _ = require('underscore');
+
 
 
 module.exports = {
+
+  getAllEvents: function() {
+    request
+      .get(Constants.Endpoints.EVENTS)
+      .type('json')
+      .send()
+      .on('error', function(err) {
+        console.error('API Login Error', err);
+      })
+      .end(function(res) {
+        _.defer(EventServerActionCreators.receiveAll, res.body);
+      });
+  },
 
 
   createEvent: function(event) {

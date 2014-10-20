@@ -17,6 +17,7 @@ var EventRow = React.createClass({
 
   propTypes: {
     key: ReactPropTypes.string.isRequired,
+    maxAttendees: ReactPropTypes.number.isRequired,
     user: ReactPropTypes.object.isRequired,
     time: ReactPropTypes.object.isRequired,
     venue: ReactPropTypes.string.isRequired,
@@ -35,14 +36,20 @@ var EventRow = React.createClass({
       <Button bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
       <Button bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
 
+
+    var maxAttendees = <Badge></Badge>;
+
     return (
       <tr>
           <td>{this.getTime()}</td>
           <td>{this.props.venue}</td>
           <td>
           <OverlayTrigger placement="left" overlay={<Tooltip>{attendees}</Tooltip>}>
-            <Badge>{this.props.attendees.length}</Badge>
+            <Badge>
+            {this.props.attendees.length}
+            {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}</Badge>
           </OverlayTrigger>
+          {maxAttendees}
           </td>
           <td>{this.getOrganizer(this.props.creator)}</td>
           <td>{button}</td>
