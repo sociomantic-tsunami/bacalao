@@ -3,8 +3,7 @@ var config = require('../config.json'),
     mongoose = require('mongoose'),
     routes = require('./routes'),
     logger = require('./utils/logger'),
-    Schema = mongoose.Schema;
-    ObjectId = Schema.ObjectID;
+    checkSession = require('./utils/sessionValidator').checkSession;
 
 
 restify.defaultResponseHeaders = function(data) {
@@ -37,11 +36,10 @@ server.use(restify.bodyParser());
 server.use(restify.requestLogger());
 
 
-
-server.get("/api/events", routes.getEvents);
-server.post("/api/event", routes.createEvent);
+// routes
 server.post("/api/user", routes.createUser);
-
+server.post("/api/event", checkSession, routes.createEvent);
+server.get("/api/events", checkSession, routes.getEvents);
 server.get(/\/.*/, restify.serveStatic({
   directory: '../public/',
   default: 'index.html'
