@@ -4,5 +4,7 @@ module.exports = {
 
   createEvent: require('./controllers/event.ctrl').createEvent,
 
+  joinEvent: require('./controllers/event.ctrl').joinEvent,
+
   createUser: require('./controllers/user.ctrl').createUser
 }

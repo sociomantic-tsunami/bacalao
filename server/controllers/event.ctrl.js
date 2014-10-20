@@ -39,5 +39,9 @@ module.exports = {
 
   },
 
+  joinEvent: function (req, res, next) {
+
+  }
+
 
 }

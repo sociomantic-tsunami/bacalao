@@ -3,7 +3,6 @@
 
 var Outline = require('./Outline.react');
 var User = require('./User.react');
-var NodeActionCreators = require('../actions/NodeActionCreators');
 var React = require('react/addons');
 // var key = require('keymaster');
 var OutlineStore = require('../stores/OutlineStore');

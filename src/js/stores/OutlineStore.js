@@ -29,6 +29,10 @@ var OutlineStore = merge(EventEmitter.prototype, {
 
   getLastAdded: function() {
     return _nodes[_nodes.length -1];
+  },
+
+  removeAttendeeFromEvent: function(eventId, userId) {
+
   }
 
 });
@@ -69,20 +73,28 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         OutlineStore.emitChange();
       break;
 
-    case ActionTypes.JOIN_LUNCH:
-      // if(_nodes[action.key]) {
-      //   _nodes[action.key].attendees.push(action.attendee);
-      //   OutlineStore.emitChange();
-      // }
+    case ActionTypes.JOIN_EVENT:
+        for (var i = _nodes.length - 1; i >= 0; i--) {
+          if(_nodes[i]._id === action.eventId) {
+            _nodes[i].attendees.push(UserStore.getUserId());
+            break;
+          }
+        };
+        OutlineStore.emitChange();
       break;
 
-    case ActionTypes.LEAVE_LUNCH:
-      // if(_nodes[action.key]) {
-      //   _nodes[action.key].attendees.filter(function(el) {
-      //     return el !== action.attendee;
-      //   });
-        // OutlineStore.emitChange();
-      // }
+    case ActionTypes.LEAVE_EVENT:
+        for (var i = _nodes.length - 1; i >= 0; i--) {
+          if(_nodes[i]._id === action.eventId) {
+            for (var k = _nodes[i].attendees.length - 1; k >= 0; k--) {
+              if(_nodes[i].attendees[k] === UserStore.getUserId()) {
+                _nodes[i].attendees.splice(k, 1);
+                OutlineStore.emitChange();
+                return;
+              }
+            };
+          }
+        };
       break;
 
     default:

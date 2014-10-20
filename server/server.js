@@ -40,6 +40,7 @@ server.post("/api/user", routes.createUser);
 server.get("/api/events", routes.getEvents);
 
 server.post("/api/event", checkSession, routes.createEvent);
+server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.get(/\/.*/, restify.serveStatic({
   directory: '../public/',
   default: 'index.html'

@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var NodeActionCreators = require('../actions/NodeActionCreators');
+var EventActionCreators = require('../actions/EventActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
@@ -76,11 +76,11 @@ var EventRow = React.createClass({
   },
 
   _onUserJoin: function(event) {
-    console.log('_onUserJoin');
+    EventActionCreators.joinEvent(this.props.key);
   },
 
   _onUserLeave: function(event) {
-    console.log('_onUserLeave');
+    EventActionCreators.leaveEvent(this.props.key);
   },
 });
 
