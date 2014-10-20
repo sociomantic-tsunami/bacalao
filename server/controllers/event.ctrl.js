@@ -22,13 +22,17 @@ module.exports = {
   },
 
   createEvent: function (req, res, next) {
-      var params = 'cid time venue maxAttendees creator attendees'.split(' ');
-      var paramsToSave = _.pick(req.params, params);
+      var saveParams = 'cid venue time maxAttendees creator attendees'.split(' ');
+      var resParams = saveParams.concat('_id', 'cid');
+      var paramsToSave = _.pick(req.params, saveParams);
+
       var newEvent = new Event(paramsToSave);
       newEvent.save(function (err, newEvent) {
         if (err) return next(err);
-        console.log(newEvent);
-        res.send(_.pick(newEvent, params.push('_id', 'cid')));
+        req.log.info('Created event _id:' + newEvent._id );
+        var response = _.pick(newEvent, resParams);
+        response.cid = req.params.cid;
+        res.send(response);
         return next();
       });
 
