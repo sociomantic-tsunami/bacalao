@@ -28,7 +28,7 @@ var UserStore = merge(EventEmitter.prototype, {
   },
 
   getUser: function() {
-    return _user;
+    return _.clone(_user);
   },
 
   getUserId: function() {
