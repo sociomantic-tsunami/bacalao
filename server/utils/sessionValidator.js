@@ -1,18 +1,19 @@
 var Q = require('q'),
     config = require('../../config.json'),
+    restify = require('restify'),
     _ = require('underscore');
 
 var sessionValidator = {
     checkSession: function(req, res, next) {
         if(!req.headers.sessionid) {
-            return next('No sessionid in the request');
+            return next(new restify.errors.UnauthorizedError('no sessionid'));
         }
 
         this.validateSession(req.headers.sessionid)
             .then(function() {
                 return next();
             },function(error) {
-                return next(error);
+                return next(new restify.errors.UnauthorizedError(error));
             });
     },
 

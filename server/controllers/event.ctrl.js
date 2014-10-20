@@ -8,14 +8,12 @@ var Models = require('../models/models'),
 module.exports = {
 
   getEvents: function (req, res, next) {
-
+      console.log('getEvents');
       Event.find(function (err, Events) {
-        if (err) return console.error(err);
-        console.log(Events)
-        // if(Events && Events.length > 0) {
-        if(Events) {
-          res.send(Events);
+        if(err) {
+          return next(err);
         }
+        res.send(Events);
         return next();
       });
 
@@ -27,8 +25,11 @@ module.exports = {
       var paramsToSave = _.pick(req.params, saveParams);
 
       var newEvent = new Event(paramsToSave);
-      newEvent.save(function (err, newEvent) {
-        if (err) return next(err);
+      newEvent.save(function (err, newEvent)
+      {
+        if(err) {
+          return next(err);
+        }
         req.log.info('Created event _id:' + newEvent._id );
         var response = _.pick(newEvent, resParams);
         response.cid = req.params.cid;

@@ -24,8 +24,7 @@ server.pre(function (request, response, next) {
 
 
 server.on('uncaughtException', function (request, response, route, error) {
-  req.log.error(error);
-  reponse.send(500);
+  request.log.error(error);
 });
 
 
@@ -38,8 +37,9 @@ server.use(restify.requestLogger());
 
 // routes
 server.post("/api/user", routes.createUser);
+server.get("/api/events", routes.getEvents);
+
 server.post("/api/event", checkSession, routes.createEvent);
-server.get("/api/events", checkSession, routes.getEvents);
 server.get(/\/.*/, restify.serveStatic({
   directory: '../public/',
   default: 'index.html'
