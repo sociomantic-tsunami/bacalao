@@ -1,10 +1,8 @@
-var Models = require('../models/models'),
-    _ = require('underscore'),
-    Mongoose = require('mongoose'),
-    authValidator = require('../utils/authValidator'),
-    User = Models.User,
-    Q = require('q')
-
+var User = require('../models/user.model');
+var _ = require('underscore');
+var Mongoose = require('mongoose');
+var authValidator = require('../utils/authValidator');
+var Q = require('q');
 
 module.exports = {
 
@@ -13,8 +11,6 @@ module.exports = {
     var paramsToSave = _.pick(req.params, fields);
     paramsToSave.tokenExpiration = new Date(paramsToSave.tokenExpiration * 1000);
     paramsToSave.updated = new Date();
-
-
 
     authValidator.validateToken(paramsToSave.accessToken)
       .then(function() {

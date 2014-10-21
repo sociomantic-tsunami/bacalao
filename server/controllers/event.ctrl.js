@@ -1,14 +1,12 @@
-var Models = require('../models/models'),
-    _ = require('underscore'),
-    authValidator = require('../utils/authValidator'),
-    Event = Models.Event,
-    Q = require('q')
+var Event = require('../models/event.model');
+var _ = require('underscore');
+var authValidator = require('../utils/authValidator');
+var Q = require('q');
 
 
 module.exports = {
 
   getEvents: function (req, res, next) {
-      console.log('getEvents');
       Event.find(function (err, Events) {
         if(err) {
           return next(err);
@@ -40,7 +38,7 @@ module.exports = {
   },
 
   joinEvent: function (req, res, next) {
-
+    req.log.warn('joinEvent:' + req.params );
   }
 
 
