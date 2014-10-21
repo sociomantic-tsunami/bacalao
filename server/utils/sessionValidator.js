@@ -23,6 +23,7 @@ var sessionValidator = {
 
         // simulate async request...
         process.nextTick(function() {
+            // TODO remove this in PRODUCTION
             if(sessionId === 'debugSession') {
                 deferred.resolve();
             } else {

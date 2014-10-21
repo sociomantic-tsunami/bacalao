@@ -26,7 +26,7 @@ var EventRow = React.createClass({
 
   render: function() {
     var attendees = _.chain(this.props.attendees)
-     .reduce(function(memo, name) { return memo + ", " + name})
+     .reduce(function(memo, name) { return memo + ", " + name}, '')
      .value();
 
     //TODO abstract the join/leave buttons to their own components(reusable with some props)

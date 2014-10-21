@@ -18,7 +18,6 @@ module.exports = {
       type: ActionTypes.CREATED_EVENT,
       event: event
     });
-
   }
 
 };

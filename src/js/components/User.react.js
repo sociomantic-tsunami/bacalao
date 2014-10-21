@@ -3,7 +3,7 @@
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
 var UserActionCreators = require('../actions/UserActionCreators');
-var UserLogin = require('./UserLogin.react');
+var Button = require('react-bootstrap').Button;
 
 var ENTER_KEY_CODE = 13;
 
@@ -23,7 +23,10 @@ var User = React.createClass({
             </div>
             );
     } else {
-        return (<button onClick={this._onLogin}>FB Login</button>);
+      return(
+          <Button bsSize="medium" bsStyle="info" onClick={this._onLogin}>
+          Login FB
+          </Button>)
     }
   },
 
@@ -36,7 +39,6 @@ var User = React.createClass({
   },
 
   _onLogout: function() {
-    // do something...
     UserActionCreators.logoutFB()
   },
 

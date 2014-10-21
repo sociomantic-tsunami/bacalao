@@ -1,9 +1,9 @@
-var config = require('../config.json'),
-    restify = require('restify'),
-    mongoose = require('mongoose'),
-    routes = require('./routes'),
-    logger = require('./utils/logger'),
-    checkSession = require('./utils/sessionValidator').checkSession;
+var config = require('../config.json');
+var restify = require('restify');
+var mongoose = require('mongoose');
+var routes = require('./routes');
+var logger = require('./utils/logger');
+var checkSession = require('./utils/sessionValidator').checkSession;
 
 
 restify.defaultResponseHeaders = function(data) {
@@ -25,6 +25,7 @@ server.pre(function (request, response, next) {
 
 server.on('uncaughtException', function (request, response, route, error) {
   request.log.error(error);
+  req.send(500);
 });
 
 
@@ -41,6 +42,7 @@ server.get("/api/events", routes.getEvents);
 
 server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
+server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
 server.get(/\/.*/, restify.serveStatic({
   directory: '../public/',
   default: 'index.html'

@@ -16,11 +16,12 @@ module.exports = {
   }),
 
 
-
   Endpoints: {
     LOGIN: '/api/user',
     EVENT: '/api/event',
-    EVENTS: '/api/events'
+    EVENTS: '/api/events',
+    JOIN_EVENT: '/api/event/[eventId]/attendees',
+    LEAVE_EVENT: '/api/event/[eventId]/attendees'
   }
 
   // PayloadSources: keyMirror({

@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-    EventAPIUtils = require('../utils/EventAPIUtils');
+var EventAPIUtils = require('../utils/EventAPIUtils');
+var UserStore = require('../stores/UserStore');
 
 module.exports = {
 
@@ -8,7 +9,7 @@ module.exports = {
       type: "JOIN_EVENT",
       eventId: eventId
     });
-    // TODO - send to API with EventAPIUtils
+    EventAPIUtils.joinEvent(eventId, UserStore.getUserId());
   },
 
   leaveEvent : function(eventId) {
@@ -17,6 +18,7 @@ module.exports = {
       eventId: eventId
     });
     // TODO - send to API with EventAPIUtils
+    EventAPIUtils.leaveEvent(eventId, UserStore.getUserId());
   },
 };
 

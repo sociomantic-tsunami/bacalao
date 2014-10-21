@@ -38,7 +38,40 @@ module.exports = {
   },
 
   joinEvent: function (req, res, next) {
-    req.log.warn('joinEvent:' + req.params );
+    // TODO - only proceed if the userId matches the sessionUserId
+
+    Event.update(
+      { _id: req.params.eventId }, 
+      { $addToSet: { attendees: req.params.userId }},
+      // function(err, numberAffected){ 
+      function(err, numberAffected, raw){ 
+        if(err) {
+          return next(err);
+        }
+        
+        req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
+        res.send(200);
+        return next();
+      });
+  },
+
+
+  leaveEvent: function(req, res, next) {
+    // TODO - only proceed if the userId matches the sessionUserId
+
+    Event.update(
+      { _id: req.params.eventId }, 
+      { $pull: { attendees: req.params.userId }},
+      // function(err, numberAffected){ 
+      function(err, numberAffected, raw){ 
+        if(err) {
+          return next(err);
+        }
+        
+        req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
+        res.send(200);
+        return next();
+      });
   }
 
 
