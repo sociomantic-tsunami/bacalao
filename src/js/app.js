@@ -8,7 +8,6 @@
 // This file bootstraps the entire application.
 
 var App = require('./components/App.react');
-var OutlineStartingData = require('./OutlineStartingData');
 var EventAPIUtils = require('./utils/EventAPIUtils');
 var React = require('react');
 var SocialLoginUtils = require('./utils/SocialLoginUtils');
@@ -19,7 +18,6 @@ window.React = React;
 
 
 LocalUserUtils.init();
-OutlineStartingData.init();
 SocialLoginUtils.init();
 
 EventAPIUtils.getAllEvents();
