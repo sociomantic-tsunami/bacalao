@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var routes = require('./routes');
 var logger = require('./utils/logger');
 var checkSession = require('./utils/sessionValidator').checkSession;
-
+var _ = require('underscore');
 
 restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
@@ -15,6 +15,8 @@ var server = restify.createServer({
   name: config.name,
   log: logger
 });
+var io = require('socket.io')(server.server);
+// var io = socketio.listen(server.server);
 
 // log every request
 server.pre(function (request, response, next) {
@@ -25,10 +27,15 @@ server.pre(function (request, response, next) {
 
 server.on('uncaughtException', function (request, response, route, error) {
   request.log.error(error);
-  req.send(500);
+  // req.send(500);
 });
 
 
+// inject the global socket.io obect to all requests
+server.use(function(req, res, next) {
+  req.socketio = io;
+  next();
+});
 
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
@@ -49,7 +56,7 @@ server.get(/\/.*/, restify.serveStatic({
 }));
 
 
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.on('error', console.error.bind(server.log, 'DB connection error:'));
 mongoose.connection.once('open', function callback () {
     console.log("Connceted to db: ", mongoose.connection.host);
     if(!config.port) {
@@ -59,6 +66,19 @@ mongoose.connection.once('open', function callback () {
     server.listen(config.port, function () {
         console.log("Server started @ " + config.port);
     });
+});
+
+
+var connections = 0;
+io.sockets.on('connection', function (socket) {
+  connections++;
+  // setInterval(function() {
+  //   socket.emit('news', { hello: Date.now() });
+  // }, 1000);
+  server.log.info('new socket connection: ', socket.id );
+  socket.on('disconnect', function () {
+    connections--;
+  });
 });
 
 

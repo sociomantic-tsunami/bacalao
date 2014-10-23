@@ -2,7 +2,7 @@ var Event = require('../models/event.model');
 var _ = require('underscore');
 var authValidator = require('../utils/authValidator');
 var Q = require('q');
-
+var clientConstants = require('../../src/js/constants/Constants');
 
 module.exports = {
 
@@ -32,6 +32,10 @@ module.exports = {
         var response = _.pick(newEvent, resParams);
         response.cid = req.params.cid;
         res.send(response);
+        // makes more sense to use this - socket.broadcast.emit('hi');
+        // which doesn't send to this socket.
+        // TODO - use this once sockets are integrated with sessions 
+        req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, response);
         return next();
       });
 

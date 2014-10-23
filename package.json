@@ -6,18 +6,20 @@
   "description": "",
   "main": "js/app.js",
   "dependencies": {
+    "bunyan": "~1.1.3",
     "keymaster": "~1.6.2",
     "moment": "^2.8.3",
     "mongoose": "~3.8.17",
+    "q": "~1.0.1",
     "react": "~0.11",
     "react-bootstrap": "~0.12.0",
-    "restify": "~2.8.2",
-    "underscore": "~1.7.0",
-    "xhr": "^1.16.1",
+    "restify": "2.8.1",
+    "sass-loader": "~0.2.0",
+    "socket.io": "^1.1.0",
+    "socket.io-client": "^1.1.0",
     "superagent": "~0.20.0",
-    "q": "~1.0.1",
-    "bunyan": "~1.1.3",
-    "sass-loader": "~0.2.0"
+    "underscore": "~1.7.0",
+    "xhr": "^1.16.1"
   },
   "devDependencies": {
     "browserify": "~4.2.2",

@@ -6,6 +6,7 @@ module.exports = {
     RECEIVE_RAW_EVENTS: null,
     INIT_USER: null,
     CREATE_EVENT: null,
+    CREATED_EVENT: null,
     JOIN_EVENT: null,
     LEAVE_EVENT: null,
     LOGIN_FB: null,
