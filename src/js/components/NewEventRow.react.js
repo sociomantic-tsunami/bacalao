@@ -79,7 +79,14 @@ var NewEventRow = React.createClass({
   },
 
   _onMaxAttendeesChange: function(e) {
-    this.setState({ maxAttendees: e.target.value });
+    if ( e.target.value % 1 === 0 )
+    {
+      this.setState({ maxAttendees: e.target.value });
+    }
+    else
+    {
+      this.setState({ maxAttendees: Math.floor(e.target.value)});
+    }
   },
 
   _create: function() {
