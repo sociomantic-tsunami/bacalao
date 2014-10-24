@@ -7,8 +7,10 @@ var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
 var Button = require('react-bootstrap').Button;
+var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment')
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
+require('../../sass/event.scss');
 
 
 
@@ -38,21 +40,32 @@ var EventRow = React.createClass({
     var maxAttendees = <Badge></Badge>;
 
     return (
-      <tr>
-          <td>{this.getTime()}</td>
-          <td>{this.props.venue}</td>
-          <td>
-          <OverlayTrigger placement="left" overlay={<Tooltip>{attendees}</Tooltip>}>
-            <Badge>
-            {this.props.attendees.length}
-            {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}</Badge>
-          </OverlayTrigger>
-          {maxAttendees}
-          </td>
-          <td>{this.getOrganizer(this.props.creator)}</td>
-          <td>{button}</td>
-
-      </tr>
+        <div className="event__box">
+            <h3 className="event__box--title">
+              <Glyphicon className="event__box__icon" glyph="cutlery" />
+              <span className="event__box--venue">{this.props.venue}</span>
+            </h3>
+            <div className="event__box--map">
+              <img clasName="event__box--map-mockup" src="https://c2.staticflickr.com/8/7058/6796532194_8479ab30ea_z.jpg" />
+            </div>
+            <div className="event__box--time">
+              <Glyphicon className="event__box__icon" glyph="calendar" />
+              {this.getTime()}
+            </div>
+            <div className="event__box--organizer">
+              <Glyphicon className="event__box__icon" glyph="user" />
+              {this.getOrganizer(this.props.creator)}</div>
+            <div className="event__box--atendees">
+              <Glyphicon className="event__box__icon" glyph="thumbs-up" />
+              <OverlayTrigger placement="right" overlay={<Tooltip>{attendees}</Tooltip>}>
+                <Badge>
+                {this.props.attendees.length}
+                {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}</Badge>
+              </OverlayTrigger>
+              {maxAttendees}
+            </div>
+            <div className="event__box--buttons">{button}</div>
+          </div>
     );
   },
 

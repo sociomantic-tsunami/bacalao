@@ -7,6 +7,8 @@ var React = require('react'),
     _ = require('underscore'),
     ReactPropTypes = React.PropTypes;
 
+require('../../sass/outline.scss');
+
 
 var getRow = function(user, node) {
   return <Row
@@ -32,26 +34,9 @@ var Outline = React.createClass({
     var rows = _.map(this.props.events, _.partial(getRow, this.props.user));
 
     return (
-      <div className="row clearfix">
-        <div className="panel panel-primary filterable">
-            <div className="panel-heading">
-                <h3 className="panel-title">Events</h3>
-            </div>
-            <table className="table">
-                <thead>
-                    <tr className="filters">
-                        <th>Time</th>
-                        <th>Venue</th>
-                        <th>Attendees</th>
-                        <th>Organizer</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {rows}
-                  <NewEventRow isLoggedIn={this.props.user.loggedIn}></NewEventRow>
-                </tbody>
-            </table>
+      <div className="events__spread">
+        <div className="events__columns">
+            {rows}
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ var React = require('react/addons');
 var OutlineStore = require('../stores/OutlineStore');
 var UserStore = require('../stores/UserStore');
 require('../../sass/app.scss');
+require('../../sass/topbar.scss');
 
 var getAppState = function () {
   return {
@@ -32,11 +33,15 @@ var App = React.createClass({
     var cx = React.addons.classSet;
 
     return (
-      <div className="">
-        <h1>wip</h1>
-        <User
-          user={this.state.user}
-        />
+      <div>
+          <div className="topbar">
+            <div className="col-md-12">
+              <h1 className="app-title">WIP</h1>
+              <div className="app-user">
+                <User  user={this.state.user} />
+              </div>
+            </div>
+          </div>
         <Outline
           events={this.state.events}
           user={this.state.user}
