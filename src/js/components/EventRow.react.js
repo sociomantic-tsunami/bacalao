@@ -31,8 +31,8 @@ var EventRow = React.createClass({
 
     //TODO abstract the join/leave buttons to their own components(reusable with some props)
     var button = this.hasUserJoined() ?
-      <Button bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
-      <Button bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
+      <Button disabled={!this.props.user.loggedIn} bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
+      <Button disabled={!this.props.user.loggedIn} bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
 
 
     var maxAttendees = <Badge></Badge>;
