@@ -13,6 +13,11 @@ var moment = require('moment')
 
 var NewEventRow = React.createClass({
 
+
+  propTypes: {
+   isLoggedIn: ReactPropTypes.bool.isRequired
+  },
+
   getInitialState: function() {
     return {
       time: moment().add(1,'hours').startOf('hour').format('HH:mm'),
@@ -23,9 +28,15 @@ var NewEventRow = React.createClass({
 
 
   render: function() {
+    var cx = React.addons.classSet;
+    var classes = cx({
+      'hidden': !this.props.isLoggedIn
+    });
+
+
 
     return (
-      <tr>
+      <tr className={classes}>
           <td>
             <Input
               type="time"
@@ -56,7 +67,6 @@ var NewEventRow = React.createClass({
   },
 
   _onTimeChange: function(e) {
-    console.log(e.target.value);
     this.setState({ time: e.target.value });
   },
 

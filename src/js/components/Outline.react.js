@@ -49,7 +49,7 @@ var Outline = React.createClass({
                 </thead>
                 <tbody>
                   {rows}
-                  <NewEventRow></NewEventRow>
+                  <NewEventRow isLoggedIn={this.props.user.loggedIn}></NewEventRow>
                 </tbody>
             </table>
         </div>
