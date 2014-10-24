@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var _ = require('underscore');
 
 
 var services = 'facebook window google'.split(' ');
@@ -19,7 +20,16 @@ var userSchema = new Schema({
   tokenExpiration:  Date,
   created: { type: Date, default: Date.now },
   updated: Date
-}, { autoIndex: false });
+}, {
+  autoIndex: false,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
+});
+
+
+userSchema.virtual('fullName').get(function() {
+  return this.firstName + ' ' + this.lastName;
+});
 
 
 module.exports = mongoose.model('User', userSchema);

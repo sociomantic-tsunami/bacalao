@@ -1,17 +1,25 @@
 var Event = require('../models/event.model');
+var User = require('../models/user.model');
 var _ = require('underscore');
 var authValidator = require('../utils/authValidator');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
+var moment = require('moment');
 
 module.exports = {
 
   getEvents: function (req, res, next) {
-      Event.find(function (err, Events) {
+    var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
+
+    Event
+      .find({ '$gte': roundHourAgo }, 'title venue time attendees maxAttendees creator')
+      .populate('attendees', 'firstName lastName picture')
+      .populate('creator', 'firstName lastName picture')
+      .exec(function (err, events) {
         if(err) {
           return next(err);
         }
-        res.send(Events);
+        res.send(events);
         return next();
       });
 
@@ -34,7 +42,7 @@ module.exports = {
         res.send(response);
         // makes more sense to use this - socket.broadcast.emit('hi');
         // which doesn't send to this socket.
-        // TODO - use this once sockets are integrated with sessions 
+        // TODO - use this once sockets are integrated with sessions
         req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, response);
         return next();
       });
@@ -45,14 +53,14 @@ module.exports = {
     // TODO - only proceed if the userId matches the sessionUserId
 
     Event.update(
-      { _id: req.params.eventId }, 
+      { _id: req.params.eventId },
       { $addToSet: { attendees: req.params.userId }},
-      // function(err, numberAffected){ 
-      function(err, numberAffected, raw){ 
+      // function(err, numberAffected){
+      function(err, numberAffected, raw){
         if(err) {
           return next(err);
         }
-        
+
         req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
         res.send(200);
         return next();
@@ -64,14 +72,14 @@ module.exports = {
     // TODO - only proceed if the userId matches the sessionUserId
 
     Event.update(
-      { _id: req.params.eventId }, 
+      { _id: req.params.eventId },
       { $pull: { attendees: req.params.userId }},
-      // function(err, numberAffected){ 
-      function(err, numberAffected, raw){ 
+      // function(err, numberAffected){
+      function(err, numberAffected, raw){
         if(err) {
           return next(err);
         }
-        
+
         req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
         res.send(200);
         return next();
