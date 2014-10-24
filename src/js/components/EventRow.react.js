@@ -20,13 +20,13 @@ var EventRow = React.createClass({
     user: ReactPropTypes.object.isRequired,
     time: ReactPropTypes.object.isRequired,
     venue: ReactPropTypes.string.isRequired,
-    creator: ReactPropTypes.string.isRequired,
+    creator: ReactPropTypes.object.isRequired,
     attendees: ReactPropTypes.array.isRequired
   },
 
   render: function() {
     var attendees = _.chain(this.props.attendees)
-     .reduce(function(memo, name) { return memo + ", " + name}, '')
+     .reduce(function(memo, user) { return memo + ", " + user.firstName}, '')
      .value();
 
     //TODO abstract the join/leave buttons to their own components(reusable with some props)
@@ -63,8 +63,8 @@ var EventRow = React.createClass({
   },
 
 
-  getOrganizer : function(userId) {
-    return userId;
+  getOrganizer : function(user) {
+    return [user.firstName, user.lastName].join(' ');
   },
 
   hasUserJoined : function() {
