@@ -27,8 +27,11 @@ var OutlineStore = merge(EventEmitter.prototype, {
     return _nodes;
   },
 
-  getLastAdded: function() {
-    return _nodes[_nodes.length -1];
+  getLastAddedForSaving: function() {
+    var lastAdded = _.clone(_nodes[_nodes.length -1]);
+    lastAdded.attendees[0] = lastAdded.attendees[0]._id
+    lastAdded.creator = lastAdded.creator._id
+    return lastAdded;
   },
 
   removeAttendeeFromEvent: function(eventId, userId) {
@@ -40,9 +43,7 @@ var OutlineStore = merge(EventEmitter.prototype, {
 
 OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
-
   switch(action.type) {
-
     case ActionTypes.RECEIVE_RAW_EVENTS:
       _nodes = _.map(action.rawEvents, function(node) {
         node.time = new Date(node.time);
@@ -52,7 +53,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATED_EVENT:
-      // first case: this client created the event 
+      // first case: this client created the event
       for (var i = _nodes.length - 1; i >= 0; i--) {
         // add server information based on the cid
         if(_nodes[i].cid === action.event.cid) {
@@ -61,8 +62,8 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           return;
         }
       };
-      
-      // second case: the event was created by a different client and is added 
+
+      // second case: the event was created by a different client and is added
       // as a new event
       _nodes.push(action.event);
       OutlineStore.emitChange();
@@ -74,8 +75,8 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           time: moment(action.time, 'HH:mm').toDate(),
           venue: action.venue,
           maxAttendees: action.maxAttendees,
-          creator : UserStore.getUserId(),
-          attendees : [UserStore.getUserId()]
+          creator : UserStore.getBasicUser(),
+          attendees : [UserStore.getBasicUser()]
         })
         OutlineStore.emitChange();
       break;
@@ -83,7 +84,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
     case ActionTypes.JOIN_EVENT:
         for (var i = _nodes.length - 1; i >= 0; i--) {
           if(_nodes[i]._id === action.eventId) {
-            _nodes[i].attendees.push(UserStore.getUserId());
+            _nodes[i].attendees.push(UserStore.getBasicUser());
             break;
           }
         };
@@ -94,7 +95,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         for (var i = _nodes.length - 1; i >= 0; i--) {
           if(_nodes[i]._id === action.eventId) {
             for (var k = _nodes[i].attendees.length - 1; k >= 0; k--) {
-              if(_nodes[i].attendees[k] === UserStore.getUserId()) {
+              if(_nodes[i].attendees[k]._id === UserStore.getUserId()) {
                 _nodes[i].attendees.splice(k, 1);
                 OutlineStore.emitChange();
                 return;

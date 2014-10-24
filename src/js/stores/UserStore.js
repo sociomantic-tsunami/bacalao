@@ -38,6 +38,10 @@ var UserStore = merge(EventEmitter.prototype, {
 
   getUserId: function() {
     return _user._id || false;
+  },
+
+  getBasicUser: function() {
+    return _.pick(_user, ['_id', 'firstName', 'lastName', 'picture']);
   }
 
 });

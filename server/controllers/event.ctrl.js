@@ -26,7 +26,7 @@ module.exports = {
   },
 
   createEvent: function (req, res, next) {
-      var saveParams = 'cid venue time maxAttendees creator attendees'.split(' ');
+      var saveParams = 'venue time maxAttendees creator attendees'.split(' ');
       var resParams = saveParams.concat('_id', 'cid');
       var paramsToSave = _.pick(req.params, saveParams);
 
@@ -37,14 +37,26 @@ module.exports = {
           return next(err);
         }
         req.log.info('Created event _id:' + newEvent._id );
-        var response = _.pick(newEvent, resParams);
-        response.cid = req.params.cid;
-        res.send(response);
-        // makes more sense to use this - socket.broadcast.emit('hi');
-        // which doesn't send to this socket.
-        // TODO - use this once sockets are integrated with sessions
-        req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, response);
-        return next();
+
+        newEvent
+          .populate('attendees', 'firstName lastName picture')
+          .populate('creator', 'firstName lastName picture', function(err, newEvent) {
+            if(err) {
+              return next(err);
+            }
+            var response = _.pick(newEvent, resParams);
+            response.cid = req.params.cid;
+            res.send(response);
+            // makes more sense to use this - socket.broadcast.emit('hi');
+            // which doesn't send to this socket.
+            // TODO - use this once sockets are integrated with sessions
+            req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response,
+              'cid'));
+            return next();
+
+          });
+
+
       });
 
   },

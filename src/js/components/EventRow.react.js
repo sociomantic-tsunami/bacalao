@@ -15,7 +15,7 @@ var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 var EventRow = React.createClass({
 
   propTypes: {
-    key: ReactPropTypes.string.isRequired,
+    key: ReactPropTypes.string,
     maxAttendees: ReactPropTypes.number.isRequired,
     user: ReactPropTypes.object.isRequired,
     time: ReactPropTypes.object.isRequired,
@@ -72,14 +72,27 @@ var EventRow = React.createClass({
       return false;
     }
 
-    return _.contains(this.props.attendees, this.props.user._id);
+    for (var i = this.props.attendees.length - 1; i >= 0; i--) {
+      if(this.props.attendees[i]._id == this.props.user._id) {
+        return true;
+      }
+    };
+    return false;
   },
 
   _onUserJoin: function(event) {
+    if(!this.props.key) {
+      console.error('cant join before its saved on the server')
+      return;
+    }
     EventActionCreators.joinEvent(this.props.key);
   },
 
   _onUserLeave: function(event) {
+    if(!this.props.key) {
+      console.error('cant leave before its saved on the server')
+      return;
+    }
     EventActionCreators.leaveEvent(this.props.key);
   },
 });

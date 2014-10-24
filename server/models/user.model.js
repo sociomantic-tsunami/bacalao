@@ -22,8 +22,9 @@ var userSchema = new Schema({
   updated: Date
 }, {
   autoIndex: false,
-  toObject: { virtuals: true },
-  toJSON: { virtuals: true }
+  toObject: { virtuals: false },
+  toJSON: { virtuals: false },
+  id: false
 });
 
 

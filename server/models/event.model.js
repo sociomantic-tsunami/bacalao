@@ -11,6 +11,9 @@ var eventSchema = new Schema({
   maxAttendees: Number,
   creator: { type: Schema.Types.ObjectId, ref: 'User' }
   // comments: [{ body: String, date: Date }],
+}, {
+    autoIndex: false,
+    id: false
 });
 
 
