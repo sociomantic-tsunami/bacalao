@@ -29,14 +29,18 @@ var NewEventRow = React.createClass({
 
   render: function() {
     var cx = React.addons.classSet;
-    var classes = cx({
+    var trClasses = cx({
       'hidden': !this.props.isLoggedIn
+    });
+
+    var createButtonClasses = cx({
+      'disabled': ! this.state.venue || ! this.state.maxAttendees
     });
 
 
 
     return (
-      <tr className={classes}>
+      <tr className={trClasses}>
           <td>
             <Input
               type="time"
@@ -60,7 +64,7 @@ var NewEventRow = React.createClass({
           </td>
           <td></td>
           <td>
-            <Button bsSize="medium" bsStyle="info" onClick={this._create}>Create</Button>
+            <Button bsSize="medium" bsStyle="info" className={createButtonClasses} onClick={this._create}>Create</Button>
           </td>
       </tr>
     );
