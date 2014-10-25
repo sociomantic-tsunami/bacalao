@@ -12,7 +12,9 @@ module.exports = {
     var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
 
     Event
-      .find({ time: { '$gte': roundHourAgo } }, 'title venue time attendees maxAttendees creator')
+      .find(
+        // { time: { '$gte': roundHourAgo } },
+      'title venue time attendees maxAttendees creator')
       .populate('attendees', 'firstName lastName picture')
       .populate('creator', 'firstName lastName picture')
       .exec(function (err, events) {
