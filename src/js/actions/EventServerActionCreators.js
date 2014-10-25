@@ -18,6 +18,20 @@ module.exports = {
       type: ActionTypes.CREATED_EVENT,
       event: event
     });
+  },
+
+  joinedEvent : function(event) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.JOINED_EVENT,
+      event: event
+    });
+  },
+
+  leftEvent : function(event) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.LEFT_EVENT,
+      event: event
+    });
   }
 
 };

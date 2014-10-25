@@ -91,6 +91,21 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         OutlineStore.emitChange();
       break;
 
+    // from the server
+    // action.event = { eventId: ..., user: {...} }
+    // add the user to the attendees if he's not already there
+    case ActionTypes.JOINED_EVENT:
+        for (var i = _nodes.length - 1; i >= 0; i--) {
+          if(_nodes[i]._id === action.event.eventId) {
+            if(! _.some(_nodes[i].attendees, function(attendee) { return attendee._id == action.event.user._id })) {
+              _nodes[i].attendees.push(action.event.user);
+            }
+            break;
+          }
+        };
+        OutlineStore.emitChange();
+      break;
+
     case ActionTypes.LEAVE_EVENT:
         for (var i = _nodes.length - 1; i >= 0; i--) {
           if(_nodes[i]._id === action.eventId) {
@@ -101,6 +116,24 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
                 return;
               }
             };
+          }
+        };
+      break;
+
+    // from the server
+    // action.event = { eventId: ..., userId: ... }
+    // add the user to the attendees if he's not already there
+    case ActionTypes.LEFT_EVENT:
+        for (var i = _nodes.length - 1; i >= 0; i--) {
+          if(_nodes[i]._id === action.event.eventId) {
+            for (var k = _nodes[i].attendees.length - 1; k >= 0; k--) {
+              if(_nodes[i].attendees[k]._id === action.event.userId) {
+                _nodes[i].attendees.splice(k, 1);
+                OutlineStore.emitChange();
+                return
+              }
+            };
+            break;
           }
         };
       break;

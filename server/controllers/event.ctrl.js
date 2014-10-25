@@ -77,7 +77,18 @@ module.exports = {
 
         req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
         res.send(200);
+        User.findById(req.params.userId, 'firstName lastName picture', function(err, user) {
+          if(err) {
+            return next(err);
+          }
+          var response = {
+            eventId: req.params.eventId,
+            user: user
+          };
+          req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
+        })
         return next();
+
       });
   },
 
@@ -96,6 +107,11 @@ module.exports = {
 
         req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
         res.send(200);
+        var response = {
+          eventId: req.params.eventId,
+          userId: req.params.userId
+        };
+        req.socketio.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
         return next();
       });
   }

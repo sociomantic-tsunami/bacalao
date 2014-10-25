@@ -12,6 +12,15 @@ var SocketUtils = {
       EventServerActionCreators.createdEvent(data);
     });
 
+
+    _socket.on(Constants.ActionTypes.JOINED_EVENT, function(user) {
+      EventServerActionCreators.joinedEvent(user);
+    });
+
+    _socket.on(Constants.ActionTypes.LEFT_EVENT, function(event) {
+      EventServerActionCreators.leftEvent(event);
+    });
+
   }
 }
 
