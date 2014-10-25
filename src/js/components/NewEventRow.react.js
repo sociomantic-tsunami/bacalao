@@ -8,6 +8,7 @@ var Badge = require('react-bootstrap').Badge;
 var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
 var moment = require('moment')
+require('../../sass/new_event_form.scss');
 
 
 
@@ -40,33 +41,24 @@ var NewEventRow = React.createClass({
 
 
     return (
-      <tr className={trClasses}>
-          <td>
+      <div className="new-event">
             <Input
               type="time"
               label="Time"
               value={this.state.time}
               onChange={this._onTimeChange} />
-          </td>
-          <td>
             <Input
               type="text"
               label="Venue"
               value={this.state.venue}
               onChange={this._onVenueChange} />
-          </td>
-          <td>
             <Input
               type="number"
               label="Max Attendees"
               value={this.state.maxAttendees}
               onChange={this._onMaxAttendeesChange} />
-          </td>
-          <td></td>
-          <td>
             <Button bsSize="medium" bsStyle="info" className={createButtonClasses} onClick={this._create}>Create</Button>
-          </td>
-      </tr>
+      </div>
     );
   },
 

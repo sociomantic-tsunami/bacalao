@@ -6,7 +6,18 @@
     color : #D6D5C1;
 }
 
-.app-title, .app-user
+.app-title, .app-user, .app-new-event
 {
     float: left;
+}
+
+.app-user
+{
+	position: absolute;
+	right:10px;
+}
+
+.app-new-event
+{
+	margin-left: 12px;
 }

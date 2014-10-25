@@ -3,6 +3,7 @@
 
 var Outline = require('./Outline.react');
 var User = require('./User.react');
+var NewEvent = require('./NewEventRow.react');
 var React = require('react/addons');
 // var key = require('keymaster');
 var OutlineStore = require('../stores/OutlineStore');
@@ -37,6 +38,9 @@ var App = React.createClass({
           <div className="topbar">
             <div className="col-md-12">
               <h1 className="app-title">WIP</h1>
+              <div className="app-new-event">
+                <NewEvent  isLoggedIn={this.state.user.loggedIn} />
+              </div>
               <div className="app-user">
                 <User  user={this.state.user} />
               </div>
