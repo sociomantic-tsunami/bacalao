@@ -3,7 +3,7 @@ var restify = require('restify');
 var mongoose = require('mongoose');
 var routes = require('./routes');
 var logger = require('./utils/logger');
-var checkSession = require('./utils/sessionValidator').checkSession;
+var checkSession = require('./utils/sessionUtils').checkSession;
 var _ = require('underscore');
 
 restify.defaultResponseHeaders = function(data) {

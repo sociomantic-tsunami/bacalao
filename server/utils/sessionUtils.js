@@ -3,7 +3,27 @@ var Q = require('q'),
     restify = require('restify'),
     _ = require('underscore');
 
-var sessionValidator = {
+
+
+var _sessions = {};
+
+var sessionUtils = {
+
+    // Create session for a given user object
+    // @param user  object  user object
+    //
+    createSession: function(user) {
+        if(!_.isObject(user)) {
+            throw new Exception('Pass an object with user info to create a session');
+        }
+
+        if(!user._id) {
+            throw new Exception('An _id property is required in the user object when creating a session');
+        }
+
+
+    }
+
     checkSession: function(req, res, next) {
         if(!req.headers.sessionid) {
             return next(new restify.errors.UnauthorizedError('no sessionid'));
@@ -35,7 +55,7 @@ var sessionValidator = {
     }
 };
 
-_.bindAll(sessionValidator, 'checkSession')
+_.bindAll(sessionUtils, 'checkSession')
 
 
-module.exports = sessionValidator;
+module.exports = sessionUtils;
