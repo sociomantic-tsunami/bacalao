@@ -1,6 +1,6 @@
 module.exports = {
   // User:
-  createUser: require('./controllers/user.ctrl').createUser,
+  login: require('./controllers/user.ctrl').login,
 
   // Events:
   getEvents: require('./controllers/event.ctrl').getEvents,
@@ -8,7 +8,7 @@ module.exports = {
   createEvent: require('./controllers/event.ctrl').createEvent,
 
   joinEvent: require('./controllers/event.ctrl').joinEvent,
-  
+
   leaveEvent: require('./controllers/event.ctrl').leaveEvent
 
 }

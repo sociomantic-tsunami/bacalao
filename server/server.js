@@ -44,7 +44,7 @@ server.use(restify.requestLogger());
 
 
 // routes
-server.post("/api/user", routes.createUser);
+server.post("/api/user", routes.login);
 server.get("/api/events", routes.getEvents);
 
 server.post("/api/event", checkSession, routes.createEvent);
