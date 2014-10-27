@@ -33,6 +33,7 @@ module.exports = {
       var newEvent = new Event(paramsToSave);
       newEvent.save(function (err, newEvent)
       {
+
         if(err) {
           return next(err);
         }
