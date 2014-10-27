@@ -14,7 +14,7 @@ module.exports = {
           maxAttendees: event.maxAttendees
         });
 
-        EventAPIUtils.createEvent(OutlineStore.getLastAddedForSaving());
+        EventAPIUtils.createEvent(OutlineStore.getFirstForSaving());
     }
 
 

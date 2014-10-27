@@ -27,8 +27,12 @@ var OutlineStore = merge(EventEmitter.prototype, {
     return _nodes;
   },
 
-  getLastAddedForSaving: function() {
-    var lastAdded = _.clone(_nodes[_nodes.length -1]);
+  getFirstForSaving: function() {
+    var lastAdded = _.clone(_nodes[0]);
+    if(lastAdded._id) {
+      console.error('The event is already saved');
+      return;
+    }
     lastAdded.attendees[0] = lastAdded.attendees[0]._id
     lastAdded.creator = lastAdded.creator._id
     return lastAdded;
@@ -57,7 +61,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       if(!action.event.cid) {
         // first case: the event was created by a different client and is added
         // as a new event
-        _nodes.push(action.event);
+        _nodes.unshift(action.event);
         OutlineStore.emitChange();
         return;
       }
@@ -76,7 +80,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATE_EVENT:
-        _nodes.push({
+        _nodes.unshift({
           cid: _.uniqueId('event_' + Date.now() + '_'),
           time: moment(action.time, 'HH:mm').toDate(),
           venue: action.venue,
