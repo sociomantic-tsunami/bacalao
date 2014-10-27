@@ -1,10 +1,12 @@
 var Event = require('../models/event.model');
 var User = require('../models/user.model');
+var restify = require('restify');
 var _ = require('underscore');
 var authValidator = require('../utils/authValidator');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
 var moment = require('moment');
+
 
 module.exports = {
 
@@ -13,11 +15,13 @@ module.exports = {
 
     Event
       .find({ time: { '$gte': roundHourAgo } }, 'title venue time attendees maxAttendees creator')
+      .sort({ time: 'desc'})
       .populate('attendees', 'firstName lastName picture')
       .populate('creator', 'firstName lastName picture')
       .exec(function (err, events) {
         if(err) {
-          return next(err);
+          req.log.error(err);
+          return next(new restify.errors.InternalError);
         }
         res.send(events);
         return next();
@@ -35,7 +39,8 @@ module.exports = {
       {
 
         if(err) {
-          return next(err);
+          req.log.error(err);
+          return next(new restify.errors.InternalError);
         }
         req.log.info('Created event _id:' + newEvent._id );
 
@@ -43,7 +48,8 @@ module.exports = {
           .populate('attendees', 'firstName lastName picture')
           .populate('creator', 'firstName lastName picture', function(err, newEvent) {
             if(err) {
-              return next(err);
+              req.log.error(err);
+              return next(new restify.errors.InternalError);
             }
             var response = _.pick(newEvent, resParams);
             response.cid = req.params.cid;
@@ -71,14 +77,16 @@ module.exports = {
       // function(err, numberAffected){
       function(err, numberAffected, raw){
         if(err) {
-          return next(err);
+          req.log.error(err);
+          return next(new restify.errors.InternalError);
         }
 
         req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
         res.send(200);
         User.findById(req.params.userId, 'firstName lastName picture', function(err, user) {
           if(err) {
-            return next(err);
+            req.log.error(err);
+            return next(new restify.errors.InternalError);
           }
           var response = {
             eventId: req.params.eventId,
@@ -101,7 +109,8 @@ module.exports = {
       // function(err, numberAffected){
       function(err, numberAffected, raw){
         if(err) {
-          return next(err);
+          req.log.error(err);
+          return next(new restify.errors.InternalError);
         }
 
         req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
