@@ -46,7 +46,7 @@ var EventRow = React.createClass({
               <span className="event__box--venue">{this.props.venue}</span>
             </h3>
             <div className="event__box--map">
-              <img clasName="event__box--map-mockup" src="https://pbs.twimg.com/profile_images/453545705622106112/6ERHbJBN_400x400.jpeg" />
+
             </div>
             <div className="event__box--time">
               <Glyphicon className="event__box__icon" glyph="calendar" />
