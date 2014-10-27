@@ -53,7 +53,16 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATED_EVENT:
-      // first case: this client created the event
+
+      if(!action.event.cid) {
+        // first case: the event was created by a different client and is added
+        // as a new event
+        _nodes.push(action.event);
+        OutlineStore.emitChange();
+        return;
+      }
+
+      // second case: this client created the event
       for (var i = _nodes.length - 1; i >= 0; i--) {
         // add server information based on the cid
         if(_nodes[i].cid === action.event.cid) {
@@ -63,10 +72,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         }
       };
 
-      // second case: the event was created by a different client and is added
-      // as a new event
-      _nodes.push(action.event);
-      OutlineStore.emitChange();
+
       break;
 
     case ActionTypes.CREATE_EVENT:
