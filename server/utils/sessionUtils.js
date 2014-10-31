@@ -21,8 +21,7 @@ var sessionUtils = {
             throw new Exception('An _id property is required in the user object when creating a session');
         }
 
-
-    }
+    },
 
     checkSession: function(req, res, next) {
         if(!req.headers.sessionid) {

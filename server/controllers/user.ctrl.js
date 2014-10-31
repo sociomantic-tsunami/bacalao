@@ -20,7 +20,7 @@ module.exports = {
       .then(function() {
         if(!paramsToSave._id && !paramsToSave.serviceUserId ) {
           req.log.error('A serviceUserId or _id must be supplied');
-          return next(new errors.BadRequestError('A serviceUserId or _id must be supplied'););
+          return next(new errors.BadRequestError('A serviceUserId or _id must be supplied'));
 
         }
         // TODO - does it make sense to use _id - a user could spoof someone else's _id with a valid token
