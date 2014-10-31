@@ -1,6 +1,5 @@
 var EventServerActionCreators = require('../actions/EventServerActionCreators');
 var Constants = require('../constants/Constants');
-var SessionUtils = require('./SessionUtils');
 var Endpoints = Constants.Endpoints;
 var request = require('superagent');
 var _ = require('underscore');
@@ -28,7 +27,6 @@ module.exports = {
     request
       .post(Endpoints.EVENT)
       .type('json')
-      .set('sessionid', SessionUtils.getSessionId())
       .send(event)
       .on('error', function(err) {
         console.error('API Error', err);
@@ -46,7 +44,6 @@ module.exports = {
     request
       .put(url)
       .type('json')
-      .set('sessionid', SessionUtils.getSessionId())
       .send({userId : userId})
       .on('error', function(err) {
         console.error('API Error', err);
@@ -56,14 +53,13 @@ module.exports = {
       });
   },
 
-  
+
   leaveEvent: function(eventId, userId) {
     var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
 
     request
       .del(url)
       .type('json')
-      .set('sessionid', SessionUtils.getSessionId())
       .send({userId : userId})
       .on('error', function(err) {
         console.error('API Error', err);
