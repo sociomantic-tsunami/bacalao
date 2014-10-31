@@ -15,7 +15,7 @@ module.exports = {
 
     Event
       .find({ time: { '$gte': roundHourAgo } }, 'title venue time attendees maxAttendees creator')
-      .sort({ time: 'desc'})
+      .sort({ time: 'asc'})
       .populate('attendees', 'firstName lastName picture')
       .populate('creator', 'firstName lastName picture')
       .exec(function (err, events) {
