@@ -82,16 +82,6 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       localStorage.setItem('user', JSON.stringify(_user));
       break;
 
-
-    // case ActionTypes.TEST:
-    //   if(_nodes[action.key]) {
-    //     _nodes[action.key].attendees.filter(function(el) {
-    //       return el !== action.attendee;
-    //     });
-    //     UserStore.emitChange();
-    //   }
-    //   break;
-
     default:
       // do nothing
   }

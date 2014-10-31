@@ -21,6 +21,7 @@ module.exports = {
 
   Endpoints: {
     LOGIN: '/api/user',
+    LOGOUT: '/api/user',
     EVENT: '/api/event',
     EVENTS: '/api/events',
     JOIN_EVENT: '/api/event/[eventId]/attendees',

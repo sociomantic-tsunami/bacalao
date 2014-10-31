@@ -3,16 +3,13 @@ var Q = require('q'),
     restify = require('restify'),
     _ = require('underscore');
 
-
-
-var _sessions = {};
-
 var sessionUtils = {
 
     // Create session for a given user object
-    // @param user  object  user object
     //
-    createSession: function(user) {
+    // @param req   object  request object from restify
+    // @param user  object  user object
+    createSession: function(req, user) {
         if(!_.isObject(user)) {
             throw new Exception('Pass an object with user info to create a session');
         }
@@ -20,41 +17,24 @@ var sessionUtils = {
         if(!user._id) {
             throw new Exception('An _id property is required in the user object when creating a session');
         }
+        // req[config.cookieKey].user = _.clone(user);
+        req[config.cookieKey].user = { userId : user._id };
+    },
 
+    // Delete the session cookie
+    removeSession: function(req) {
+      req[config.cookieKey].reset();
     },
 
     checkSession: function(req, res, next) {
-        if(!req.headers.sessionid) {
-            return next(new restify.errors.UnauthorizedError('no sessionid'));
+        if(req[config.cookieKey] && req[config.cookieKey].user && req[config.cookieKey].user.userId) {
+            return next();
         }
 
-        this.validateSession(req.headers.sessionid)
-            .then(function() {
-                return next();
-            },function(error) {
-                return next(new restify.errors.UnauthorizedError(error));
-            });
-    },
-
-    validateSession : function(sessionId) {
-        var deferred = Q.defer();
-
-
-        // simulate async request...
-        process.nextTick(function() {
-            // TODO remove this in PRODUCTION
-            if(sessionId === 'debugSession') {
-                deferred.resolve();
-            } else {
-                deferred.reject('Invalid session');
-            }
-        });
-
-        return deferred.promise;
+        return next(new restify.errors.UnauthorizedError('no session'));
     }
-};
 
-_.bindAll(sessionUtils, 'checkSession')
+};
 
 
 module.exports = sessionUtils;

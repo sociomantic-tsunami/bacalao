@@ -10,7 +10,13 @@ module.exports = {
       type: ActionTypes.LOGGED_IN_API,
       user : user
     });
+  },
 
+
+  loggedOutAPI : function() {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.LOGGED_OUT_API
+    });
   }
 
 };

@@ -3,6 +3,7 @@ var _ = require('underscore');
 var Mongoose = require('mongoose');
 var errors = require('restify').errors;
 var authValidator = require('../utils/authValidator');
+var sessionUtils = require('../utils/sessionUtils');
 var Q = require('q');
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
       .then(function(user) {
         if(user) {
           req.log.info('Created/Updated User _id:' + user._id );
+          sessionUtils.createSession(req, user);
           res.send({ _id: user._id, serviceUserId: user.serviceUserId });
         }
         return next();
@@ -45,6 +47,13 @@ module.exports = {
         return next(new errors.InternalError);
       });
 
+  },
+
+  // delete the session cookie
+  logout: function(req, res, next) {
+    sessionUtils.removeSession(req);
+    res.send(200);
+    next();
   }
 
 

@@ -5,6 +5,8 @@ var routes = require('./routes');
 var logger = require('./utils/logger');
 var checkSession = require('./utils/sessionUtils').checkSession;
 var _ = require('underscore');
+var sessions = require("client-sessions");
+
 
 restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
@@ -15,6 +17,20 @@ var server = restify.createServer({
   name: config.name,
   log: logger
 });
+
+server.use(sessions({
+  cookieName: config.cookieKey,
+  path: '/api',
+  secret: config.cookieSecret,
+  secret: 'jJKH872',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // duration of the cookie in milliseconds, defaults to duration above
+    ephemeral: false, // when true, cookie expires when the browser closes
+    httpOnly: true, // when true, cookie is not accessible from javascript
+    secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
+  }
+}));
+
 var io = require('socket.io')(server.server);
 // var io = socketio.listen(server.server);
 
@@ -45,6 +61,7 @@ server.use(restify.requestLogger());
 
 // routes
 server.post("/api/user", routes.login);
+server.del("/api/user", routes.logout);
 server.get("/api/events", routes.getEvents);
 
 server.post("/api/event", checkSession, routes.createEvent);

@@ -1,7 +1,8 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher'),
-    SocialLoginUtils = require('../utils/SocialLoginUtils'),
-    Constants = require('../constants/Constants'),
-    ActionTypes = Constants.ActionTypes;
+var AppDispatcher = require('../dispatcher/AppDispatcher');
+var SocialLoginUtils = require('../utils/SocialLoginUtils');
+var Constants = require('../constants/Constants');
+var UserApiUtils = require('../utils/UserApiUtils');
+var ActionTypes = Constants.ActionTypes;
 
 module.exports = {
 
@@ -17,6 +18,7 @@ module.exports = {
       type: ActionTypes.LOGOUT_FB
     });
     SocialLoginUtils.logoutFB();
+    UserApiUtils.logout();
   }
 
 };
