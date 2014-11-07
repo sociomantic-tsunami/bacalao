@@ -1,9 +1,11 @@
 .topbar
 {
-    background-color: #584F52;
-    position: relative;
-    height: 70px;
-    color : #D6D5C1;
+    background-color: #E61E35;
+    position:         fixed;
+    height:           70px;
+    color:            #D6D5C1;
+    width:            100%;
+    z-index:          999;
 }
 
 .app-title, .app-user, .app-new-event

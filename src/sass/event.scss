@@ -1,38 +1,40 @@
-.event__box {
-    display: inline-block;
-    background: #FEFEFE;
-    border: 2px solid #FAFAFA;
-    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-    margin: 0 2px 15px;
-    -webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    column-break-inside: avoid;
-    padding: 15px;
-    background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
-    opacity: 1;
+.events__columns
+{
+  padding:              80px 0 0 0;
+  margin:               0 auto;
+  width:                960px;
+}
+.event__box
+{
+    display:            block;
+    background:         #FEFEFE;
+    border:             2px solid #FAFAFA;
+    box-shadow:         0 1px 2px rgba(34, 25, 25, 0.2);
+    margin:             0 auto 10px auto;
+    -webkit-column-break-inside:        avoid;
+    -moz-column-break-inside:           avoid;
+    column-break-inside:                avoid;
+    padding:            15px;
+    background:         -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+    opacity:            1;
 
     -webkit-transition: all .2s ease;
-    -moz-transition: all .2s ease;
-    -o-transition: all .2s ease;
-    transition: all .2s ease;
-    width: 24%;
+    -moz-transition:    all .2s ease;
+    -o-transition:      all .2s ease;
+    transition:         all .2s ease;
+    width:              515px;
+    height:             340px;
 }
 
-.event__box img {
-    width: 100%;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
-    margin-bottom: 5px;
-}
 
 .event-box--metadata
 {
-    margin-bottom: 4px;
+    margin-bottom:      4px;
 }
 
 .event__box--title
 {
-    margin-top: 0;
+    margin-top:          0;
 }
 
 .event__box--time,
@@ -40,6 +42,27 @@
 .event__box--atendees
 {
     @extend .event-box--metadata;
+}
+
+
+.event__box--atendee-pictures
+{
+  background-color:   #f8f8f8;
+  padding-top:        10px;
+}
+.event__box--atendees-avatar
+{
+  width:              35px;
+  height:             35px;
+  display:            block;
+  float:              left;
+  border-radius:      35px;
+  margin-right: 5px;
+
+    &:hover
+    {
+      cursor:         pointer;
+    }
 }
 
 .event__box--buttons
@@ -50,11 +73,4 @@
 .event__box__icon
 {
     margin-right: 7px;
-}
-
-
-@media (max-width: 960px) {
-    .event__box {
-        width : 98%;
-    }
 }

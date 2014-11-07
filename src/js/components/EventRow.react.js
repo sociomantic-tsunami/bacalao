@@ -45,6 +45,7 @@ var EventRow = React.createClass({
 
     return (
         <div className="event__box">
+        <img src={this.props.creator.picture} class="event__box--creator-avatar" />
             <h3 className="event__box--title">
               <Glyphicon className="event__box__icon" glyph="cutlery" />
               <span className="event__box--venue">{this.props.venue}</span>

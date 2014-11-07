@@ -31,10 +31,6 @@ var NewEventRow = React.createClass({
 
   render: function() {
     var cx = React.addons.classSet;
-    var trClasses = cx({
-      'hidden': !this.props.isLoggedIn
-    });
-
     var createButtonClasses = cx({
       'disabled': ! this.state.venue || ! this.state.maxAttendees
     });
@@ -59,11 +55,13 @@ var NewEventRow = React.createClass({
               value={this.state.maxAttendees}
               onChange={this._onMaxAttendeesChange} />
             <Input
-              type="textarea"
+              type="text"
               label="Details"
               value={this.state.details}
               onChange={this._onDetailsChange} />
-            <Button bsSize="medium" bsStyle="info" className={createButtonClasses} onClick={this._create}>Create</Button>
+            <Button bsSize="medium" bsStyle="info"
+            className={createButtonClasses} onClick={this._create}>
+            Create</Button>
       </div>
     );
   },
