@@ -4,6 +4,8 @@ module.exports = {
 
   logout: require('./controllers/user.ctrl').logout,
 
+  addReference: require('./controllers/user.ctrl').addReference,
+
   // Events:
   getEvents: require('./controllers/event.ctrl').getEvents,
 

@@ -88,6 +88,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           creator : UserStore.getBasicUser(),
           attendees : [UserStore.getBasicUser()]
         })
+        console.log(_nodes[0]);
         OutlineStore.emitChange();
       break;
 

@@ -54,6 +54,12 @@ module.exports = {
     sessionUtils.removeSession(req);
     res.send(200);
     next();
+  },
+
+  addReference: function(req, res, next) {
+    //user to add referance to: req.params.eventId
+    //user adding referance(in session) : req.session.SOMETHING
+
   }
 
 

@@ -64,6 +64,7 @@ server.post("/api/user", routes.login);
 server.del("/api/user", routes.logout);
 server.get("/api/events", routes.getEvents);
 
+server.post("/api/user/:eventId/reference", checkSession, routes.addReference);
 server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
