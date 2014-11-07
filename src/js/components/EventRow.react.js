@@ -6,14 +6,14 @@ var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
-var Button = require('react-bootstrap').Button;
+var JoinLeaveButton = require('./JoinLeaveButton.react');
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment')
 var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 require('../../sass/event.scss');
 
 var getAttendee = function(attendee) {
-  return <img className="event__box--atendees-avatar" src={attendee.picture} />
+  return <img key={attendee._id} className="event__box--atendees-avatar" src={attendee.picture} />
 }
 
 
@@ -38,10 +38,7 @@ var EventRow = React.createClass({
 
     var attendees = _.map(this.props.attendees, getAttendee);
 
-    //TODO abstract the join/leave buttons to their own components(reusable with some props)
-    var button = this.hasUserJoined() ?
-      <Button disabled={!this.props.user.loggedIn} bsSize="small" bsStyle="danger" onClick={this._onUserLeave}>Leave</Button> :
-      <Button disabled={!this.props.user.loggedIn} bsSize="small" bsStyle="info" onClick={this._onUserJoin}>Join</Button>;
+
 
 
     var maxAttendees = <Badge></Badge>;
@@ -78,7 +75,15 @@ var EventRow = React.createClass({
                 {attendees}
                 </div>
             </div>
-            <div className="event__box--buttons">{button}</div>
+            <div className="event__box--buttons">
+              <JoinLeaveButton
+                 user={this.props.user}
+                 maxAttendees={this.props.maxAttendees}
+                 attendees={this.props.attendees}
+                 _onUserJoin={this._onUserJoin}
+                 _onUserLeave={this._onUserLeave}
+              />
+            </div>
           </div>
     );
   },
