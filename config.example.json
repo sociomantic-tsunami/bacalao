@@ -1,8 +1,8 @@
 {
   "name": "Bacalao",
   "dburi": "mongodb://...",
-  "port" : 8080,
+  "port": 8080,
   "facebookAppToken": "blabla|blabla",
-  "cookieKey": "",
-  "cookieSecret": ""
+  "cookieKey": "cookieKey",
+  "cookieSecret": "cookieSecret"
 }
