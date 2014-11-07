@@ -12,7 +12,7 @@ require('../../sass/outline.scss');
 
 var getRow = function(user, node) {
   return <Row
-            key={node._id}
+            key={node._id || node.cid}
             user={user}
             time={node.time}
             details={node.details}

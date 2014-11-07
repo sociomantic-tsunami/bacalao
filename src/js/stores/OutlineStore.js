@@ -57,10 +57,10 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATED_EVENT:
-
       if(!action.event.cid) {
         // first case: the event was created by a different client and is added
         // as a new event
+        action.event.time = parseInt(action.event.time, 10);
         _nodes.unshift(action.event);
         OutlineStore.emitChange();
         return;

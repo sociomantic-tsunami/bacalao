@@ -13,7 +13,7 @@ var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 require('../../sass/event.scss');
 
 var getAttendee = function(attendee) {
-  return <img key={attendee._id} className="event__box--atendees-avatar" src={attendee.picture} />
+  return <img key={attendee._id || _.uniqueId('attendee-')} className="event__box--atendees-avatar" src={attendee.picture} />
 }
 
 
@@ -77,6 +77,7 @@ var EventRow = React.createClass({
             </div>
             <div className="event__box--buttons">
               <JoinLeaveButton
+                 key={this.props.key}
                  user={this.props.user}
                  maxAttendees={this.props.maxAttendees}
                  attendees={this.props.attendees}

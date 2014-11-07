@@ -24,7 +24,7 @@ var NewEventRow = React.createClass({
       time: moment().add(1,'hours').startOf('hour').format('HH:mm'),
       details: '',
       venue: '',
-      maxAttendees: ''
+      maxAttendees: null
     };
   },
 
@@ -84,7 +84,7 @@ var NewEventRow = React.createClass({
     if ( e.target.value === 1 ) {
       this.setState({ maxAttendees: 2 });
     } else if ( e.target.value % 1 === 0 ) {
-      this.setState({ maxAttendees: e.target.value });
+      this.setState({ maxAttendees: parseInt(e.target.value, 10) });
     } else {
       this.setState({ maxAttendees: Math.floor(e.target.value)});
     }
