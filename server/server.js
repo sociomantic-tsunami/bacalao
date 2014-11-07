@@ -1,3 +1,23 @@
+/**
+* REST API server entry point
+*/
+var cmdlineEnv = process.argv[2] || 'default';
+
+
+if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
+    process.env.NODE_ENV = 'development';
+} else if (cmdlineEnv == '-p' || cmdlineEnv.toUpperCase() == '--PRODUCTION') {
+    process.env.NODE_ENV = 'production';
+} else {
+  console.log("Usage: [node|nodemon] server.js [-d|-p|--development|--production]");
+  console.log("Defaulting to Development");
+  process.env.NODE_ENV = 'development';
+  // console.log("Alternatively there are scripts defined in package.json, to use one of these:");
+  // console.log("\tnpm run-scripts <dev|prod|>");
+}
+console.log('Env: ' + process.env.NODE_ENV);
+
+var configExample = require('../config.example.json');
 var config = require('../config.json');
 var restify = require('restify');
 var mongoose = require('mongoose');
@@ -7,6 +27,13 @@ var checkSession = require('./utils/sessionUtils').checkSession;
 var _ = require('underscore');
 var sessions = require("client-sessions");
 
+
+_.each(configExample, function(val, k) {
+  if(!config[k]) {
+    console.log('config.json missing configuration key: %s', k);
+    process.exit(1);
+  }
+})
 
 restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
@@ -22,7 +49,6 @@ server.use(sessions({
   cookieName: config.cookieKey,
   path: '/api',
   secret: config.cookieSecret,
-  secret: 'jJKH872',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // duration of the cookie in milliseconds, defaults to duration above
     ephemeral: false, // when true, cookie expires when the browser closes
