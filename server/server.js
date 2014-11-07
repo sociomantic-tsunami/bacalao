@@ -95,7 +95,7 @@ server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
 server.get(/\/.*/, restify.serveStatic({
-  directory: '../public/',
+  directory: './public/',
   default: 'index.html'
 }));
 
