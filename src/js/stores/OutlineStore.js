@@ -84,6 +84,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           cid: _.uniqueId('event_' + Date.now() + '_'),
           time: moment(action.time, 'HH:mm').toDate(),
           venue: action.venue,
+          details: action.details,
           maxAttendees: action.maxAttendees,
           creator : UserStore.getBasicUser(),
           attendees : [UserStore.getBasicUser()]

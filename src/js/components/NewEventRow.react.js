@@ -22,6 +22,7 @@ var NewEventRow = React.createClass({
   getInitialState: function() {
     return {
       time: moment().add(1,'hours').startOf('hour').format('HH:mm'),
+      details: '',
       venue: '',
       maxAttendees: ''
     };
@@ -57,6 +58,11 @@ var NewEventRow = React.createClass({
               label="Max Attendees"
               value={this.state.maxAttendees}
               onChange={this._onMaxAttendeesChange} />
+            <Input
+              type="textarea"
+              label="Details"
+              value={this.state.details}
+              onChange={this._onDetailsChange} />
             <Button bsSize="medium" bsStyle="info" className={createButtonClasses} onClick={this._create}>Create</Button>
       </div>
     );
@@ -68,6 +74,10 @@ var NewEventRow = React.createClass({
 
   _onVenueChange: function(e) {
     this.setState({ venue: e.target.value });
+  },
+
+  _onDetailsChange: function(e) {
+    this.setState({ details: e.target.value });
   },
 
   _onMaxAttendeesChange: function(e) {

@@ -10,6 +10,7 @@ module.exports = {
         AppDispatcher.handleViewAction({
           type: ActionTypes.CREATE_EVENT,
           time: event.time,
+          details: event.details,
           venue: event.venue,
           maxAttendees: event.maxAttendees
         });

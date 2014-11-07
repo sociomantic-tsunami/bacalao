@@ -14,7 +14,7 @@ module.exports = {
     var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
 
     Event
-      .find({ time: { '$gte': roundHourAgo } }, 'title venue time attendees maxAttendees creator')
+      .find({ time: { '$gte': roundHourAgo } }, 'title venue time details attendees maxAttendees creator')
       .sort({ time: 'asc'})
       .populate('attendees', 'firstName lastName picture')
       .populate('creator', 'firstName lastName picture')
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   createEvent: function (req, res, next) {
-      var saveParams = 'venue time maxAttendees creator attendees'.split(' ');
+      var saveParams = 'venue time maxAttendees creator attendees details'.split(' ');
       var resParams = saveParams.concat('_id', 'cid');
       var paramsToSave = _.pick(req.params, saveParams);
 

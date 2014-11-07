@@ -5,7 +5,7 @@ var eventSchema = new Schema({
   title:  String,
   venue: String ,
   time: Date,
-  // location : String,
+  details : String,
   creationDate: { type: Date, default: Date.now },
   attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   maxAttendees: Number,

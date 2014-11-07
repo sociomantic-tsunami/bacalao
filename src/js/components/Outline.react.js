@@ -15,6 +15,7 @@ var getRow = function(user, node) {
             key={node._id}
             user={user}
             time={node.time}
+            details={node.details}
             venue={node.venue}
             creator={node.creator}
             attendees={node.attendees}
