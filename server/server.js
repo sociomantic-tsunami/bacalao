@@ -1,22 +1,6 @@
 /**
 * REST API server entry point
 */
-var cmdlineEnv = process.argv[2] || 'default';
-
-
-if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
-    process.env.NODE_ENV = 'development';
-} else if (cmdlineEnv == '-p' || cmdlineEnv.toUpperCase() == '--PRODUCTION') {
-    process.env.NODE_ENV = 'production';
-} else {
-  console.log("Usage: [node|nodemon] server.js [-d|-p|--development|--production]");
-  console.log("Defaulting to Development");
-  process.env.NODE_ENV = 'development';
-  // console.log("Alternatively there are scripts defined in package.json, to use one of these:");
-  // console.log("\tnpm run-scripts <dev|prod|>");
-}
-console.log('Env: ' + process.env.NODE_ENV);
-
 var configExample = require('../config.example.json');
 var config = require('../config.json');
 var restify = require('restify');
@@ -26,6 +10,21 @@ var logger = require('./utils/logger');
 var checkSession = require('./utils/sessionUtils').checkSession;
 var _ = require('underscore');
 var sessions = require("client-sessions");
+
+
+
+var cmdlineEnv = process.argv[2] || 'default';
+if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
+    process.env.NODE_ENV = 'development';
+} else if (cmdlineEnv == '-p' || cmdlineEnv.toUpperCase() == '--PRODUCTION') {
+    process.env.NODE_ENV = 'production';
+} else {
+  console.log("Usage: [node|nodemon] server.js [-d|-p|--development|--production]");
+  console.log("Defaulting to Development");
+  process.env.NODE_ENV = 'development';
+}
+console.log('Env: ' + process.env.NODE_ENV);
+
 
 
 _.each(configExample, function(val, k) {
@@ -90,7 +89,8 @@ server.post("/api/user", routes.login);
 server.del("/api/user", routes.logout);
 server.get("/api/events", routes.getEvents);
 
-server.post("/api/user/:eventId/reference", checkSession, routes.addReference);
+// reference is currently disabled
+// server.post("/api/user/:eventId/reference", checkSession, routes.addReference);
 server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);

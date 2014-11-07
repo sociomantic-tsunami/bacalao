@@ -5,6 +5,22 @@ var Q = require('q'),
 
 var sessionUtils = {
 
+
+    isUserMatchingSession: function(req, userId) {
+        var user = this.getSessionUser(req);
+
+        return user.userId === userId;
+    },
+
+    // Get session object from the req object
+    //
+    // @param req   object  request object from restify
+    //
+    // @return user session object
+    getSessionUser: function(req) {
+        return req[config.cookieKey] && req[config.cookieKey].user;
+    },
+
     // Create session for a given user object
     //
     // @param req   object  request object from restify
@@ -35,6 +51,8 @@ var sessionUtils = {
     }
 
 };
+
+_.bindAll(sessionUtils, 'isUserMatchingSession');
 
 
 module.exports = sessionUtils;

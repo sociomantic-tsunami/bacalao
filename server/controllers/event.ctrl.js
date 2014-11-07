@@ -6,6 +6,7 @@ var authValidator = require('../utils/authValidator');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
 var moment = require('moment');
+var sessionUtils = require('../utils/sessionUtils');
 
 
 module.exports = {
@@ -69,7 +70,9 @@ module.exports = {
   },
 
   joinEvent: function (req, res, next) {
-    // TODO - only proceed if the userId matches the sessionUserId
+    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+        return next(new errors.NotAuthorizedError('You can only join as your self'));
+    }
 
     Event.update(
       { _id: req.params.eventId },
@@ -101,7 +104,9 @@ module.exports = {
 
 
   leaveEvent: function(req, res, next) {
-    // TODO - only proceed if the userId matches the sessionUserId
+    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+        return next(new errors.NotAuthorizedError('You can only laeve as your self'));
+    }
 
     Event.update(
       { _id: req.params.eventId },
