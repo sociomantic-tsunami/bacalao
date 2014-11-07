@@ -44,49 +44,55 @@ var EventRow = React.createClass({
     var maxAttendees = <Badge></Badge>;
 
     return (
+
         <div className="event__box">
-        <img src={this.props.creator.picture} class="event__box--creator-avatar" />
-            <h3 className="event__box--title">
-              <Glyphicon className="event__box__icon" glyph="cutlery" />
-              <span className="event__box--venue">{this.props.venue}</span>
-            </h3>
-            <div className="event__box--map">
+          <div className="event__box--buttons">
+            <JoinLeaveButton
+               key={this.props.key}
+               user={this.props.user}
+               maxAttendees={this.props.maxAttendees}
+               attendees={this.props.attendees}
+               _onUserJoin={this._onUserJoin}
+               _onUserLeave={this._onUserLeave}
+            />
+          </div>
 
-            </div>
-            <div className="event__box--time">
-              <Glyphicon className="event__box__icon" glyph="calendar" />
-              {this.getTime()}
-            </div>
-            <div className="event__box--organizer">
-              <Glyphicon className="event__box__icon" glyph="user" />
-              {this.getOrganizer(this.props.creator)}</div>
 
-            <div className="event__box--details">
-              <Glyphicon className="event__box__icon" glyph="info-sign" />
-              {this.props.details}
-            </div>
-            <div className="event__box--atendees">
-              <Glyphicon className="event__box__icon" glyph="thumbs-up" />
-                <Badge>
-                  {this.props.attendees.length}
-                  {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}
-                  {maxAttendees}
-                </Badge>
-                <div className="event__box--atendee-pictures">
-                {attendees}
+
+          <div className="event__box--details">
+          <img src={this.props.creator.picture} className="event__box--creator-avatar" />
+            <div className="event__box--details__text">
+                <h3 className="event__box--title">
+                  <span className="event__box--venue">{this.props.venue}</span>
+                </h3>
+                <div className="event__box--time">
+                  {this.getTime()}
+                </div>
+                <div className="event__box--details">
+                  {this.props.details}
                 </div>
             </div>
-            <div className="event__box--buttons">
-              <JoinLeaveButton
-                 key={this.props.key}
-                 user={this.props.user}
-                 maxAttendees={this.props.maxAttendees}
-                 attendees={this.props.attendees}
-                 _onUserJoin={this._onUserJoin}
-                 _onUserLeave={this._onUserLeave}
-              />
-            </div>
           </div>
+
+
+
+
+          <div className="event__box--atendees">
+              <span className="">Coming&nbsp;
+
+              {this.props.attendees.length}
+              {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}
+              {maxAttendees}
+
+              </span>
+              <p>
+
+              </p>
+              <div className="event__box--atendee-pictures">
+              {attendees}
+              </div>
+          </div>
+        </div>
     );
   },
 
