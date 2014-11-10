@@ -32,7 +32,7 @@ _.each(configExample, function(val, k) {
     console.log('config.json missing configuration key: %s', k);
     process.exit(1);
   }
-})
+});
 
 restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
@@ -49,7 +49,7 @@ server.use(sessions({
   path: '/api',
   secret: config.cookieSecret,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24, // duration of the cookie in milliseconds, defaults to duration above
+    maxAge: 1000 * 60 * 60 * 24 * 30, // duration of the cookie in milliseconds, defaults to duration above
     ephemeral: false, // when true, cookie expires when the browser closes
     httpOnly: true, // when true, cookie is not accessible from javascript
     secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
