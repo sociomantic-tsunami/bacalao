@@ -26,7 +26,7 @@ var EventRow = React.createClass({
     user: ReactPropTypes.object.isRequired,
     time: ReactPropTypes.object.isRequired,
     details: ReactPropTypes.string.isRequired,
-    venue: ReactPropTypes.string.isRequired,
+    venue: ReactPropTypes.object.isRequired,
     creator: ReactPropTypes.object.isRequired,
     attendees: ReactPropTypes.array.isRequired
   },
@@ -63,7 +63,7 @@ var EventRow = React.createClass({
           <img src={this.props.creator.picture} className="event__box--creator-avatar" />
             <div className="event__box--details__text">
                 <h3 className="event__box--title">
-                  <span className="event__box--venue">{this.props.venue}</span>
+                  <span className="event__box--venue">{this.props.venue.name}</span>
                 </h3>
                 <div className="event__box--time">
                   {this.getTime()}

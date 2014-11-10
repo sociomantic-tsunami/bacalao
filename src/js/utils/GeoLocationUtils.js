@@ -9,7 +9,6 @@ var GeoLocationUtils = {
 
   init: function() {
     this.getLocation(function(position) {
-      console.log(position);
       AppDispatcher.handleInitAction({
         type: ActionTypes.GOT_LOCATION,
         position: position

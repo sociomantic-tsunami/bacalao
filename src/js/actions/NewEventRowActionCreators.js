@@ -9,10 +9,7 @@ module.exports = {
     createEvent: function(event) {
         AppDispatcher.handleViewAction({
           type: ActionTypes.CREATE_EVENT,
-          time: event.time,
-          details: event.details,
-          venue: event.venue,
-          maxAttendees: event.maxAttendees
+          event: event
         });
 
         EventAPIUtils.createEvent(OutlineStore.getFirstForSaving());

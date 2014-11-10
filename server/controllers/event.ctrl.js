@@ -38,10 +38,14 @@ module.exports = {
       var newEvent = new Event(paramsToSave);
       newEvent.save(function (err, newEvent)
       {
-
         if(err) {
           req.log.error(err);
-          return next(new restify.errors.InternalError);
+          if(err.name === 'ValidationError') {
+            // TODO - pass the validation errors to the client
+            return next(new restify.errors.BadRequestError());
+          } else {
+            return next(new restify.errors.InternalError);
+          }
         }
         req.log.info('Created event _id:' + newEvent._id );
 

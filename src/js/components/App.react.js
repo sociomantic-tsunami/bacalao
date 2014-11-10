@@ -16,7 +16,7 @@ var getAppState = function () {
     events: OutlineStore.getAll(),
     user: UserStore.getUser()
   };
-}
+};
 
 
 var App = React.createClass({
@@ -39,7 +39,7 @@ var App = React.createClass({
             <div className="col-md-12">
               <h1 className="app-title">WIP</h1>
               <div className="app-new-event">
-                <NewEvent  isLoggedIn={this.state.user.loggedIn} />
+                <NewEvent loggedIn={this.state.user.loggedIn} />
               </div>
               <div className="app-user">
                 <User  user={this.state.user} />

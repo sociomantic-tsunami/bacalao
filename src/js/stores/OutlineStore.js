@@ -36,10 +36,6 @@ var OutlineStore = merge(EventEmitter.prototype, {
     lastAdded.attendees[0] = lastAdded.attendees[0]._id
     lastAdded.creator = lastAdded.creator._id
     return lastAdded;
-  },
-
-  removeAttendeeFromEvent: function(eventId, userId) {
-
   }
 
 });
@@ -60,7 +56,12 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       if(!action.event.cid) {
         // first case: the event was created by a different client and is added
         // as a new event
-        action.event.time = parseInt(action.event.time, 10);
+        action.event.time = new Date(action.event.time);
+        if(action.event._id === _nodes[0]._id) {
+          // if this client created the event, got the response with _id
+          // and got an extra socket notification
+          return;
+        }
         _nodes.unshift(action.event);
         OutlineStore.emitChange();
         return;
@@ -74,7 +75,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           OutlineStore.emitChange();
           return;
         }
-      };
+      }
 
 
       break;
@@ -82,14 +83,13 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
     case ActionTypes.CREATE_EVENT:
         _nodes.unshift({
           cid: _.uniqueId('event_' + Date.now() + '_'),
-          time: moment(action.time, 'HH:mm').toDate(),
-          venue: action.venue,
-          details: action.details,
-          maxAttendees: action.maxAttendees,
+          time: moment(action.event.time, 'HH:mm').toDate(),
+          venue: action.event.venue,
+          details: action.event.details,
+          maxAttendees: action.event.maxAttendees || 0,
           creator : UserStore.getBasicUser(),
           attendees : [UserStore.getBasicUser()]
-        })
-        console.log(_nodes[0]);
+        });
         OutlineStore.emitChange();
       break;
 
@@ -99,7 +99,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             _nodes[i].attendees.push(UserStore.getBasicUser());
             break;
           }
-        };
+        }
         OutlineStore.emitChange();
       break;
 
@@ -114,7 +114,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             }
             break;
           }
-        };
+        }
         OutlineStore.emitChange();
       break;
 
@@ -127,9 +127,9 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
                 OutlineStore.emitChange();
                 return;
               }
-            };
+            }
           }
-        };
+        }
       break;
 
     // from the server
@@ -142,12 +142,12 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
               if(_nodes[i].attendees[k]._id === action.event.userId) {
                 _nodes[i].attendees.splice(k, 1);
                 OutlineStore.emitChange();
-                return
+                return;
               }
-            };
+            }
             break;
           }
-        };
+        }
       break;
 
     default:
