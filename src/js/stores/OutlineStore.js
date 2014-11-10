@@ -71,7 +71,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       for (var i = _nodes.length - 1; i >= 0; i--) {
         // add server information based on the cid
         if(_nodes[i].cid === action.event.cid) {
-          _.defaults(_nodes[i], action.event);
+          _.extend(_nodes[i], _.omit(action.event, 'time'));
           OutlineStore.emitChange();
           return;
         }
