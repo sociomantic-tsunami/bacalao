@@ -1,5 +1,5 @@
-var ActionTypes = require('../constants/Constants').ActionTypes,
-    AppDispatcher = require('../dispatcher/AppDispatcher');
+var AppDispatcher = require('../dispatcher/AppDispatcher');
+var ActionTypes = require('../constants/Constants').ActionTypes;
 
 
 module.exports = {
