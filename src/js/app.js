@@ -13,6 +13,7 @@ var React = require('react');
 var SocialLoginUtils = require('./utils/SocialLoginUtils');
 var LocalUserUtils = require('./utils/LocalUserUtils');
 var SocketUtils = require('./utils/SocketUtils');
+var GeoLocationUtils = require('./utils/GeoLocationUtils');
 var hello = require('./lib/hello.all.min');
 
 // for debugging with the React Devtools
@@ -22,7 +23,12 @@ SocketUtils.init();
 LocalUserUtils.init();
 SocialLoginUtils.init();
 
+GeoLocationUtils.init();
+
 EventAPIUtils.getAllEvents();
+
+
+
 
 React.renderComponent(
   <App />,

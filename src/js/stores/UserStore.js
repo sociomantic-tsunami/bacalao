@@ -71,6 +71,11 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       UserStore.emitChange();
       break;
 
+    case ActionTypes.GOT_LOCATION:
+      _user.geolocation =  action.position;
+      UserStore.emitChange();
+      break;
+
 
     case ActionTypes.LOGGED_IN_API:
       _user.loggedIn = true;
