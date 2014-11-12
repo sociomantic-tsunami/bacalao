@@ -22,21 +22,23 @@ var EventRow = React.createClass({
 
   propTypes: {
     key: ReactPropTypes.string,
-    maxAttendees: ReactPropTypes.number.isRequired,
     user: ReactPropTypes.object.isRequired,
-    time: ReactPropTypes.object.isRequired,
-    details: ReactPropTypes.string.isRequired,
-    venue: ReactPropTypes.object.isRequired,
-    creator: ReactPropTypes.object.isRequired,
-    attendees: ReactPropTypes.array.isRequired
+    event: React.PropTypes.shape({
+      maxAttendees: ReactPropTypes.number.isRequired,
+      time: ReactPropTypes.object.isRequired,
+      details: ReactPropTypes.string.isRequired,
+      venue: ReactPropTypes.object.isRequired,
+      creator: ReactPropTypes.object.isRequired,
+      attendees: ReactPropTypes.array.isRequired
+    })
   },
 
   render: function() {
-    // var attendees = _.chain(this.props.attendees)
+    // var attendees = _.chain(this.props.event.attendees)
     //  .reduce(function(memo, user) { return memo + ", " + user.firstName}, '')
     //  .value();
 
-    var attendees = _.map(this.props.attendees, getAttendee);
+    var attendees = _.map(this.props.event.attendees, getAttendee);
 
 
 
@@ -50,8 +52,8 @@ var EventRow = React.createClass({
             <JoinLeaveButton
                key={this.props.key}
                user={this.props.user}
-               maxAttendees={this.props.maxAttendees}
-               attendees={this.props.attendees}
+               maxAttendees={this.props.event.maxAttendees}
+               attendees={this.props.event.attendees}
                _onUserJoin={this._onUserJoin}
                _onUserLeave={this._onUserLeave}
             />
@@ -60,16 +62,16 @@ var EventRow = React.createClass({
 
 
           <div className="event__box--details">
-          <img src={this.props.creator.picture} className="event__box--creator-avatar" />
+          <img src={this.props.event.creator.picture} className="event__box--creator-avatar" />
             <div className="event__box--details__text">
                 <h3 className="event__box--title">
-                  <span className="event__box--venue">{this.props.venue.name}</span>
+                  <span className="event__box--venue">{this.props.event.venue.name}</span>
                 </h3>
                 <div className="event__box--time">
                   {this.getTime()}
                 </div>
                 <div className="event__box--details">
-                  {this.props.details}
+                  {this.props.event.details}
                 </div>
             </div>
           </div>
@@ -80,8 +82,8 @@ var EventRow = React.createClass({
           <div className="event__box--atendees">
               <span className="">Coming&nbsp;
 
-              {this.props.attendees.length}
-              {this.props.maxAttendees > 0 ? '/' : '' }{this.props.maxAttendees}
+              {this.props.event.attendees.length}
+              {this.props.event.maxAttendees > 0 ? '/' : '' }{this.props.event.maxAttendees}
               {maxAttendees}
 
               </span>
@@ -98,7 +100,7 @@ var EventRow = React.createClass({
 
 
   getTime: function() {
-    var time = moment(this.props.time).fromNow();
+    var time = moment(this.props.event.time).fromNow();
     return time;
   },
 
@@ -112,8 +114,8 @@ var EventRow = React.createClass({
       return false;
     }
 
-    for (var i = this.props.attendees.length - 1; i >= 0; i--) {
-      if(this.props.attendees[i]._id == this.props.user._id) {
+    for (var i = this.props.event.attendees.length - 1; i >= 0; i--) {
+      if(this.props.event.attendees[i]._id == this.props.user._id) {
         return true;
       }
     };

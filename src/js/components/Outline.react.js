@@ -10,16 +10,11 @@ var React = require('react'),
 require('../../sass/outline.scss');
 
 
-var getRow = function(user, node) {
+var getEvent = function(user, event) {
   return <Row
-            key={node._id || node.cid}
+            key={event._id || event.cid}
             user={user}
-            time={node.time}
-            details={node.details}
-            venue={node.venue}
-            creator={node.creator}
-            attendees={node.attendees}
-            maxAttendees={node.maxAttendees}
+            event={event}
           />
 }
 
@@ -32,7 +27,7 @@ var Outline = React.createClass({
   },
 
   render: function() {
-    var rows = _.map(this.props.events, _.partial(getRow, this.props.user));
+    var rows = _.map(this.props.events, _.partial(getEvent, this.props.user));
 
     return (
       <div className="events__spread">
