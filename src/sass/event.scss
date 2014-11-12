@@ -36,13 +36,14 @@
     }
 }
 
-.event__box--creator-avatar
+.event__box--creator-avatar, .user--profile-pic
 {
   float: left;
   height: 50px;
   width: 50px;
   border-radius: 50px;
 }
+
 .event__box--details__text
 {
   width: 460px;

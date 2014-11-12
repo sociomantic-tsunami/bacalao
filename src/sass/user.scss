@@ -3,6 +3,11 @@
     position : relative;
 }
 
+.user--current-user 
+{
+  display: inline-block;
+}
+
 .user--login-button,
 .user--logout-button
 {
