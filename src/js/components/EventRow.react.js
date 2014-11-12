@@ -64,9 +64,17 @@ var EventRow = React.createClass({
           <div className="event__box--details">
           <img src={this.props.event.creator.picture} className="event__box--creator-avatar" />
             <div className="event__box--details__text">
-                <h3 className="event__box--title">
-                  <span className="event__box--venue">{this.props.event.venue.name}</span>
-                </h3>
+                <div className="event__box--venue">
+                  <h3 className="event__box--venue-name">
+                    <a target="_blank" href={this.props.event.venue.url}>{this.props.event.venue.name}</a>
+                  </h3>
+                  <span className="event__box--venue-address">
+                    {this.props.event.venue.formatted_address}
+                  </span>
+                  <span className="event__box--venue-phone-number">
+                    {this.props.event.venue.international_phone_number}
+                  </span>
+                </div>
                 <div className="event__box--time">
                   {this.getTime()}
                 </div>
