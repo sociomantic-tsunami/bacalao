@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 
-var Outline = require('./Outline.react');
+var Events = require('./Events.react');
 var User = require('./User.react');
 var NewEvent = require('./NewEventRow.react');
 var React = require('react/addons');
@@ -46,7 +46,7 @@ var App = React.createClass({
               </div>
             </div>
           </div>
-        <Outline
+        <Events
           events={this.state.events}
           user={this.state.user}
         />
