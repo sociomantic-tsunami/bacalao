@@ -6,7 +6,9 @@
   "description": "",
   "main": "js/app.js",
   "dependencies": {
+    "asorted": "0.0.3",
     "bunyan": "~1.1.3",
+    "client-sessions": "~0.7.0",
     "keymaster": "~1.6.2",
     "moment": "^2.8.3",
     "mongoose": "~3.8.17",
@@ -19,8 +21,7 @@
     "socket.io-client": "^1.1.0",
     "superagent": "~0.20.0",
     "underscore": "~1.7.0",
-    "xhr": "^1.16.1",
-    "client-sessions": "~0.7.0"
+    "xhr": "^1.16.1"
   },
   "devDependencies": {
     "browserify": "~4.2.2",

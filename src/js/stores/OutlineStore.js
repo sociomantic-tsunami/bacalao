@@ -4,11 +4,13 @@ var EventEmitter = require('events').EventEmitter;
 var merge = require('react/lib/merge');
 var UserStore = require('./UserStore');
 var _ = require('underscore');
+var Asorted = require('Asorted');
 var moment = require('moment');
 
 var CHANGE_EVENT = 'change';
 
-var _nodes = [];
+var _nodes = new Asorted({ sortBy: 'time' });
+var lastAddedIndex = -1;
 
 var OutlineStore = merge(EventEmitter.prototype, {
 
@@ -24,17 +26,17 @@ var OutlineStore = merge(EventEmitter.prototype, {
   },
 
   getAll: function() {
-    return _nodes;
+    return _nodes.array;
   },
 
   getFirstForSaving: function() {
-    var lastAdded = _.clone(_nodes[0]);
+    var lastAdded = _.clone(_nodes.array[lastAddedIndex]);
     if(lastAdded._id) {
       console.error('The event is already saved');
       return;
     }
-    lastAdded.attendees[0] = lastAdded.attendees[0]._id
-    lastAdded.creator = lastAdded.creator._id
+    lastAdded.attendees[0] = lastAdded.attendees[0]._id;
+    lastAdded.creator = lastAdded.creator._id;
     return lastAdded;
   }
 
@@ -45,10 +47,11 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
   switch(action.type) {
     case ActionTypes.RECEIVE_RAW_EVENTS:
-      _nodes = _.map(action.rawEvents, function(node) {
+      var toAdd = _.map(action.rawEvents, function(node) {
         node.time = new Date(node.time);
         return node;
       });
+      _nodes.insert.apply(_nodes, toAdd);
       OutlineStore.emitChange();
       break;
 
@@ -57,12 +60,12 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         // first case: the event was created by a different client and is added
         // as a new event
         action.event.time = new Date(action.event.time);
-        if(action.event._id === _nodes[0]._id) {
+        if(action.event._id === _nodes.array[lastAddedIndex]._id) {
           // if this client created the event, got the response with _id
           // and got an extra socket notification
           return;
         }
-        _nodes.unshift(action.event);
+        _nodes.insert(action.event);
         OutlineStore.emitChange();
         return;
       }
@@ -81,7 +84,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATE_EVENT:
-        _nodes.unshift({
+        lastAddedIndex = _nodes.insert({
           cid: _.uniqueId('event_' + Date.now() + '_'),
           time: moment(action.event.time, 'HH:mm').toDate(),
           venue: action.event.venue,
