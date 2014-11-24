@@ -51,7 +51,8 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         node.time = new Date(node.time);
         return node;
       });
-      _nodes.insert.apply(_nodes, toAdd);
+      // _nodes.insert.apply(_nodes, toAdd);
+      _.each(toAdd, _nodes.insert);
       OutlineStore.emitChange();
       break;
 
