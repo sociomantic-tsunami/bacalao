@@ -1,7 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
 var UserStore = require('./UserStore');
 var _ = require('underscore');
 var Asorted = require('Asorted');
@@ -12,7 +11,7 @@ var CHANGE_EVENT = 'change';
 var _nodes = new Asorted({ sortBy: 'time' });
 var lastAddedIndex = -1;
 
-var EventsStore = merge(EventEmitter.prototype, {
+var EventsStore = _.extend({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);

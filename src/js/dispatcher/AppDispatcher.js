@@ -17,10 +17,11 @@
  */
 
 var Dispatcher = require('./Dispatcher');
+var _ = require('underscore');
 
-var copyProperties = require('react/lib/copyProperties');
+var AppDispatcher = new Dispatcher();
 
-var AppDispatcher = copyProperties(new Dispatcher(), {
+_.extend(AppDispatcher, {
 
   /**
    * @param {object} action The details of the action, including the action's

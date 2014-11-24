@@ -1,7 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/Constants').ActionTypes;
 var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
 var _ = require('underscore');
 
 var CHANGE_EVENT = 'change';
@@ -10,7 +9,7 @@ var _user = {
   loggedIn : false,
 };
 
-var UserStore = merge(EventEmitter.prototype, {
+var UserStore = _.extend({}, EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);

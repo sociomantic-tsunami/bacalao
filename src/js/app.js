@@ -30,7 +30,7 @@ EventAPIUtils.getAllEvents();
 
 
 
-React.renderComponent(
+React.render(
   <App />,
   document.getElementsByClassName('js-react')[0]
 );
