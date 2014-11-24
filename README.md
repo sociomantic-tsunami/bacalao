@@ -2,7 +2,6 @@ bacalao
 ===========
 
 Lunch scheduler
-live: bacalao.tk
 
 Setup
 -----
