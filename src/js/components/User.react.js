@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
 var UserActionCreators = require('../actions/UserActionCreators');

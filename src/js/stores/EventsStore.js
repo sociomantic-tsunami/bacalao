@@ -12,7 +12,7 @@ var CHANGE_EVENT = 'change';
 var _nodes = new Asorted({ sortBy: 'time' });
 var lastAddedIndex = -1;
 
-var OutlineStore = merge(EventEmitter.prototype, {
+var EventsStore = merge(EventEmitter.prototype, {
 
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -43,7 +43,7 @@ var OutlineStore = merge(EventEmitter.prototype, {
 });
 
 
-OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
+EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
   switch(action.type) {
     case ActionTypes.RECEIVE_RAW_EVENTS:
@@ -53,7 +53,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
       });
       // _nodes.insert.apply(_nodes, toAdd);
       _.each(toAdd, _nodes.insert);
-      OutlineStore.emitChange();
+      EventsStore.emitChange();
       break;
 
     case ActionTypes.CREATED_EVENT:
@@ -67,7 +67,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           return;
         }
         _nodes.insert(action.event);
-        OutlineStore.emitChange();
+        EventsStore.emitChange();
         return;
       }
 
@@ -76,7 +76,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
         // add server information based on the cid
         if(_nodes[i].cid === action.event.cid) {
           _.extend(_nodes[i], _.omit(action.event, 'time'));
-          OutlineStore.emitChange();
+          EventsStore.emitChange();
           return;
         }
       }
@@ -94,7 +94,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
           creator : UserStore.getBasicUser(),
           attendees : [UserStore.getBasicUser()]
         });
-        OutlineStore.emitChange();
+        EventsStore.emitChange();
       break;
 
     case ActionTypes.JOIN_EVENT:
@@ -104,7 +104,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             break;
           }
         }
-        OutlineStore.emitChange();
+        EventsStore.emitChange();
       break;
 
     // from the server
@@ -119,7 +119,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             break;
           }
         }
-        OutlineStore.emitChange();
+        EventsStore.emitChange();
       break;
 
     case ActionTypes.LEAVE_EVENT:
@@ -128,7 +128,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             for (var k = _nodes[i].attendees.length - 1; k >= 0; k--) {
               if(_nodes[i].attendees[k]._id === UserStore.getUserId()) {
                 _nodes[i].attendees.splice(k, 1);
-                OutlineStore.emitChange();
+                EventsStore.emitChange();
                 return;
               }
             }
@@ -145,7 +145,7 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
             for (var k = _nodes[i].attendees.length - 1; k >= 0; k--) {
               if(_nodes[i].attendees[k]._id === action.event.userId) {
                 _nodes[i].attendees.splice(k, 1);
-                OutlineStore.emitChange();
+                EventsStore.emitChange();
                 return;
               }
             }
@@ -160,4 +160,4 @@ OutlineStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 });
 
-module.exports = OutlineStore;
+module.exports = EventsStore;

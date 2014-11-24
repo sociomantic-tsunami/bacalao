@@ -1,19 +1,15 @@
-/** @jsx React.DOM */
-
-
 var Events = require('./Events.react');
 var User = require('./User.react');
 var NewEvent = require('./NewEventRow.react');
 var React = require('react/addons');
-// var key = require('keymaster');
-var OutlineStore = require('../stores/OutlineStore');
+var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
 require('../../sass/app.scss');
 require('../../sass/topbar.scss');
 
 var getAppState = function () {
   return {
-    events: OutlineStore.getAll(),
+    events: EventsStore.getAll(),
     user: UserStore.getUser()
   };
 };
@@ -26,7 +22,7 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
-    OutlineStore.addChangeListener(this._onChange);
+    EventsStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
   },
 

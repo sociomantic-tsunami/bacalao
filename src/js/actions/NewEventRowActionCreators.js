@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher'),
     Constants = require('../constants/Constants'),
     ActionTypes = Constants.ActionTypes,
-    OutlineStore = require('../stores/OutlineStore'),
+    EventsStore = require('../stores/EventsStore'),
     EventAPIUtils = require('../utils/EventAPIUtils');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
           event: event
         });
 
-        EventAPIUtils.createEvent(OutlineStore.getFirstForSaving());
+        EventAPIUtils.createEvent(EventsStore.getFirstForSaving());
     }
 
 

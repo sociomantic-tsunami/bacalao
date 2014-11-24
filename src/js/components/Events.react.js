@@ -1,11 +1,8 @@
-/** @jsx React.DOM */
-
-
-var React = require('react'),
-    Row = require('./EventRow.react'),
-    NewEventRow = require('./NewEventRow.react'),
-    _ = require('underscore'),
-    ReactPropTypes = React.PropTypes;
+var React = require('react');
+var Row = require('./EventRow.react');
+var NewEventRow = require('./NewEventRow.react');
+var _ = require('underscore');
+var ReactPropTypes = React.PropTypes;
 
 require('../../sass/outline.scss');
 

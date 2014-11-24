@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var EventActionCreators = require('../actions/EventActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;

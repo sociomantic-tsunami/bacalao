@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var NewEventRowActionCreators = require('../actions/NewEventRowActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;

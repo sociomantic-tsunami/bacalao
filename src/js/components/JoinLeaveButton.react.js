@@ -1,17 +1,7 @@
-/** @jsx React.DOM */
-
-// var EventActionCreators = require('../actions/EventActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Button = require('react-bootstrap').Button;
-// var Tooltip = require('react-bootstrap').Tooltip;
-// var Badge = require('react-bootstrap').Badge;
-// var Glyphicon = require('react-bootstrap').Glyphicon;
-// var moment = require('moment')
-// var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
-// require('../../sass/event.scss');
-
 
 var JoinLeaveButton = React.createClass({
 
