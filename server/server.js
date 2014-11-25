@@ -8,8 +8,11 @@ var mongoose = require('mongoose');
 var routes = require('./routes');
 var logger = require('./utils/logger');
 var checkSession = require('./utils/sessionUtils').checkSession;
+var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
 var sessions = require("client-sessions");
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 
@@ -56,6 +59,29 @@ server.use(sessions({
   }
 }));
 
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+
+
+passport.serializeUser(function(user, done) {
+  console.log('\n passport.serializeUser \n ', user);
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  console.log('\n passport.deserializeUser \n ', user);
+  done(null, user);
+});
+
+passport.use(new FacebookStrategy({
+    clientID: config.facebookAppId,
+    clientSecret: config.facebookAppSecret,
+    callbackURL: "http://bacalao.io:8080/auth/facebook/callback"
+  }, userCtrl.facebookCallback
+));
+
 var io = require('socket.io')(server.server);
 // var io = socketio.listen(server.server);
 
@@ -85,6 +111,24 @@ server.use(restify.requestLogger());
 
 
 // routes
+server.get("/auth/facebook", passport.authenticate('facebook'));
+
+server.get("/auth/facebook/callback", function(req, res, next) {
+    console.log('facebook callback');
+    passport.authenticate('facebook', function(err, usr, info) {
+      console.log('passport authenticate callback');
+      if(err) {
+        return next(new errors.NotAuthorizedError());
+      }
+      console.log(err, usr, info);
+      res.header('Location', '/good');
+      res.send(302);
+    });
+  });
+
+
+
+
 server.post("/api/user", routes.login);
 server.del("/api/user", routes.logout);
 server.get("/api/events", routes.getEvents);

@@ -28,6 +28,7 @@ var User = React.createClass({
     } else {
       return(
         <div className="user">
+        <a href="/auth/facebook">Login with Facebook</a>
           <Button className="user--login-button" bsSize="medium" bsStyle="info" onClick={this._onLogin}>
           Login FB
           </Button>

@@ -8,6 +8,42 @@ var Q = require('q');
 
 module.exports = {
 
+  facebookCallback: function(accessToken, refreshToken, profile, done) {
+    console.log('--- facebookCallback ---');
+    var conditions = {
+      service: 'facebook',
+      serviceUserId: profile.id
+    };
+
+    var toSave = {
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      middleName: profile.name.middleName,
+      gender: profile.gender,
+      email: profile.emails[0].value,
+      service: 'facebook',
+      serviceUserId: profile.id,
+      accessToken: accessToken,
+      updated: new Date()
+    };
+
+
+    User.findOne(conditions, function(err, oldUser) {
+      if(oldUser) {
+        // User has alredy registered
+        done(null, oldUser);
+      } else {
+        var newUser = new User(toSave).save(function(err, newUser) {
+          if(err) {
+            // TODO who's gonna catch this guy?
+            throw err;
+          }
+          done(null, newUser);
+        });
+      }
+    });
+  },
+
   // login handler
   //
   // picks the fields from the
