@@ -1,5 +1,7 @@
 module.exports = {
   // User:
+  getUser: require('./controllers/user.ctrl').getUser,
+
   login: require('./controllers/user.ctrl').login,
 
   logout: require('./controllers/user.ctrl').logout,
@@ -15,4 +17,4 @@ module.exports = {
 
   leaveEvent: require('./controllers/event.ctrl').leaveEvent
 
-}
+};

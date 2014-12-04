@@ -1,7 +1,6 @@
-var Q = require('q'),
-    config = require('../../config.json'),
-    restify = require('restify'),
-    _ = require('underscore');
+var config = require('../../config.json');
+var restify = require('restify');
+var _ = require('underscore');
 
 var sessionUtils = {
 
@@ -9,7 +8,7 @@ var sessionUtils = {
     isUserMatchingSession: function(req, userId) {
         var user = this.getSessionUser(req);
 
-        return user.userId === userId;
+        return user._id === userId;
     },
 
     // Get session object from the req object
@@ -18,23 +17,9 @@ var sessionUtils = {
     //
     // @return user session object
     getSessionUser: function(req) {
-        return req[config.cookieKey] && req[config.cookieKey].user;
-    },
-
-    // Create session for a given user object
-    //
-    // @param req   object  request object from restify
-    // @param user  object  user object
-    createSession: function(req, user) {
-        if(!_.isObject(user)) {
-            throw new Exception('Pass an object with user info to create a session');
-        }
-
-        if(!user._id) {
-            throw new Exception('An _id property is required in the user object when creating a session');
-        }
-        // req[config.cookieKey].user = _.clone(user);
-        req[config.cookieKey].user = { userId : user._id };
+        return req.session &&
+                req.session.passport &&
+                req.session.passport.user;
     },
 
     // Delete the session cookie

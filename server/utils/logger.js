@@ -4,7 +4,5 @@ var config = require('../../config.json'),
 
 module.exports = new Logger.createLogger({
     name: config.name,
-    serializers: {
-        req: Logger.stdSerializers.req
-    }
+    serializers: Logger.stdSerializers
 });

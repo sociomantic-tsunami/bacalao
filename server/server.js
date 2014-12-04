@@ -12,10 +12,10 @@ var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
 var sessions = require("client-sessions");
 var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 
+// Determine the environment
 var cmdlineEnv = process.argv[2] || 'default';
 if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
     process.env.NODE_ENV = 'development';
@@ -26,10 +26,10 @@ if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
   console.log("Defaulting to Development");
   process.env.NODE_ENV = 'development';
 }
+
 console.log('Env: ' + process.env.NODE_ENV);
 
-
-
+// Inform use if the config is missing config keys
 _.each(configExample, function(val, k) {
   if(!config[k]) {
     console.log('config.json missing configuration key: %s', k);
@@ -37,6 +37,7 @@ _.each(configExample, function(val, k) {
   }
 });
 
+// Default response is json
 restify.defaultResponseHeaders = function(data) {
   this.header('Content-Type', 'application/json; charset=utf-8');
 };
@@ -47,6 +48,18 @@ var server = restify.createServer({
   log: logger
 });
 
+// Logging
+server.on('uncaughtException', function (request, response, route, error) {
+  request.log.error(error);
+});
+
+server.pre(function (request, response, next) {
+    request.log.info({ req: request.url }, 'REQUEST');
+    next();
+});
+
+
+// Encrypted cookies for session persistance.
 server.use(sessions({
   cookieName: config.cookieKey,
   path: '/api',
@@ -60,42 +73,14 @@ server.use(sessions({
 }));
 
 
+// Encrypted cookies for session persistance.
 server.use(passport.initialize());
 server.use(passport.session());
+require('./config/passport')(passport, config);
 
 
-
-passport.serializeUser(function(user, done) {
-  console.log('\n passport.serializeUser \n ', user);
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  console.log('\n passport.deserializeUser \n ', user);
-  done(null, user);
-});
-
-passport.use(new FacebookStrategy({
-    clientID: config.facebookAppId,
-    clientSecret: config.facebookAppSecret,
-    callbackURL: "http://bacalao.io:8080/auth/facebook/callback"
-  }, userCtrl.facebookCallback
-));
 
 var io = require('socket.io')(server.server);
-// var io = socketio.listen(server.server);
-
-// log every request
-server.pre(function (request, response, next) {
-    request.log.info({ req: request }, 'REQUEST');
-    next();
-});
-
-
-server.on('uncaughtException', function (request, response, route, error) {
-  request.log.error(error);
-  // req.send(500);
-});
 
 
 // inject the global socket.io obect to all requests
@@ -104,6 +89,8 @@ server.use(function(req, res, next) {
   next();
 });
 
+
+// middleware for parsing requests
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
@@ -112,33 +99,26 @@ server.use(restify.requestLogger());
 
 // routes
 server.get("/auth/facebook", passport.authenticate('facebook'));
-
-server.get("/auth/facebook/callback", function(req, res, next) {
-    console.log('facebook callback');
-    passport.authenticate('facebook', function(err, usr, info) {
-      console.log('passport authenticate callback');
-      if(err) {
-        return next(new errors.NotAuthorizedError());
-      }
-      console.log(err, usr, info);
-      res.header('Location', '/good');
-      res.send(302);
-    });
-  });
+server.get("/auth/facebook/callback", passport.authenticate('facebook'), function(req, res) {
+  res.header('Location', '/welcome');
+  res.send(302);
+});
 
 
-
-
-server.post("/api/user", routes.login);
+server.get("/api/me", routes.getUser);
 server.del("/api/user", routes.logout);
 server.get("/api/events", routes.getEvents);
 
 // reference is currently disabled
-// server.post("/api/user/:eventId/reference", checkSession, routes.addReference);
 server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
-server.get(/\/.*/, restify.serveStatic({
+server.get('/welcome', restify.serveStatic({
+  directory: './public/',
+  default: 'index.html'
+}));
+
+server.get(/.*/, restify.serveStatic({
   directory: './public/',
   default: 'index.html'
 }));
@@ -157,17 +137,16 @@ mongoose.connection.once('open', function callback () {
 });
 
 
-var connections = 0;
-io.sockets.on('connection', function (socket) {
-  connections++;
-  // setInterval(function() {
-  //   socket.emit('news', { hello: Date.now() });
-  // }, 1000);
-  server.log.info('new socket connection: ', socket.id );
-  socket.on('disconnect', function () {
-    connections--;
-  });
-});
+
+// Debugging for socket.io
+// var connections = 0;
+// io.sockets.on('connection', function (socket) {
+//   connections++;
+//   server.log.info('new socket connection: ', socket.id );
+//   socket.on('disconnect', function () {
+//     connections--;
+//   });
+// });
 
 
 
