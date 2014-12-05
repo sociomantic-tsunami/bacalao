@@ -17,7 +17,7 @@ module.exports = function (passport, config) {
       lastName: profile.name.familyName,
       middleName: profile.name.middleName,
       gender: profile.gender,
-      email: profile.emails[0].value,
+      email: profile && profile.emails && profile.emails[0].value,
       service: 'facebook',
       serviceUserId: profile.id,
       accessToken: accessToken,

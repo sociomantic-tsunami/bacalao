@@ -30,7 +30,7 @@ var User = React.createClass({
       return(
         <div className="user">
           <Button href="/auth/facebook" className="user--login-button" bsSize="medium" bsStyle="info" onClick={this._onLogin}>
-            Login with Facebook
+            Login FB
           </Button>
         </div>
         );
