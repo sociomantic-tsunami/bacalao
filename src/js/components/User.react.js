@@ -26,11 +26,11 @@ var User = React.createClass({
           </div>
             );
     } else {
+        //<a href="/auth/facebook">Login with Facebook</a>
       return(
         <div className="user">
-        <a href="/auth/facebook">Login with Facebook</a>
-          <Button className="user--login-button" bsSize="medium" bsStyle="info" onClick={this._onLogin}>
-          Login FB
+          <Button href="/auth/facebook" className="user--login-button" bsSize="medium" bsStyle="info" onClick={this._onLogin}>
+            Login with Facebook
           </Button>
         </div>
         );
@@ -41,12 +41,8 @@ var User = React.createClass({
     return "http://graph.facebook.com/" + this.props.user.serviceUserId + "/picture";
   },
 
-  _onLogin: function() {
-    UserActionCreators.loginFB();
-  },
-
   _onLogout: function() {
-    UserActionCreators.logoutFB()
+    UserActionCreators.logout()
   },
 
 });
