@@ -51,7 +51,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
         return node;
       });
       // _nodes.insert.apply(_nodes, toAdd);
-      _.each(toAdd, _nodes.insert);
+      _.each(toAdd, _nodes.insert, _nodes);
       EventsStore.emitChange();
       break;
 
