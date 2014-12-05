@@ -100,23 +100,19 @@ server.use(restify.requestLogger());
 // routes
 server.get("/auth/facebook", passport.authenticate('facebook'));
 server.get("/auth/facebook/callback", passport.authenticate('facebook'), function(req, res) {
-  res.header('Location', '/welcome');
+  res.header('Location', '/#welcome');
   res.send(302);
 });
 
 
-server.get("/api/me", routes.getUser);
 server.del("/api/user", routes.logout);
+server.get("/api/me", routes.getUser);
 server.get("/api/events", routes.getEvents);
 
 // reference is currently disabled
 server.post("/api/event", checkSession, routes.createEvent);
 server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
-server.get('/welcome', restify.serveStatic({
-  directory: './public/',
-  default: 'index.html'
-}));
 
 server.get(/.*/, restify.serveStatic({
   directory: './public/',
