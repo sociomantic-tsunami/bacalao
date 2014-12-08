@@ -2,7 +2,6 @@ var Event = require('../models/event.model');
 var User = require('../models/user.model');
 var restify = require('restify');
 var _ = require('underscore');
-var authValidator = require('../utils/authValidator');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
 var moment = require('moment');
