@@ -1,14 +1,13 @@
 var React = require('react');
-var Row = require('./EventRow.react');
-var NewEventRow = require('./NewEventRow.react');
-var _ = require('underscore');
 var ReactPropTypes = React.PropTypes;
+var _ = require('underscore');
+var Event = require('./Event.react');
 
 require('../../sass/outline.scss');
 
 
 var getEvent = function(user, event) {
-  return <Row
+  return <Event
             key={event._id || event.cid}
             user={user}
             event={event}
@@ -24,12 +23,12 @@ var Events = React.createClass({
   },
 
   render: function() {
-    var rows = _.map(this.props.events, _.partial(getEvent, this.props.user));
+    var events = _.map(this.props.events, _.partial(getEvent, this.props.user));
 
     return (
       <div className="events__spread">
         <div className="events__columns">
-            {rows}
+            {events}
         </div>
       </div>
     );

@@ -11,10 +11,11 @@ var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 require('../../sass/event.scss');
 
 var getAttendee = function(attendee) {
-  return <img key={attendee._id || _.uniqueId('attendee-')} className="event__box--atendees-avatar" src={attendee.picture} />
+  return <img
+    key={attendee._id || _.uniqueId('attendee-')}
+    className="event__box--atendees-avatar"
+    src={attendee.picture} />
 }
-
-
 
 var EventRow = React.createClass({
 
@@ -32,9 +33,6 @@ var EventRow = React.createClass({
   },
 
   render: function() {
-    // var attendees = _.chain(this.props.event.attendees)
-    //  .reduce(function(memo, user) { return memo + ", " + user.firstName}, '')
-    //  .value();
 
     var attendees = _.map(this.props.event.attendees, getAttendee);
 
