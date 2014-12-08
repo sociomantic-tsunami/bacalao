@@ -16,7 +16,7 @@ var getEvent = function(user, event) {
 }
 
 
-var Outline = React.createClass({
+var Events = React.createClass({
 
   propTypes: {
    events: ReactPropTypes.array.isRequired,
@@ -38,4 +38,4 @@ var Outline = React.createClass({
 
 });
 
-module.exports = Outline;
+module.exports = Events;
