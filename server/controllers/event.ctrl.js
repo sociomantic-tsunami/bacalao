@@ -4,6 +4,7 @@ var restify = require('restify');
 var _ = require('underscore');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
+var errors = require('restify').errors;
 var moment = require('moment');
 var sessionUtils = require('../utils/sessionUtils');
 
@@ -77,6 +78,11 @@ module.exports = {
         return next(new errors.NotAuthorizedError('You can only join as your self'));
     }
 
+    if(!req.params.eventId || req.params.eventId === 'undefined') {
+        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
+    }
+
+
     Event.update(
       { _id: req.params.eventId },
       { $addToSet: { attendees: req.params.userId }},
@@ -88,7 +94,6 @@ module.exports = {
         }
 
         req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
-        res.send(200);
         User.findById(req.params.userId, 'firstName lastName picture', function(err, user) {
           if(err) {
             req.log.error(err);
@@ -98,6 +103,7 @@ module.exports = {
             eventId: req.params.eventId,
             user: user
           };
+          res.json(response);
           req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
         });
         return next();
@@ -111,6 +117,11 @@ module.exports = {
         return next(new errors.NotAuthorizedError('You can only laeve as your self'));
     }
 
+    if(!req.params.eventId || req.params.eventId === 'undefined') {
+        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
+    }
+
+
     Event.update(
       { _id: req.params.eventId },
       { $pull: { attendees: req.params.userId }},
@@ -122,11 +133,11 @@ module.exports = {
         }
 
         req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
-        res.send(200);
         var response = {
           eventId: req.params.eventId,
           userId: req.params.userId
         };
+        res.json(response);
         req.socketio.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
         return next();
       });
