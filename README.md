@@ -15,3 +15,23 @@ Setup
 
 * For easy logging install bunyan globally (npm install -g bunyan)
  and run `node server.js | bunyan`
+
+
+Conventions
+-----------
+- Indentation - 2 spaces
+- Colon directly after the property name.
+```javascript
+var polishFood = {
+  pierogi: true,
+  bacalhau: false
+};
+```
+- Curly braces the opening one on the same line
+- White space - no need to add spaces where not needed
+```javascript
+var logout = function() {
+  user.logout();
+  return false;
+}
+```
