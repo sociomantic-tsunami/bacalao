@@ -7,7 +7,7 @@ var restify = require('restify');
 var mongoose = require('mongoose');
 var routes = require('./routes');
 var logger = require('./utils/logger');
-var checkSession = require('./utils/sessionUtils').checkSession;
+var ensureAuthenticated = require('./utils/sessionUtils').ensureAuthenticated;
 var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
 var sessions = require("client-sessions");
@@ -105,14 +105,13 @@ server.get("/auth/facebook/callback", passport.authenticate('facebook'), functio
 });
 
 
-server.del("/api/user", routes.logout);
-server.get("/api/me", routes.getUser);
-server.get("/api/events", routes.getEvents);
+server.del("/api/user", ensureAuthenticated, routes.logout);
+server.get("/api/me", ensureAuthenticated, routes.getUser);
 
-// reference is currently disabled
-server.post("/api/event", checkSession, routes.createEvent);
-server.put("/api/event/:eventId/attendees", checkSession, routes.joinEvent);
-server.del("/api/event/:eventId/attendees", checkSession, routes.leaveEvent);
+server.get("/api/events", ensureAuthenticated, routes.getEvents);
+server.post("/api/event", ensureAuthenticated, routes.createEvent);
+server.put("/api/event/:eventId/attendees", ensureAuthenticated, routes.joinEvent);
+server.del("/api/event/:eventId/attendees", ensureAuthenticated, routes.leaveEvent);
 
 server.get(/.*/, restify.serveStatic({
   directory: './public/',

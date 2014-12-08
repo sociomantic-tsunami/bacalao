@@ -20,6 +20,7 @@ module.exports = function (passport, config) {
       email: profile && profile.emails && profile.emails[0].value,
       service: 'facebook',
       serviceUserId: profile.id,
+      picture: 'http://graph.facebook.com/'+ profile.id + '/picture',
       accessToken: accessToken,
       updated: new Date()
     };

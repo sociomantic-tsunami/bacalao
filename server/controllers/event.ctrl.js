@@ -23,7 +23,7 @@ module.exports = {
           req.log.error(err);
           return next(new restify.errors.InternalError);
         }
-        res.send(events);
+        res.json(events);
         return next();
       });
 
@@ -57,7 +57,7 @@ module.exports = {
             }
             var response = _.pick(newEvent, resParams);
             response.cid = req.params.cid;
-            res.send(response);
+            res.json(response);
             // makes more sense to use this - socket.broadcast.emit('hi');
             // which doesn't send to this socket.
             // TODO - use this once sockets are integrated with sessions
@@ -99,7 +99,7 @@ module.exports = {
             user: user
           };
           req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
-        })
+        });
         return next();
 
       });
@@ -133,4 +133,4 @@ module.exports = {
   }
 
 
-}
+};
