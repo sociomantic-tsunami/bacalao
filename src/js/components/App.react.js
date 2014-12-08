@@ -32,7 +32,7 @@ var App = React.createClass({
     return (
       <div>
           <div className="topbar">
-            <div className="col-md-12">
+            <div classqName="col-md-12">
               <h1 className="app-title">WIP</h1>
               <div className="app-new-event">
                 <NewEvent loggedIn={this.state.user.loggedIn} />

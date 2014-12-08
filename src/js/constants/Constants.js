@@ -12,11 +12,7 @@ module.exports = {
     JOINED_EVENT: null,
     LEAVE_EVENT: null,
     LEFT_EVENT: null,
-    LOGIN_FB: null,
-    LOGOUT_FB: null,
-    LOGGED_IN_FB: null,
-    LOGGED_OUT_FB: null,
-    LOGGED_IN_API: null
+    GOT_USER_INFO: null
   }),
 
 

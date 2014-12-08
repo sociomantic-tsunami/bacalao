@@ -32,14 +32,13 @@ module.exports = {
         console.error('API Error', err);
       })
       .end(function(res) {
-        EventServerActionCreators.createdEvent(res.body)
+        EventServerActionCreators.createdEvent(res.body);
       });
   },
 
 
   joinEvent: function(eventId, userId) {
     var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
-    console.log(url);
 
     request
       .put(url)

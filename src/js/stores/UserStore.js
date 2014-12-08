@@ -56,19 +56,6 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       UserStore.emitChange();
       break;
 
-    case ActionTypes.LOGGED_IN_FB:
-      _.extend(_user, action.user);
-      UserStore.emitChange();
-      break;
-
-
-    case ActionTypes.LOGGED_OUT_FB:
-      _user = {
-        loggedIn: false
-      };
-      localStorage.removeItem('user', JSON.stringify(_user));
-      UserStore.emitChange();
-      break;
 
     case ActionTypes.GOT_LOCATION:
       _user.geolocation =  action.position;
@@ -76,14 +63,18 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
 
-    case ActionTypes.LOGGED_IN_API:
+    case ActionTypes.GOT_USER_INFO:
       _user.loggedIn = true;
-      if(_user.serviceUserId === action.user.serviceUserId) {
-        _user._id = action.user._id;
-      }
+      _.extend(_user, action.user);
       UserStore.emitChange();
 
-      localStorage.setItem('user', JSON.stringify(_user));
+      break;
+
+    case ActionTypes.LOGGED_OUT_API:
+      _user = {
+        loggedIn : false
+      };
+      UserStore.emitChange();
       break;
 
     default:

@@ -1,11 +1,11 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants = require('../constants/Constants');
-var UserApiUtils = require('../utils/UserApiUtils');
+var UserAPIUtils = require('../utils/UserAPIUtils');
 
 module.exports = {
 
   logout : function() {
-    UserApiUtils.logout();
+    UserAPIUtils.logout();
   }
 
 };

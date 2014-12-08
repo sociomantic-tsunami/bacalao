@@ -5,9 +5,9 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 
 module.exports = {
 
-  loggedInAPI : function(user) {
+  gotUserInfo : function(user) {
     AppDispatcher.handleServerAction({
-      type: ActionTypes.LOGGED_IN_API,
+      type: ActionTypes.GOT_USER_INFO,
       user : user
     });
   },
