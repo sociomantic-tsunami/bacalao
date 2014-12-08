@@ -42,7 +42,7 @@
     "css-loader": "~0.9.0"
   },
   "scripts": {
-    "dev": "nodemon -w server/ server/server.js --development | bunyan & webpack -w -d --colors",
+    "dev": "nodemon -w server/ server/server.js --development | bunyan & webpack -w --colors",
     "watch": "webpack -w -d --colors",
     "build": "webpack -p --colors --display-modules",
     "start": "node server/server.js --production"
