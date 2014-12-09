@@ -13,6 +13,8 @@ module.exports = {
 
   createEvent: require('./controllers/event.ctrl').createEvent,
 
+  deleteEvent: require('./controllers/event.ctrl').deleteEvent,
+
   joinEvent: require('./controllers/event.ctrl').joinEvent,
 
   leaveEvent: require('./controllers/event.ctrl').leaveEvent

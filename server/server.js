@@ -110,6 +110,7 @@ server.get("/api/me", ensureAuthenticated, routes.getUser);
 
 server.get("/api/events", ensureAuthenticated, routes.getEvents);
 server.post("/api/event", ensureAuthenticated, routes.createEvent);
+server.del("/api/event/:eventId", ensureAuthenticated, routes.deleteEvent);
 server.put("/api/event/:eventId/attendees", ensureAuthenticated, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", ensureAuthenticated, routes.leaveEvent);
 

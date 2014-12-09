@@ -73,6 +73,45 @@ module.exports = {
 
   },
 
+
+  deleteEvent: function (req, res, next) {
+    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+        return next(new errors.NotAuthorizedError('You can only join as your self'));
+    }
+
+    if(!req.params.eventId || req.params.eventId === 'undefined') {
+        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
+    }
+
+
+    Event.findById(req.params.eventId, 'creator attendees', function(err, event) {
+        if(err) {
+          req.log.error(err);
+          return next(new restify.errors.InternalError);
+        }
+
+        if(event.attendees.length > 1 ||
+          (event.attendees.length === 1 && event.attendees[0] !== req.user._id) ) {
+          return next(new errors.UnprocessableEntityError('Cannot delete an event with attendees'));
+        }
+
+        event.remove(function(err, event){
+          var response = {
+            removed: true,
+            eventId: event._id
+          };
+
+          res.json(response);
+          req.socketio.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
+
+        });
+
+        return next();
+
+    });
+
+  },
+
   joinEvent: function (req, res, next) {
     if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
         return next(new errors.NotAuthorizedError('You can only join as your self'));
