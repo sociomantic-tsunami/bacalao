@@ -12,6 +12,7 @@ module.exports = {
     JOINED_EVENT: null,
     LEAVE_EVENT: null,
     LEFT_EVENT: null,
+    REMOVED_EVENT: null,
     GOT_USER_INFO: null
   }),
 
@@ -20,6 +21,7 @@ module.exports = {
     LOGOUT: '/api/user',
     ME: '/api/me',
     EVENT: '/api/event',
+    DELETE_EVENT: '/api/event/[eventId]',
     EVENTS: '/api/events',
     JOIN_EVENT: '/api/event/[eventId]/attendees',
     LEAVE_EVENT: '/api/event/[eventId]/attendees'

@@ -18,7 +18,7 @@ var Backbone = require('backbone');
 // for debugging with the React Devtools
 window.React = React;
 
-// SocketUtils.init();
+SocketUtils.init();
 
 
 GeoLocationUtils.init();

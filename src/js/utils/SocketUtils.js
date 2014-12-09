@@ -27,6 +27,6 @@ var SocketUtils = {
     });
 
   }
-}
+};
 
-module.exports = SocketUtils
+module.exports = SocketUtils;

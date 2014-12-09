@@ -37,7 +37,24 @@ module.exports = {
   },
 
 
+  deleteEvent: function(eventId) {
+    var url = Endpoints.DELETE_EVENT.replace('[eventId]', eventId);
+
+    request
+      .del(url)
+      .on('error', function(err) {
+        console.error('API Error', err);
+      })
+      .end(function(res) {
+        // EventServerActionCreators.deletedEvent(res.body);
+      });
+  },
+
+
   joinEvent: function(eventId, userId) {
+    if(!eventId || !userId) {
+      console.error('invalid eventId/userId');
+    }
     var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
 
     request
@@ -48,13 +65,17 @@ module.exports = {
         console.error('API Error', err);
       })
       .end(function(res) {
-        // EventServerActionCreators.createdEvent(res.body)
+        EventServerActionCreators.joinedEvent(res.body);
       });
   },
 
 
   leaveEvent: function(eventId, userId) {
+    if(!eventId || !userId) {
+      console.error('invalid eventId/userId');
+    }
     var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
+
 
     request
       .del(url)
@@ -64,7 +85,7 @@ module.exports = {
         console.error('API Error', err);
       })
       .end(function(res) {
-        // EventServerActionCreators.createdEvent(res.body)
+        EventServerActionCreators.leftEvent(res.body);
       });
   }
 

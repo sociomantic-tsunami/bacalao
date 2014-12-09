@@ -127,19 +127,19 @@ var EventRow = React.createClass({
   },
 
   _onUserJoin: function(event) {
-    if(!this.props.key) {
+    if(!this.props.event._id) {
       console.error('cant join before its saved on the server')
       return;
     }
-    EventActionCreators.joinEvent(this.props.key);
+    EventActionCreators.joinEvent(this.props.event._id);
   },
 
   _onUserLeave: function(event) {
-    if(!this.props.key) {
+    if(!this.props.event._id) {
       console.error('cant leave before its saved on the server')
       return;
     }
-    EventActionCreators.leaveEvent(this.props.key);
+    EventActionCreators.leaveEvent(this.props.event._id);
   },
 });
 
