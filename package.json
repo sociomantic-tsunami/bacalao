@@ -43,6 +43,7 @@
   },
   "scripts": {
     "dev": "nodemon -w server/ server/server.js --development | bunyan & webpack -w --colors",
+    "devmap": "nodemon -w server/ server/server.js --development | bunyan & webpack -d -w --colors",
     "watch": "webpack -w -d --colors",
     "build": "webpack -p --colors --display-modules",
     "start": "node server/server.js --production"
