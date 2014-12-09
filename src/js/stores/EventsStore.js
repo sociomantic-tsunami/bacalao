@@ -74,7 +74,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       for (var i = _nodes.array.length - 1; i >= 0; i--) {
         // add server information based on the cid
         if(_nodes.array[i].cid === action.event.cid) {
-          _.extend(_nodes[i], _.omit(action.event, 'time'));
+          _.extend(_nodes.array[i], _.omit(action.event, 'time'));
           EventsStore.emitChange();
           return;
         }
