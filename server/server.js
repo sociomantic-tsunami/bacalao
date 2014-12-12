@@ -10,10 +10,9 @@ var logger = require('./utils/logger');
 var ensureAuthenticated = require('./utils/sessionUtils').ensureAuthenticated;
 var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
-var sessions = require("client-sessions");
+var cookieSessions = require("client-sessions");
 var passport = require('passport');
-
-
+var cookieConfig = require('./config/cookieSession');
 
 // Determine the environment
 var cmdlineEnv = process.argv[2] || 'default';
@@ -60,17 +59,7 @@ server.pre(function (request, response, next) {
 
 
 // Encrypted cookies for session persistance.
-server.use(sessions({
-  cookieName: config.cookieKey,
-  path: '/api',
-  secret: config.cookieSecret,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 30, // duration of the cookie in milliseconds, defaults to duration above
-    ephemeral: false, // when true, cookie expires when the browser closes
-    httpOnly: true, // when true, cookie is not accessible from javascript
-    secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
-  }
-}));
+server.use(cookieSessions(cookieConfig));
 
 
 // Encrypted cookies for session persistance.
@@ -133,17 +122,46 @@ mongoose.connection.once('open', function callback () {
 });
 
 
+  io.set('authorization', function (handshakeData, callback) {
+
+    var cookie = require('cookie');
+
+    var cookies = cookie.parse(handshakeData.headers.cookie);
+
+    if(!cookies.session) { // if no session cookie the user isn't logged in
+      return callback(null, false); // error first callback style
+    }
+
+    var parsedSession = cookieSessions.util.decode(cookieConfig, cookies.session);
+
+    if(parsedSession &&
+       parsedSession.content &&
+       parsedSession.content.passport &&
+       parsedSession.content.passport.user &&
+       parsedSession.content.passport.user._id) {
+
+      return callback(null, true); // allow to open connection
+    }
+
+    return callback(null, false); // not authenticated
+
+  });
+
+
 
 // Debugging for socket.io
-// var connections = 0;
-// io.sockets.on('connection', function (socket) {
-//   connections++;
-//   server.log.info('new socket connection: ', socket.id );
-//   socket.on('disconnect', function () {
-//     connections--;
-//   });
-// });
+var connections = 0;
+io.sockets.on('connection', function (socket) {
+  connections++;
+  server.log.info('new socket connection. open connections[%s]', connections);
+
+  socket.on('disconnect', function () {
+    connections--;
+  });
+});
+
 
 
 
 mongoose.connect(config.dburi);
+
