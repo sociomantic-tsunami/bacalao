@@ -7,6 +7,7 @@ var React = require('react/addons');
 var LandingComponent = require('./components/Landing.react');
 var AppComponent = require('./components/App.react');
 var UserAPIUtils = require('./utils/UserAPIUtils');
+var EventAPIUtils = require('./utils/EventAPIUtils');
 
 
 var Router = Backbone.Router.extend({
@@ -35,6 +36,8 @@ var Router = Backbone.Router.extend({
 
     welcome : function( ){
         UserAPIUtils.getUserInfo();
+        EventAPIUtils.getAllEvents();
+
 
         React.render(
             <AppComponent />,
