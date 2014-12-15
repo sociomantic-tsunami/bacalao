@@ -27,6 +27,9 @@ module.exports = function (passport, config) {
 
 
     User.findOne(conditions, function(err, oldUser) {
+      if(err) {
+        throw err;
+      }
       if(oldUser) {
         // User has alredy registered
         done(null, oldUser);
