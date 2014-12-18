@@ -1,7 +1,3 @@
-/**
- *  Backbone Router integrated into React
- */
-
 var React = require('react/addons');
 var LandingComponent = require('./components/Landing.react');
 var NewEventComponent = require('./components/NewEventRow.react');
