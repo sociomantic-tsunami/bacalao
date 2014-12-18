@@ -5,6 +5,9 @@ var AddEventButton = require('./AddEventButton.react');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
+
 require('../../sass/app.scss');
 require('../../sass/topbar.scss');
 
@@ -40,10 +43,8 @@ var App = React.createClass({
             </div>
           </div>
         </nav>
-        <Events
-          events={this.state.events}
-          user={this.state.user}
-        />
+        <RouteHandler/>
+
         <AddEventButton
           onClick={this.onAddEvent}
           isLoggedIn={this.state.user.loggedIn} />

@@ -17,17 +17,6 @@ module.exports = {
     GOT_USER_INFO: null
   }),
 
-  /**
-   * Routes object
-   *
-   * the actual routes are the values
-   */
-  Routes: {
-    landing: '',
-    welcome: 'welcome',
-    newEvent: 'event/new'
-  },
-
 
   Endpoints: {
     LOGOUT: '/api/user',

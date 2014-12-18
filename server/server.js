@@ -89,7 +89,7 @@ server.use(restify.requestLogger());
 // routes
 server.get("/auth/facebook", passport.authenticate('facebook'));
 server.get("/auth/facebook/callback", passport.authenticate('facebook'), function(req, res) {
-  res.header('Location', '/#welcome');
+  res.header('Location', '/#dashboard');
   res.send(302);
 });
 
