@@ -7,7 +7,7 @@
 
 // This file bootstraps the entire application.
 
-var Router = require('./router');
+var router = require('./router');
 var React = require('react');
 var SocketUtils = require('./utils/SocketUtils');
 var GeoLocationUtils = require('./utils/GeoLocationUtils');
@@ -21,5 +21,4 @@ SocketUtils.init();
 
 GeoLocationUtils.init();
 
-var router = new Router();
 Backbone.history.start();

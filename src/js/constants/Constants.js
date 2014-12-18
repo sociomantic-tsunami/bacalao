@@ -4,6 +4,7 @@ module.exports = {
 
   ActionTypes: keyMirror({
     RECEIVE_RAW_EVENTS: null,
+    CHANGE_ROUTE: null,
     GOT_LOCATION: null,
     INIT_USER: null,
     CREATE_EVENT: null,
@@ -15,6 +16,17 @@ module.exports = {
     REMOVED_EVENT: null,
     GOT_USER_INFO: null
   }),
+
+  /**
+   * Routes object
+   *
+   * the actual routes are the values
+   */
+  Routes: {
+    landing: '',
+    welcome: 'welcome',
+    newEvent: 'event/new'
+  },
 
 
   Endpoints: {

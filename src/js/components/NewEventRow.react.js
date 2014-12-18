@@ -14,7 +14,8 @@ var NewEventRow = React.createClass({
 
 
   propTypes: {
-   loggedIn: ReactPropTypes.bool.isRequired
+   loggedIn: ReactPropTypes.bool.isRequired,
+   onCreate: ReactPropTypes.func
   },
 
   getInitialState: function() {
@@ -127,6 +128,8 @@ var NewEventRow = React.createClass({
   _create: function() {
     NewEventRowActionCreators.createEvent(_.clone(this.state));
     this.replaceState(this.getInitialState());
+    this.props.onCreate && this.props.onCreate();
+
   }
 
 });

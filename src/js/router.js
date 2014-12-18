@@ -8,13 +8,27 @@ var LandingComponent = require('./components/Landing.react');
 var AppComponent = require('./components/App.react');
 var UserAPIUtils = require('./utils/UserAPIUtils');
 var EventAPIUtils = require('./utils/EventAPIUtils');
+var Constants = require('./constants/Constants');
+var ActionTypes = Constants.ActionTypes;
+var Routes = Constants.Routes;
+var AppDispatcher = require('./dispatcher/AppDispatcher');
+var _ = require('underscore');
 
+
+var _currentRoute = '';
 
 var Router = Backbone.Router.extend({
 
-    routes : {
-        ''       : 'landing',
-        'welcome' : 'welcome'
+    routes : _.invert(Routes),
+
+    initialize: function() {
+        AppDispatcher.register(_.bind(function(payload) {
+            var action = payload.action;
+            if(action.type === ActionTypes.CHANGE_ROUTE) {
+                this.navigate(action.route, { trigger: true });
+            }
+
+        }, this));
     },
 
     getReactContainer: function() {
@@ -34,7 +48,7 @@ var Router = Backbone.Router.extend({
     },
 
 
-    welcome : function( ){
+    welcome: function( ){
         UserAPIUtils.getUserInfo();
         EventAPIUtils.getAllEvents();
 
@@ -43,9 +57,17 @@ var Router = Backbone.Router.extend({
             <AppComponent />,
             this.getReactContainer()
         );
-    }
+    },
 
+    newEvent: function() {
+    // <NewEvent
+    //   loggedIn={this.state.user.loggedIn}
+    //   onCreate={this.hideNewEventForm}
+    //  />;
+    }
 
 });
 
-module.exports = Router;
+
+
+module.exports = new Router();

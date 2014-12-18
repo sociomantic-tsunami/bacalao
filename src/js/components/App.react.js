@@ -1,6 +1,7 @@
 var Events = require('./Events.react');
 var User = require('./User.react');
 var NewEvent = require('./NewEventRow.react');
+var AddEventButton = require('./AddEventButton.react');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
@@ -24,28 +25,28 @@ var App = React.createClass({
   componentDidMount: function() {
     EventsStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
+
   },
 
   render: function() {
-    var cx = React.addons.classSet;
 
     return (
       <div>
-          <div className="topbar">
-            <div className="col-md-12">
-              <h1 className="app-title">WIP</h1>
-              <div className="app-new-event">
-                <NewEvent loggedIn={this.state.user.loggedIn} />
-              </div>
-              <div className="app-user">
-                <User  user={this.state.user} />
-              </div>
+        <nav className="navbar navbar-fixed-top bacalao--navbar">
+          <div className="container-fluid">
+            <a className="navbar-brand">Bacalao</a>
+            <div className="nav navbar-nav navbar-right">
+              <User user={this.state.user} />
             </div>
           </div>
+        </nav>
         <Events
           events={this.state.events}
           user={this.state.user}
         />
+        <AddEventButton
+          onClick={this.onAddEvent}
+          isLoggedIn={this.state.user.loggedIn} />
       </div>
     );
   },
