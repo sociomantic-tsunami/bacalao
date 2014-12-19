@@ -31,10 +31,6 @@ var AddEventButton = React.createClass({
   },
 
   onClick: function() {
-    AppDispatcher.handleViewAction({
-      type: ActionTypes.CHANGE_ROUTE,
-      route: Routes.newEvent
-    });
   }
 
 });
