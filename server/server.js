@@ -89,7 +89,7 @@ server.use(restify.requestLogger());
 // routes
 server.get("/auth/facebook", passport.authenticate('facebook'));
 server.get("/auth/facebook/callback", passport.authenticate('facebook'), function(req, res) {
-  res.header('Location', '/#dashboard');
+  res.header('Location', '/app');
   res.send(302);
 });
 
@@ -103,10 +103,36 @@ server.del("/api/event/:eventId", ensureAuthenticated, routes.deleteEvent);
 server.put("/api/event/:eventId/attendees", ensureAuthenticated, routes.joinEvent);
 server.del("/api/event/:eventId/attendees", ensureAuthenticated, routes.leaveEvent);
 
-server.get(/.*/, restify.serveStatic({
-  directory: './public/',
-  default: 'index.html'
-}));
+server.get("/", function(req, res, next) {
+  if(req.user && req.user._id) {
+  // THE USER HAS THE COOKIE AND IS LOGGED IN
+    res.header('Location', '/app');
+    res.send(302);
+  } else {
+    // serve the landing page
+    // res.send('landing.html')
+    res.json({ message: 'welcome to landing page'});
+  }
+});
+
+server.get(/\/app\/?/, function(req, res, next) {
+  if(!req.user) {
+  // THE USER HAS THE COOKIE AND IS LOGGED IN
+    res.header('Location', '/');
+    res.send(302);
+  } else {
+    // serve the app page
+    // res.send('index.html')
+    res.json({ message: 'welcome to the BABYLON!'});
+  }
+});
+
+
+
+// server.get(/.*/, restify.serveStatic({
+//   directory: './public/',
+//   default: 'index.html'
+// }));
 
 
 mongoose.connection.on('error', console.error.bind(server.log, 'DB connection error:'));
