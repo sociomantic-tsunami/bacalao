@@ -4,7 +4,6 @@ module.exports = {
 
   ActionTypes: keyMirror({
     RECEIVE_RAW_EVENTS: null,
-    CHANGE_ROUTE: null,
     GOT_LOCATION: null,
     INIT_USER: null,
     CREATE_EVENT: null,
