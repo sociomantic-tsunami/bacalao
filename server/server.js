@@ -4,6 +4,7 @@
 var configExample = require('../config.example.json');
 var config = require('../config.json');
 var restify = require('restify');
+var fs = require('fs');
 var mongoose = require('mongoose');
 var routes = require('./routes');
 var logger = require('./utils/logger');
@@ -110,8 +111,9 @@ server.get("/", function(req, res, next) {
     res.send(302);
   } else {
     // serve the landing page
-    // res.send('landing.html')
-    res.json({ message: 'welcome to landing page'});
+    var landing = fs.readFileSync('./public/landing.html');
+    res.writeHead(200, {'Content-Type' : 'mimeType'});
+    res.end(landing);
   }
 });
 
