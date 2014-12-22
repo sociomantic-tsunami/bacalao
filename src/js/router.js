@@ -1,8 +1,9 @@
 var React = require('react/addons');
 var LandingComponent = require('./components/Landing.react');
 var NewEventComponent = require('./components/NewEventRow.react');
-var EventsComponent = require('./Events.react');
+var EventsComponent = require('./components/Events.react');
 var AppComponent = require('./components/App.react');
+var DashboardComponent = require('./components/Dashboard.react');
 var UserAPIUtils = require('./utils/UserAPIUtils');
 var EventAPIUtils = require('./utils/EventAPIUtils');
 var Constants = require('./constants/Constants');
@@ -18,28 +19,22 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var routes = (
-    <Route>
+    <Route handler={AppComponent}>
 
-        <Route name="landing" path="/" handler={LandingComponent}>
 
-        <Route name="app" path="/dashboard" handler={AppComponent}>
-            <Route name="" path="/event/new" handler={NewEventComponent}>
-            <DefaultRoute handler={EventsComponent}/>
+        <Route name="dashboard" path="/dashboard" handler={DashboardComponent}>
+            <Route name="new-event" path="event/new" handler={NewEventComponent} />
+            <DefaultRoute handler={EventsComponent} />
         </Route>
+
+        <DefaultRoute name="landing" handler={LandingComponent} />
     </Route>
 );
 
-// var getReactContainer = function() {
-//     var reactContainer = document.getElementsByClassName('js-react');
-//     if(reactContainer.length < 1) {
-//         console.error('Couldnt find the .js-react container');
-//         return false;
-//     }
-//     return reactContainer[0];
-// };
 
-Router.run(routes, function(Handler) {
-    React.render(<Handler />, document.getElementsByClassName('js-react')[0])
+
+module.exports = Router.create({
+    routes: routes
 });
 
 // var Router = Backbone.Router.extend({
@@ -95,4 +90,4 @@ Router.run(routes, function(Handler) {
 
 
 
-module.exports = new Router();
+// module.exports = new Router();
