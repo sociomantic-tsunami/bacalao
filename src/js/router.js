@@ -21,13 +21,10 @@ var RouteHandler = Router.RouteHandler;
 var routes = (
     <Route handler={AppComponent}>
 
-
-        <Route name="dashboard" path="/dashboard" handler={DashboardComponent}>
+        <DefaultRoute name="dashboard" path="/app" handler={DashboardComponent}>
             <Route name="new-event" path="event/new" handler={NewEventComponent} />
             <DefaultRoute handler={EventsComponent} />
-        </Route>
-
-        <DefaultRoute name="landing" handler={LandingComponent} />
+        </DefaultRoute>
     </Route>
 );
 

@@ -1,7 +1,6 @@
 var config = require('../../config.json');
 var restify = require('restify');
 var _ = require('underscore');
-var errors = require('restify').errors;
 
 var sessionUtils = {
 
