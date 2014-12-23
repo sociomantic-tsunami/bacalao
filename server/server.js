@@ -37,8 +37,11 @@ _.each(configExample, function(val, k) {
 });
 
 // create server instance
-var server = new Hapi.Server();
+var server = new Hapi.Server({ connections: { router: {stripTrailingSlash: true }}});
 server.connection({ port: config.port });
+
+
+require('./config/bell')(server);
 
 
 // Encrypted cookies for session persistance.
@@ -87,21 +90,21 @@ server.route([
       reply.file('./public/index.html');
     }
   },
-  {
-    method: 'GET',
-    path: '/auth/facebook',
-    handler: passport.authenticate('facebook')
-  },
-  {
-    method: 'GET',
-    path: '/auth/facebook/callback',
-    handler: function(reqst, reply) {
-      passport.authenticate('facebook');
-      // if successful redirect to app...
-      // res.send(302);
-      // res.redirect....
-    }
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/auth/facebook',
+  //   handler: passport.authenticate('facebook')
+  // },
+  // {
+  //   method: 'GET',
+  //   path: '/auth/facebook/callback',
+  //   handler: function(reqst, reply) {
+  //     passport.authenticate('facebook');
+  //     // if successful redirect to app...
+  //     // res.send(302);
+  //     // res.redirect....
+  //   }
+  // },
   {
     method: 'DELETE',
     path: '/api/user',
@@ -111,8 +114,10 @@ server.route([
   {
     method: 'GET',
     path: '/api/me',
-    // ensureAuthenticated
-    handler: routes.getUser
+    handler: routes.getUser,
+    config: {
+      auth: 'facebook'
+    }
   },
   {
     method: 'GET',
