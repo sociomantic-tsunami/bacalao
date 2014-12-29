@@ -14,7 +14,7 @@ var NewEventRow = React.createClass({
 
 
   propTypes: {
-   loggedIn: ReactPropTypes.bool.isRequired,
+   user: ReactPropTypes.object.isRequired,
    onCreate: ReactPropTypes.func
   },
 
@@ -32,7 +32,7 @@ var NewEventRow = React.createClass({
   render: function() {
     var cx = React.addons.classSet;
     var createButtonClasses = cx({
-      'disabled': !(this.state.venue && this.state.details && this.props.loggedIn)
+      'disabled': !(this.state.venue && this.state.details && this.props.user.loggedIn)
     });
 
 
