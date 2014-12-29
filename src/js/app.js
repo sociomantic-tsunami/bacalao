@@ -13,6 +13,7 @@ var SocketUtils = require('./utils/SocketUtils');
 var GeoLocationUtils = require('./utils/GeoLocationUtils');
 var RouterActionCreators = require('./actions/RouterActionCreators');
 var UserAPIUtils = require('./utils/UserAPIUtils');
+var EventAPIUtils = require('./utils/EventAPIUtils');
 
 
 
@@ -26,6 +27,7 @@ window.React = React;
 // SocketUtils.init();
 GeoLocationUtils.init();
 UserAPIUtils.getUserInfo();
+EventAPIUtils.getAllEvents();
 
 
 var getReactContainer = function() {
