@@ -6,7 +6,6 @@ var Good = require('good');
 var configExample = require('../config.example.json');
 var config = require('../config.json');
 var mongoose = require('mongoose');
-var routes = require('./routes');
 var ensureAuthenticated = require('./utils/sessionUtils').ensureAuthenticated;
 var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
@@ -44,19 +43,7 @@ server.connection({ port: config.port });
 require('./config/bell')(server);
 
 
-// Encrypted cookies for session persistance.
-// server.use(cookieSessions(cookieConfig));
-
-
-// Encrypted cookies for session persistance.
-// server.use(passport.initialize());
-// server.use(passport.session());
-// require('./config/passport')(passport, config);
-
-
-
 // var io = require('socket.io')(server.server);
-
 
 // inject the global socket.io obect to all requests
 // server.use(function(req, res, next) {
@@ -109,12 +96,12 @@ server.route([
   {
     method: 'GET',
     path: '/auth/logout',
-    handler: routes.logout
+    handler: require('./controllers/user.ctrl').logout
   },
   {
     method: 'GET',
     path: '/api/me',
-    handler: routes.getUser,
+    handler: require('./controllers/user.ctrl').getUser,
     config: {
       auth: 'session'
     }
@@ -122,81 +109,60 @@ server.route([
   {
     method: 'GET',
     path: '/api/events',
-    // ensureAuthenticated
-    handler: routes.getEvents
+    handler: require('./controllers/event.ctrl').getEvents,
+    config: {
+      auth: 'session'
+    }
   },
   {
     method: 'POST',
     path: '/api/event',
-    // ensureAuthenticated
-    handler: routes.createEvent
+    handler: require('./controllers/event.ctrl').createEvent,
+    config: {
+      auth: 'session'
+    }
   },
   {
     method: 'DELETE',
     path: '/api/event/{eventId}',
-    // ensureAuthenticated
-    handler: routes.deleteEvent
+    handler: require('./controllers/event.ctrl').deleteEvent,
+    config: {
+      auth: 'session'
+    }
   },
   {
     method: 'PUT',
     path: '/api/event/{eventId}/attendees',
-    // ensureAuthenticated
-    handler: routes.joinEvent
+    handler: require('./controllers/event.ctrl').joinEvent,
+    config: {
+      auth: 'session'
+    }
   },
   {
     method: 'DELETE',
     path: '/api/event/{eventId}/attendees',
-    // ensureAuthenticated
-    handler: routes.leaveEvent
+    handler: require('./controllers/event.ctrl').leaveEvent,
+    config: {
+      auth: 'session'
+    }
   }
 ]);
 
 
 
-// server.get(/.*/, restify.serveStatic({
-//   directory: './public/',
-//   default: 'index.html'
-// }));
-
-
-// server.get("/", function(req, res, next) {
-//   if(req.user && req.user._id) {
-//   // THE USER HAS THE COOKIE AND IS LOGGED IN
-//     res.header('Location', '/app');
-//     res.send(302);
-//   } else {
-//     // serve the landing page
-//     // res.send('landing.html')
-//     res.json({ message: 'welcome to landing page'});
-//   }
-// });
-
-// server.get(/\/app\/?/, function(req, res, next) {
-//   if(!req.user) {
-//   // THE USER HAS THE COOKIE AND IS LOGGED IN
-//     res.header('Location', '/');
-//     res.send(302);
-//   } else {
-//     // serve the app page
-//     // res.send('index.html')
-//     res.json({ message: 'welcome to the BABYLON!'});
-//   }
-// });
-
 server.register({
   register: Good,
   options: {
-      reporters: [{
-          reporter: require('good-console'),
-          args:[{ log: '*', response: '*' }]
-      }]
+    reporters: [{
+        reporter: require('good-console'),
+        args:[{ log: '*', response: '*' }]
+    }]
   }
-  },
-  function (err) {
+}, function (err) {
     if (err) {
       throw err;
     }
- });
+  });
 
 
 
