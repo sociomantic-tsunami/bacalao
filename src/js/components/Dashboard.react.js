@@ -1,6 +1,5 @@
 var Events = require('./Events.react');
-var User = require('./User.react');
-var Navbar = require('./User.react');
+var Navbar = require('./Navbar.react');
 var NewEvent = require('./NewEventRow.react');
 var AddEventButton = require('./AddEventButton.react');
 var React = require('react/addons');

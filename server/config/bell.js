@@ -16,11 +16,19 @@ module.exports = function(server) {
 			clientSecret: config.facebookAppSecret,
 			isSecure: false
 		});
+
+		server.auth.strategy('session', 'cookie', {
+			password: config.cookieSecret,
+			cookie: config.cookieKey,
+			redirectTo: '/',
+			isSecure: false
+		});
+
 	});
 
 
 	server.route({
-		method: ['GET', 'POST'],
+		method: ['GET'],
 		path: '/auth/facebook',
 		config: {
 			auth: 'facebook',
@@ -31,9 +39,6 @@ module.exports = function(server) {
 				    return reply('Login Failed');
 				}
 
-				server.log('debug', _.keys(request.auth.credentials));
-
-				// server.log('debug', request.auth.credentials);
 				var credentials = request.auth.credentials;
 
 				var conditions = {
@@ -74,7 +79,7 @@ module.exports = function(server) {
 
 						// User has alredy registered
 					    request.auth.session.set({
-					        _id: oldUser._id
+					        _id: newUser._id
 					    });
 						return reply.redirect('/app');
 					});

@@ -13,27 +13,7 @@ module.exports = {
         console.error('API Error', err);
       })
       .end(function(res) {
-        if(res.unauthorized) {
-          // redirect to landing page if unauthorized
-          Backbone.history.navigate("", {trigger: true, replace: true});
-          return;
-        }
-
         UserServerActionCreators.gotUserInfo(res.body);
       });
-  },
-
-
-  logout: function() {
-    request
-      .del(Constants.Endpoints.LOGOUT)
-      .on('error', function(err) {
-        console.error('API Logout Error', err);
-      })
-      .end(function() {
-        Backbone.history.navigate("", {trigger: true, replace: true});
-        UserServerActionCreators.loggedOutAPI();
-      });
   }
-
 };

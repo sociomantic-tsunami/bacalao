@@ -4,9 +4,5 @@ var UserAPIUtils = require('../utils/UserAPIUtils');
 
 module.exports = {
 
-  logout : function() {
-    UserAPIUtils.logout();
-  }
-
 };
 

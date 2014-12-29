@@ -80,7 +80,18 @@ server.route([
     method: 'GET',
     path: '/',
     handler: function(request, reply) {
+      if(request.auth.isAuthenticated) {
+          return reply.redirect('/app');
+      }
       reply.file('./public/landing.html');
+    },
+    config: {
+      auth: {
+        mode: 'try',
+        strategy: 'session'
+      },
+      // Disable the automatic redirect if the user is not logged in.
+      plugins: { 'hapi-auth-cookie': { redirectTo: false } }
     }
   },
   {
@@ -88,27 +99,16 @@ server.route([
     path: '/app',
     handler: function(request, reply) {
       reply.file('./public/index.html');
+    },
+    config: {
+      auth: {
+        strategy: 'session'
+      }
     }
   },
-  // {
-  //   method: 'GET',
-  //   path: '/auth/facebook',
-  //   handler: passport.authenticate('facebook')
-  // },
-  // {
-  //   method: 'GET',
-  //   path: '/auth/facebook/callback',
-  //   handler: function(reqst, reply) {
-  //     passport.authenticate('facebook');
-  //     // if successful redirect to app...
-  //     // res.send(302);
-  //     // res.redirect....
-  //   }
-  // },
   {
-    method: 'DELETE',
-    path: '/api/user',
-    // ensureAuthenticated
+    method: 'GET',
+    path: '/auth/logout',
     handler: routes.logout
   },
   {
@@ -116,7 +116,7 @@ server.route([
     path: '/api/me',
     handler: routes.getUser,
     config: {
-      auth: 'facebook'
+      auth: 'session'
     }
   },
   {

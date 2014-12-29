@@ -12,6 +12,7 @@ var React = require('react');
 var SocketUtils = require('./utils/SocketUtils');
 var GeoLocationUtils = require('./utils/GeoLocationUtils');
 var RouterActionCreators = require('./actions/RouterActionCreators');
+var UserAPIUtils = require('./utils/UserAPIUtils');
 
 
 
@@ -24,6 +25,7 @@ if(window.location.hash === '#_=_') {
 window.React = React;
 // SocketUtils.init();
 GeoLocationUtils.init();
+UserAPIUtils.getUserInfo();
 
 
 var getReactContainer = function() {

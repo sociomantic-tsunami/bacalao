@@ -2,7 +2,6 @@ var React = require('react/addons');
 var LandingComponent = require('./components/Landing.react');
 var NewEventComponent = require('./components/NewEventRow.react');
 var EventsComponent = require('./components/Events.react');
-var AppComponent = require('./components/App.react');
 var DashboardComponent = require('./components/Dashboard.react');
 var UserAPIUtils = require('./utils/UserAPIUtils');
 var EventAPIUtils = require('./utils/EventAPIUtils');
@@ -19,12 +18,9 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var routes = (
-    <Route handler={AppComponent}>
-
-        <DefaultRoute name="dashboard" path="/app" handler={DashboardComponent}>
-            <Route name="new-event" path="event/new" handler={NewEventComponent} />
-            <DefaultRoute handler={EventsComponent} />
-        </DefaultRoute>
+    <Route path="/" handler={DashboardComponent}>
+        <Route name="new-event" path="/event/new" handler={NewEventComponent} />
+        <DefaultRoute handler={EventsComponent} />
     </Route>
 );
 
@@ -33,58 +29,3 @@ var routes = (
 module.exports = Router.create({
     routes: routes
 });
-
-// var Router = Backbone.Router.extend({
-
-//     routes : _.invert(Routes),
-
-//     // initialize: function() {
-//     //     AppDispatcher.register(_.bind(function(payload) {
-//     //         var action = payload.action;
-//     //         if(action.type === ActionTypes.CHANGE_ROUTE) {
-//     //             this.navigate(action.route, { trigger: true });
-//     //         }
-
-//     //     }, this));
-//     // },
-
-//     getReactContainer: function() {
-//         var reactContainer = document.getElementsByClassName('js-react');
-//         if(reactContainer.length < 1) {
-//             console.error('Couldnt find the .js-react container');
-//             return false;
-//         }
-//         return reactContainer[0];
-//     },
-
-//     landing: function() {
-//         React.render(
-//             <LandingComponent />,
-//             this.getReactContainer()
-//         );
-//     },
-
-
-//     welcome: function( ){
-//         UserAPIUtils.getUserInfo();
-//         EventAPIUtils.getAllEvents();
-
-
-//         React.render(
-//             <AppComponent />,
-//             this.getReactContainer()
-//         );
-//     },
-
-//     newEvent: function() {
-//     // <NewEvent
-//     //   loggedIn={this.state.user.loggedIn}
-//     //   onCreate={this.hideNewEventForm}
-//     //  />;
-//     }
-
-// });
-
-
-
-// module.exports = new Router();

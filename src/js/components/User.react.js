@@ -1,10 +1,9 @@
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
-var UserActionCreators = require('../actions/UserActionCreators');
 var Button = require('react-bootstrap').Button;
-require('../../sass/user.scss');
+var Constants = require('../constants/Constants');
 
-var ENTER_KEY_CODE = 13;
+require('../../sass/user.scss');
 
 var User = React.createClass({
 
@@ -20,29 +19,22 @@ var User = React.createClass({
               <img className="user--profile-pic" src={this._getImgSrc()} />
               <span className="user--greeting">Hello {this.props.user.firstName}!</span>
             </div>
-            <Button className="user--logout-button" bsSize="medium" bsStyle="info" onClick={this._onLogout}>
+            <Button href={Constants.Endpoints.LOGOUT} className="user--logout-button" bsSize="medium" bsStyle="info" >
                 Logout
             </Button>
           </div>
-            );
+        );
     } else {
       return(
         <div className="user">
-          <Button href="/auth/facebook" className="user--login-button" bsSize="medium" bsStyle="info" onClick={this._onLogin}>
-            Login FB
-          </Button>
         </div>
-        );
+      );
     }
   },
 
   _getImgSrc: function() {
     return "http://graph.facebook.com/" + this.props.user.serviceUserId + "/picture";
-  },
-
-  _onLogout: function() {
-    UserActionCreators.logout()
-  },
+  }
 
 });
 
