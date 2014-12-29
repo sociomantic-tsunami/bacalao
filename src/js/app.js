@@ -14,6 +14,12 @@ var GeoLocationUtils = require('./utils/GeoLocationUtils');
 var RouterActionCreators = require('./actions/RouterActionCreators');
 
 
+
+// Clean the hash after login redirect
+if(window.location.hash === '#_=_') {
+    window.location.hash = '#/';
+}
+
 // for debugging with the React Devtools
 window.React = React;
 // SocketUtils.init();
