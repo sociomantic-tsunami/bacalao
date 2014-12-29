@@ -3,15 +3,12 @@
 */
 var Hapi = require('hapi');
 var Good = require('good');
+var Joi = require('joi');
 var configExample = require('../config.example.json');
 var config = require('../config.json');
 var mongoose = require('mongoose');
-var ensureAuthenticated = require('./utils/sessionUtils').ensureAuthenticated;
 var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
-var cookieSessions = require("client-sessions");
-var passport = require('passport');
-var cookieConfig = require('./config/cookieSession');
 
 // Determine the environment
 var cmdlineEnv = process.argv[2] || 'default';
@@ -103,7 +100,17 @@ server.route([
     path: '/api/me',
     handler: require('./controllers/user.ctrl').getUser,
     config: {
-      auth: 'session'
+      auth: 'session',
+      // response: {
+      //   schema: {
+      //     _id: Joi.string(),
+      //     firstName: Joi.string(),
+      //     lastName: Joi.string(),
+      //     email: Joi.string().email(),
+      //     service: Joi.string(),
+      //     picture: Joi.string()
+      //   }
+      // }
     }
   },
   {
@@ -111,7 +118,10 @@ server.route([
     path: '/api/events',
     handler: require('./controllers/event.ctrl').getEvents,
     config: {
-      auth: 'session'
+      auth: 'session',
+      validate: {
+        query: false
+      }
     }
   },
   {
@@ -119,7 +129,18 @@ server.route([
     path: '/api/event',
     handler: require('./controllers/event.ctrl').createEvent,
     config: {
-      auth: 'session'
+      auth: 'session',
+      validate: {
+        payload: {
+          attendees: Joi.array().includes(Joi.string()),
+          cid: Joi.string(),
+          creator: Joi.string().required(),
+          details: Joi.string(),
+          maxAttendees: Joi.number().integer(),
+          time: Joi.date(),
+          venue: Joi.object()
+        }
+      }
     }
   },
   {

@@ -6,11 +6,12 @@ var clientConstants = require('../../src/js/constants/Constants');
 var errors = require('restify').errors;
 var moment = require('moment');
 var sessionUtils = require('../utils/sessionUtils');
+var Boom = require('boom');
 
 
 module.exports = {
 
-  getEvents: function (req, res, next) {
+  getEvents: function (request, reply) {
     var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
 
     Event
@@ -20,50 +21,41 @@ module.exports = {
       .populate('creator', 'firstName lastName picture')
       .exec(function (err, events) {
         if(err) {
-          req.log.error(err);
-          return next(new restify.errors.InternalError);
+          return reply(Boom.badImplementation(err));
         }
-        res.json(events);
-        return next();
+
+        reply(events);
       });
 
   },
 
-  createEvent: function (req, res, next) {
+  createEvent: function (request, reply) {
+      // check the creator === request.auth.id
       var saveParams = 'venue time maxAttendees creator attendees details'.split(' ');
       var resParams = saveParams.concat('_id', 'cid');
-      var paramsToSave = _.pick(req.params, saveParams);
+      var paramsToSave = _.pick(request.payload, saveParams);
 
       var newEvent = new Event(paramsToSave);
       newEvent.save(function (err, newEvent)
       {
         if(err) {
-          req.log.error(err);
-          if(err.name === 'ValidationError') {
-            // TODO - pass the validation errors to the client
-            return next(new restify.errors.BadRequestError());
-          } else {
-            return next(new restify.errors.InternalError);
-          }
+            return reply(Boom.badImplementation(err));
         }
-        req.log.info('Created event _id:' + newEvent._id );
 
         newEvent
           .populate('attendees', 'firstName lastName picture')
           .populate('creator', 'firstName lastName picture', function(err, newEvent) {
             if(err) {
-              req.log.error(err);
-              return next(new restify.errors.InternalError);
+              return reply(Boom.badImplementation(err));
             }
             var response = _.pick(newEvent, resParams);
-            response.cid = req.params.cid;
-            res.json(response);
+            response.cid = request.payload.cid;
+            return reply(response);
             // makes more sense to use this - socket.broadcast.emit('hi');
             // which doesn't send to this socket.
             // TODO - use this once sockets are integrated with sessions
-            req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response,
-              'cid'));
-            return next();
+            // req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response,
+            //   'cid'));
 
           });
 
