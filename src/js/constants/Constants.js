@@ -28,9 +28,4 @@ module.exports = {
     LEAVE_EVENT: '/api/event/[eventId]/attendees'
   }
 
-  // PayloadSources: keyMirror({
-  //   SERVER_ACTION: null,
-  //   VIEW_ACTION: null
-  // })
-
 };

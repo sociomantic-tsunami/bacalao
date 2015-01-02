@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var LandingComponent = require('./components/Landing.react');
-var NewEventComponent = require('./components/NewEventRow.react');
+var NewEventComponent = require('./components/NewEventForm.react');
 var EventsComponent = require('./components/Events.react');
 var DashboardComponent = require('./components/Dashboard.react');
 var UserAPIUtils = require('./utils/UserAPIUtils');

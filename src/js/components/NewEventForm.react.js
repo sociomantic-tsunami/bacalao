@@ -1,4 +1,4 @@
-var NewEventRowActionCreators = require('../actions/NewEventRowActionCreators');
+var EventActionCreators = require('../actions/EventActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
@@ -12,7 +12,7 @@ var Navigation = require('react-router').Navigation;
 
 
 
-var NewEventRow = React.createClass({
+var NewEventForm = React.createClass({
 
   mixins: [Navigation],
 
@@ -76,8 +76,13 @@ var NewEventRow = React.createClass({
     this.transitionTo('dashboard');
   },
 
+
+  _getVenueEl: function() {
+    return this.getDOMNode().getElementsByClassName('js-venue-search')[0];
+  },
+
   componentDidMount: function() {
-    var venueEl = this.getDOMNode().getElementsByClassName('js-venue-search')[0];
+    var venueEl = this._getVenueEl();
     var autocompleteOpts = {
       types: ['establishment']
     };
@@ -98,6 +103,12 @@ var NewEventRow = React.createClass({
     google.maps.event.addListener(this.autocomplete, 'place_changed', this._onGoogleVenueChange);
   },
 
+
+  componentWillUnmount: function() {
+    this.autocomplete.unbindAll();
+    google.maps.event.clearInstanceListeners(this._getVenueEl());
+
+  },
 
   _onTimeChange: function(e) {
     this.setState({ time: e.target.value });
@@ -133,7 +144,7 @@ var NewEventRow = React.createClass({
   },
 
   _create: function() {
-    NewEventRowActionCreators.createEvent(_.clone(this.state));
+    EventActionCreators.createEvent(_.clone(this.state));
     this.replaceState(this.getInitialState());
     this.props.onCreate && this.props.onCreate();
     this.transitionTo('dashboard');
@@ -141,4 +152,4 @@ var NewEventRow = React.createClass({
 
 });
 
-module.exports = NewEventRow;
+module.exports = NewEventForm;

@@ -1,6 +1,5 @@
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
-var AddEventActionCreators = require('../actions/UserActionCreators');
 var Button = require('react-bootstrap').Button;
 
 var ReactRouterBootstrap = require('react-router-bootstrap');

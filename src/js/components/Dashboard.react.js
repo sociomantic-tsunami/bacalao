@@ -1,6 +1,6 @@
 var Events = require('./Events.react');
 var Navbar = require('./Navbar.react');
-var NewEvent = require('./NewEventRow.react');
+var NewEvent = require('./NewEventForm.react');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
@@ -36,7 +36,6 @@ var App = React.createClass({
     return (
       <div>
         <Navbar user={this.state.user} />
-        <h1>Dashboard</h1>
         <RouteHandler user={this.state.user} events={this.state.events} />
       </div>
     );
