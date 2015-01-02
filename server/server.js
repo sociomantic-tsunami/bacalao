@@ -242,3 +242,5 @@ mongoose.connection.once('open', function callback () {
 
 mongoose.connect(config.dburi);
 
+
+module.exports = server;
