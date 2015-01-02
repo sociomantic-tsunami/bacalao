@@ -5,13 +5,16 @@ var _ = require('underscore');
 var Badge = require('react-bootstrap').Badge;
 var Button = require('react-bootstrap').Button;
 var Input = require('react-bootstrap').Input;
+var Modal = require('react-bootstrap').Modal;
 var moment = require('moment');
 require('../../sass/new_event_form.scss');
+var Navigation = require('react-router').Navigation;
 
 
 
 var NewEventRow = React.createClass({
 
+  mixins: [Navigation],
 
   propTypes: {
    user: ReactPropTypes.object.isRequired,
@@ -38,7 +41,7 @@ var NewEventRow = React.createClass({
 
 
     return (
-      <div className="new-event__box">
+      <Modal title="New Event" onRequestHide={this._close}>
             <Input
               type="time"
               label="Time"
@@ -64,10 +67,14 @@ var NewEventRow = React.createClass({
             <Button bsSize="medium" bsStyle="info"
             className={createButtonClasses} onClick={this._create}>
             Create</Button>
-      </div>
+      </Modal>
     );
   },
 
+
+  _close: function(e) {
+    this.transitionTo('dashboard');
+  },
 
   componentDidMount: function() {
     var venueEl = this.getDOMNode().getElementsByClassName('js-venue-search')[0];
@@ -129,7 +136,7 @@ var NewEventRow = React.createClass({
     NewEventRowActionCreators.createEvent(_.clone(this.state));
     this.replaceState(this.getInitialState());
     this.props.onCreate && this.props.onCreate();
-
+    this.transitionTo('dashboard');
   }
 
 });

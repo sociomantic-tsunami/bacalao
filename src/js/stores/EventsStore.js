@@ -28,7 +28,11 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
     return _nodes.array;
   },
 
-  getFirstForSaving: function() {
+  getLastCreatedForAPI: function() {
+    if(lastAddedIndex === -1) {
+      console.error('No element found');
+      return;
+    }
     var lastAdded = _.clone(_nodes.array[lastAddedIndex]);
     if(lastAdded._id) {
       console.error('The event is already saved');
@@ -44,6 +48,8 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
 
 EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
+  var i,k;
+
   switch(action.type) {
     case ActionTypes.RECEIVE_RAW_EVENTS:
       var toAdd = _.map(action.rawEvents, function(node) {
@@ -71,7 +77,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       }
 
       // second case: this client created the event
-      for (var i = _nodes.array.length - 1; i >= 0; i--) {
+      for (i = _nodes.array.length - 1; i >= 0; i--) {
         // add server information based on the cid
         if(_nodes.array[i].cid === action.event.cid) {
           _.extend(_nodes.array[i], _.omit(action.event, 'time'));
@@ -97,7 +103,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.JOIN_EVENT:
-        for (var i = _nodes.array.length - 1; i >= 0; i--) {
+        for (i = _nodes.array.length - 1; i >= 0; i--) {
           if(_nodes.array[i]._id === action.eventId) {
             _nodes.array[i].attendees.push(UserStore.getBasicUser());
             break;
@@ -110,7 +116,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
     // action.event = { eventId: ..., user: {...} }
     // add the user to the attendees if he's not already there
     case ActionTypes.JOINED_EVENT:
-        for (var i = _nodes.array.length - 1; i >= 0; i--) {
+        for (i = _nodes.array.length - 1; i >= 0; i--) {
           if(_nodes.array[i]._id === action.event.eventId) {
             if(! _.some(_nodes.array[i].attendees, function(attendee) { return attendee._id == action.event.user._id })) {
               _nodes.array[i].attendees.push(action.event.user);
@@ -122,9 +128,9 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.LEAVE_EVENT:
-        for (var i = _nodes.array.length - 1; i >= 0; i--) {
+        for (i = _nodes.array.length - 1; i >= 0; i--) {
           if(_nodes.array[i]._id === action.eventId) {
-            for (var k = _nodes.array[i].attendees.length - 1; k >= 0; k--) {
+            for (k = _nodes.array[i].attendees.length - 1; k >= 0; k--) {
               if(_nodes.array[i].attendees[k]._id === UserStore.getUserId()) {
                 _nodes.array[i].attendees.splice(k, 1);
                 EventsStore.emitChange();
@@ -139,9 +145,9 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
     // action.event = { eventId: ..., userId: ... }
     // add the user to the attendees if he's not already there
     case ActionTypes.LEFT_EVENT:
-        for (var i = _nodes.array.length - 1; i >= 0; i--) {
+        for (i = _nodes.array.length - 1; i >= 0; i--) {
           if(_nodes.array[i]._id === action.event.eventId) {
-            for (var k = _nodes.array[i].attendees.length - 1; k >= 0; k--) {
+            for (k = _nodes.array[i].attendees.length - 1; k >= 0; k--) {
               if(_nodes.array[i].attendees[k]._id === action.event.userId) {
                 _nodes.array[i].attendees.splice(k, 1);
                 EventsStore.emitChange();

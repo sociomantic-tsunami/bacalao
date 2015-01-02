@@ -6,8 +6,8 @@ var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
 var JoinLeaveButton = require('./JoinLeaveButton.react');
 var Glyphicon = require('react-bootstrap').Glyphicon;
-var moment = require('moment')
-var OverlayTrigger = require('react-bootstrap').OverlayTrigger;
+var moment = require('moment');
+
 require('../../sass/event.scss');
 
 var getAttendee = function(attendee) {

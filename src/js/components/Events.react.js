@@ -2,6 +2,7 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Event = require('./Event.react');
+var AddEventButton = require('./AddEventButton.react');
 
 require('../../sass/outline.scss');
 
@@ -30,6 +31,9 @@ var Events = React.createClass({
         <div className="events__columns">
             {events}
         </div>
+        <AddEventButton
+          onClick={this.onAddEvent}
+          isLoggedIn={this.props.user.loggedIn} />
       </div>
     );
 

@@ -12,7 +12,7 @@ module.exports = {
           event: event
         });
 
-        EventAPIUtils.createEvent(EventsStore.getFirstForSaving());
+        EventAPIUtils.createEvent(EventsStore.getLastCreatedForAPI());
     }
 
 

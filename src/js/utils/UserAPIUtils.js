@@ -1,7 +1,6 @@
 var UserServerActionCreators = require('../actions/UserServerActionCreators');
 var Constants = require('../constants/Constants');
 var request = require('superagent');
-var Backbone = require('backbone');
 
 
 module.exports = {

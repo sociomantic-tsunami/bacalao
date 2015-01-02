@@ -18,7 +18,7 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var routes = (
-    <Route path="/" handler={DashboardComponent}>
+    <Route name="dashboard" path="/" handler={DashboardComponent}>
         <Route name="new-event" path="/event/new" handler={NewEventComponent} />
         <DefaultRoute handler={EventsComponent} />
     </Route>

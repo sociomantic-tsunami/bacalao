@@ -1,7 +1,6 @@
 var Events = require('./Events.react');
 var Navbar = require('./Navbar.react');
 var NewEvent = require('./NewEventRow.react');
-var AddEventButton = require('./AddEventButton.react');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
@@ -39,10 +38,6 @@ var App = React.createClass({
         <Navbar user={this.state.user} />
         <h1>Dashboard</h1>
         <RouteHandler user={this.state.user} events={this.state.events} />
-
-        <AddEventButton
-          onClick={this.onAddEvent}
-          isLoggedIn={this.state.user.loggedIn} />
       </div>
     );
   },

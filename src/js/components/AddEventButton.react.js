@@ -3,34 +3,29 @@ var ReactPropTypes = React.PropTypes;
 var AddEventActionCreators = require('../actions/UserActionCreators');
 var Button = require('react-bootstrap').Button;
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var Constants = require('../constants/Constants');
-var ActionTypes = Constants.ActionTypes;
-var Routes = Constants.Routes;
+var ReactRouterBootstrap = require('react-router-bootstrap');
+// var NavItemLink = ReactRouterBootstrap.NavItemLink;
+var ButtonLink = ReactRouterBootstrap.ButtonLink;
 
 require('../../sass/AddEventButton.scss');
 
 var AddEventButton = React.createClass({
 
   propTypes: {
-    isLoggedIn: ReactPropTypes.bool.isRequired,
-    onClick: ReactPropTypes.func
+    isLoggedIn: ReactPropTypes.bool.isRequired
   },
 
   render: function() {
     return (
-      <Button
+      <ButtonLink
+        to="new-event"
         disabled={!this.props.isLoggedIn}
         className="add-event-button"
         bsSize="large"
-        bsStyle="success"
-        onClick={this.onClick}>
+        bsStyle="success">
           +
-      </Button>
+      </ButtonLink>
     );
-  },
-
-  onClick: function() {
   }
 
 });
