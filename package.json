@@ -28,6 +28,7 @@
     "react": "~0.12",
     "react-bootstrap": "~0.13.0",
     "react-router": "^0.11.6",
+    "react-router-bootstrap": "^0.7.2",
     "sass-loader": "~0.2.0",
     "socket.io": "^1.1.0",
     "socket.io-client": "^1.1.0",
@@ -37,23 +38,26 @@
   },
   "devDependencies": {
     "browserify": "~4.2.2",
+    "code": "^1.2.1",
+    "css-loader": "~0.9.0",
     "envify": "~2.0.1",
     "jest-cli": "~0.1.17",
+    "json-loader": "~0.5.1",
+    "jsx-loader": "~0.12.2",
+    "lab": "^5.1.1",
     "reactify": "~0.14.0",
     "statics": "~0.1.0",
+    "style-loader": "~0.8.1",
     "uglify-js": "~2.4.15",
     "watchify": "^1.0.6",
-    "webpack": "~1.4.8",
-    "jsx-loader": "~0.12.2",
-    "json-loader": "~0.5.1",
-    "style-loader": "~0.8.1",
-    "css-loader": "~0.9.0"
+    "webpack": "~1.4.8"
   },
   "scripts": {
     "dev": "nodemon -w server/ server/server.js --development | bunyan & webpack -w --colors",
     "devmap": "nodemon -w server/ server/server.js --development | bunyan & webpack -d -w --colors",
     "watch": "webpack -w -d --colors",
     "build": "webpack -p --colors --display-modules",
-    "start": "node server/server.js --production"
+    "start": "node server/server.js --production",
+    "test": "./node_modules/lab/bin/lab -c"
   }
 }
