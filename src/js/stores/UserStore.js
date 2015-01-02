@@ -65,13 +65,6 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
 
       break;
 
-    case ActionTypes.LOGGED_OUT_API:
-      _user = {
-        loggedIn : false
-      };
-      UserStore.emitChange();
-      break;
-
     default:
       // do nothing
   }
