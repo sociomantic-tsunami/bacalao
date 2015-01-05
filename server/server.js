@@ -65,43 +65,47 @@ server.route([
   {
     method: 'GET',
     path: '/',
-    handler: function(request, reply) {
-      if(request.auth.isAuthenticated) {
-          return reply.redirect('/app');
-      }
-      reply.file('./public/landing.html');
-    },
     config: {
+      handler: function(request, reply) {
+        if(request.auth.isAuthenticated) {
+            return reply.redirect('/app');
+        }
+        reply.file('./public/landing.html');
+      },
       auth: {
         mode: 'try',
         strategy: 'session'
-      },
-      // Disable the automatic redirect if the user is not logged in.
-      plugins: { 'hapi-auth-cookie': { redirectTo: false } }
+      }
     }
   },
   {
     method: 'GET',
     path: '/app',
-    handler: function(request, reply) {
-      reply.file('./public/index.html');
-    },
     config: {
+      handler: function(request, reply) {
+        reply.file('./public/index.html');
+      },
       auth: {
         strategy: 'session'
-      }
+      },
+      plugins: { 'hapi-auth-cookie': { redirectTo: '/' } }
     }
   },
   {
     method: 'GET',
     path: '/auth/logout',
-    handler: require('./controllers/user.ctrl').logout
+    config: {
+      handler: require('./controllers/user.ctrl').logout
+    }
   },
   {
     method: 'GET',
     path: '/api/me',
-    handler: require('./controllers/user.ctrl').getUser,
     config: {
+      validate: {
+        query: false
+      },
+      handler: require('./controllers/user.ctrl').getUser,
       auth: 'session',
       // response: {
       //   schema: {
@@ -188,20 +192,10 @@ server.register({
   });
 
 
-
-
-mongoose.connection.on('error', server.log.bind(server.log, 'DB connection error:'));
-mongoose.connection.once('open', function callback () {
-    server.log('status', 'Connceted to db: ' + mongoose.connection.host);
-    if(!config.port) {
-      server.log('status', 'no server port defined in the config');
-    	process.exit(1);
-    }
-    server.start(function () {
-        server.log('status', 'Server started @' + config.port);
-    });
-});
+mongoose.connection.on('error', server.log.bind(server, ['status'], 'DB connection error:'));
+mongoose.connection.once('open', server.log.bind(server, 'status', 'Connceted to mongodb'));
 mongoose.connect(config.dburi);
+server.start(server.log.bind(server, ['status'], 'Server started @' + config.port));
 
 
 module.exports = server;
