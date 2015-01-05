@@ -1,47 +1,43 @@
+var socketIO = require('socket.io');
+var config = require('./config.js');
+var statehood = require('statehood');
+var _ = require('underscore');
+
 exports.register = function(server, options, next) {
-    var io = require('socket.io')(server.listener);
+    var io = socketIO(server.listener); // socket server listener
+
+    var def = new statehood.Definitions(config.statehood);
 
     next();
 
-    io.set('authorization', function (handshakeData, callback) {
-
-      console.log(arguments);
-      console.log(handshakeData.headers.cookie);
-      return callback(null, true);
-
-      var cookie = require('cookie');
-
-      var cookies = cookie.parse(handshakeData.headers.cookie);
-
-      if(!cookies.session) { // if no session cookie the user isn't logged in
-        return callback(null, false); // error first callback style
+    io.set('authorization', function (handshakeData, accept) {
+      var cookie = handshakeData.headers.cookie;
+      if(cookie) {
+        def.parse(cookie, function(err, state, failed) {
+          // console.log('session', state.session);
+          if(state && state.session && state.session._id) {
+            return accept(null, true);
+          }
+        });
+      } else {
+        return accept('No session cookie.', false);
       }
 
-      var parsedSession = cookieSessions.util.decode(cookieConfig, cookies.session);
-
-      if(parsedSession &&
-         parsedSession.content &&
-         parsedSession.content.passport &&
-         parsedSession.content.passport.user &&
-         parsedSession.content.passport.user._id) {
-
-        return callback(null, true); // allow to open connection
-      }
-
-      return callback(null, false); // not authenticated
+      return accept(null, false);
 
     });
 
     // Debugging for socket.io
-    // var connections = 0;
-    // io.sockets.on('connection', function (socket) {
-    //   connections++;
-    //   server.log.info('new socket connection. open connections[%s]', connections);
+    var connections = 0;
+    io.sockets.on('connection', function (socket) {
+      connections++;
+      server.log(['socket'], 'new connection. open connections: ' + connections);
 
-    //   socket.on('disconnect', function () {
-    //     connections--;
-    //   });
-    // });
+      socket.on('disconnect', function () {
+        connections--;
+        server.log(['socket'], 'closed connection. open connections: ' + connections);
+      });
+    });
 
 };
 
