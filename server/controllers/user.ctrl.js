@@ -9,7 +9,7 @@ module.exports = {
   getUser: function(request, reply) {
     var _id = request.auth.credentials._id;
     var fields = '_id firstName lastName gender picture email service serviceUserId';
-    User.findOne({ _id : _id }, fields, function(err, user) {
+    User.findOne({ _id : _id }, fields).lean().exec(function(err, user) {
       return reply(user);
     });
   },
