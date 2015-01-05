@@ -95,18 +95,19 @@ server.route([
     method: 'GET',
     path: '/auth/logout',
     config: {
-      handler: require('./controllers/user.ctrl').logout
+      handler: require('./controllers/user.ctrl').logout,
+      auth: 'session'
     }
   },
   {
     method: 'GET',
     path: '/api/me',
     config: {
+      handler: require('./controllers/user.ctrl').getUser,
+      auth: 'session',
       validate: {
         query: false
       },
-      handler: require('./controllers/user.ctrl').getUser,
-      auth: 'session',
       // response: {
       //   schema: {
       //     _id: Joi.string(),
@@ -122,8 +123,8 @@ server.route([
   {
     method: 'GET',
     path: '/api/events',
-    handler: require('./controllers/event.ctrl').getEvents,
     config: {
+      handler: require('./controllers/event.ctrl').getEvents,
       auth: 'session',
       validate: {
         query: false
@@ -133,8 +134,8 @@ server.route([
   {
     method: 'POST',
     path: '/api/event',
-    handler: require('./controllers/event.ctrl').createEvent,
     config: {
+      handler: require('./controllers/event.ctrl').createEvent,
       auth: 'session',
       validate: {
         payload: {
@@ -152,9 +153,14 @@ server.route([
   {
     method: 'DELETE',
     path: '/api/event/{eventId}',
-    handler: require('./controllers/event.ctrl').deleteEvent,
     config: {
-      auth: 'session'
+      handler: require('./controllers/event.ctrl').deleteEvent,
+      auth: 'session',
+      validate: {
+        query: {
+          eventId: Joi.string()
+        }
+      }
     }
   },
   {

@@ -64,40 +64,39 @@ module.exports = {
   },
 
 
-  deleteEvent: function (req, res, next) {
+  deleteEvent: function (request, reply) {
     // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
     //     return next(new errors.NotAuthorizedError('You can only join as your self'));
     // }
-
-    if(!req.params.eventId || req.params.eventId === 'undefined') {
-        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
-    }
+    var userId = request.auth.credentials._id;
 
 
-    Event.findById(req.params.eventId, 'creator attendees', function(err, event) {
+    Event.findById(request.params.eventId, 'creator attendees', function(err, event) {
         if(err) {
-          req.log.error(err);
-          return next(new restify.errors.InternalError);
+          request.log(err);
+          return reply(Boom.badImplementation());
         }
 
         if(event.attendees.length > 1 ||
-          (event.attendees.length === 1 && event.attendees[0] !== req.user._id) ) {
-          return next(new errors.UnprocessableEntityError('Cannot delete an event with attendees'));
+          (event.attendees.length === 1 && event.attendees[0] !== userId) ) {
+          return reply(new Boom.badData('Cannot delete an event with attendees'));
         }
 
         event.remove(function(err, event){
+          if(err) {
+            request.log(err);
+            return reply(Boom.badImplementation());
+          }
+
           var response = {
             removed: true,
             eventId: event._id
           };
 
-          res.json(response);
-          req.socketio.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
+          return reply(response);
+          // req.socketio.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
 
         });
-
-        return next();
-
     });
 
   },
