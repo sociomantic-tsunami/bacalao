@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Bell = require('bell');
-var config = require('../../config.json');
+var config = require('./config.js');
 var User = mongoose.model('User');
 var AuthCookie = require('hapi-auth-cookie');
 var _ = require('underscore');
@@ -8,21 +8,8 @@ var _ = require('underscore');
 module.exports = function(server) {
   // inspired by https://github.com/jaw187/hapi-auth/blob/master/bell.js
   server.register([AuthCookie, Bell], function(err) {
-    server.auth.strategy('facebook', 'bell', {
-      provider: 'facebook',
-      password: config.cookieSecret,
-      clientId: config.facebookAppId,
-      clientSecret: config.facebookAppSecret,
-      isSecure: false
-    });
-
-    server.auth.strategy('session', 'cookie', {
-      password: config.cookieSecret,
-      cookie: config.cookieKey,
-      redirectTo: '/',
-      isSecure: false
-    });
-
+    server.auth.strategy('facebook', 'bell', config.facebookAuth);
+    server.auth.strategy('session', 'cookie', config.sessionAuth);
   });
 
 

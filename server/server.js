@@ -5,35 +5,30 @@ var Hapi = require('hapi');
 var Good = require('good');
 var Joi = require('joi');
 var configExample = require('../config.example.json');
-var config = require('../config.json');
+var config = require('./config/config.js');
 var mongoose = require('mongoose');
 var userCtrl = require('./controllers/user.ctrl');
 var _ = require('underscore');
 
 // Determine the environment
-var cmdlineEnv = process.argv[2] || 'default';
-if (cmdlineEnv == '-d' || cmdlineEnv.toUpperCase() == '--DEVELOPMENT') {
-    process.env.NODE_ENV = 'development';
-} else if (cmdlineEnv == '-p' || cmdlineEnv.toUpperCase() == '--PRODUCTION') {
+var cmdlineEnv = process.argv[2] || '';
+if (cmdlineEnv === '-p' || cmdlineEnv.toUpperCase() === '--PRODUCTION') {
     process.env.NODE_ENV = 'production';
 } else {
-  console.log("Usage: [node|nodemon] server.js [-d|-p|--development|--production]");
-  console.log("Defaulting to Development");
   process.env.NODE_ENV = 'development';
 }
 
-console.log('Env: ' + process.env.NODE_ENV);
-
-// Inform use if the config is missing config keys
-_.each(configExample, function(val, k) {
-  if(!config[k]) {
-    console.log('config.json missing configuration key: %s', k);
-    process.exit(1);
-  }
-});
+// TODO - replace this with joi schema validation
+// _.each(configExample, function(val, k) {
+//   if(!config[k]) {
+//     console.log('config.json missing configuration key: %s', k);
+//     process.exit(1);
+//   }
+// });
 
 // create server instance
 var server = new Hapi.Server({ connections: { router: {stripTrailingSlash: true }}});
+server.log(['environment'], process.env.NODE_ENV)
 server.connection({ port: config.port, labels: 'app' });
 // server.connection({ port: config.streamPort, labels: 'stream' });
 
