@@ -5,7 +5,6 @@ var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
 var errors = require('restify').errors;
 var moment = require('moment');
-var sessionUtils = require('../utils/sessionUtils');
 var Boom = require('boom');
 
 
@@ -66,9 +65,9 @@ module.exports = {
 
 
   deleteEvent: function (req, res, next) {
-    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-        return next(new errors.NotAuthorizedError('You can only join as your self'));
-    }
+    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+    //     return next(new errors.NotAuthorizedError('You can only join as your self'));
+    // }
 
     if(!req.params.eventId || req.params.eventId === 'undefined') {
         return next(new errors.UnprocessableEntityError('Event Id is invalid'));
@@ -104,9 +103,9 @@ module.exports = {
   },
 
   joinEvent: function (req, res, next) {
-    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-        return next(new errors.NotAuthorizedError('You can only join as your self'));
-    }
+    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+    //     return next(new errors.NotAuthorizedError('You can only join as your self'));
+    // }
 
     if(!req.params.eventId || req.params.eventId === 'undefined') {
         return next(new errors.UnprocessableEntityError('Event Id is invalid'));
@@ -143,9 +142,9 @@ module.exports = {
 
 
   leaveEvent: function(req, res, next) {
-    if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-        return next(new errors.NotAuthorizedError('You can only laeve as your self'));
-    }
+    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
+    //     return next(new errors.NotAuthorizedError('You can only laeve as your self'));
+    // }
 
     if(!req.params.eventId || req.params.eventId === 'undefined') {
         return next(new errors.UnprocessableEntityError('Event Id is invalid'));
