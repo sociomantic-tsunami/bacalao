@@ -28,7 +28,7 @@ if (cmdlineEnv === '-p' || cmdlineEnv.toUpperCase() === '--PRODUCTION') {
 
 // create server instance
 var server = new Hapi.Server({ connections: { router: {stripTrailingSlash: true }}});
-server.log(['environment'], process.env.NODE_ENV)
+server.log(['environment'], process.env.NODE_ENV);
 server.connection({ port: config.port, labels: 'app' });
 // server.connection({ port: config.streamPort, labels: 'stream' });
 
