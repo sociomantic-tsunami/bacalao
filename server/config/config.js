@@ -3,7 +3,6 @@ var config = require('../../config.json');
 config.sessionAuth = {
   password: config.cookieSecret,
   cookie: config.cookieKey,
-  redirectTo: '/',
   isSecure: false
 };
 
