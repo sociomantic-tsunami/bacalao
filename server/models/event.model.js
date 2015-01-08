@@ -17,8 +17,8 @@ var eventSchema = new Schema({
     international_phone_number: { type: String },
     geometry: {
       location: {
-        k: Number,
-        B: Number
+        long: Number,
+        lat: Number
       }
     },
     rating: { type: Number},
@@ -26,7 +26,7 @@ var eventSchema = new Schema({
   }
 }, {
     autoIndex: false,
-    id: false
+    id: true
 });
 
 

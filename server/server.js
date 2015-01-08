@@ -108,16 +108,18 @@ server.route([
       validate: {
         query: false
       },
-      // response: {
-      //   schema: {
-      //     _id: Joi.string(),
-      //     firstName: Joi.string(),
-      //     lastName: Joi.string(),
-      //     email: Joi.string().email(),
-      //     service: Joi.string(),
-      //     picture: Joi.string()
-      //   }
-      // }
+      response: {
+        schema: {
+          _id: Joi.string(),
+          firstName: Joi.string(),
+          lastName: Joi.string(),
+          email: Joi.string().email(),
+          service: Joi.string(),
+          picture: Joi.string(),
+          gender: Joi.string(),
+          serviceUserId: Joi.string(),
+        }
+      }
     }
   },
   {
@@ -128,6 +130,23 @@ server.route([
       auth: 'session',
       validate: {
         query: false
+      },
+      response: {
+        schema: Joi.array()
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/me/upcoming',
+    config: {
+      handler: require('./controllers/event.ctrl').getUpcomingEvents,
+      auth: 'session',
+      validate: {
+        query: false
+      },
+      response: {
+        schema: Joi.array()
       }
     }
   },
@@ -147,6 +166,18 @@ server.route([
           time: Joi.date(),
           venue: Joi.object()
         }
+      },
+      response: {
+        schema: {
+          _id: Joi.string(),
+          cid: Joi.string(),
+          time: Joi.date(),
+          venue: Joi.object(),
+          maxAttendees: Joi.number().integer(),
+          creator: Joi.object(),
+          attendees: Joi.array(),
+          details : Joi.string()
+        }
       }
     }
   },
@@ -158,25 +189,51 @@ server.route([
       auth: 'session',
       validate: {
         query: {
-          eventId: Joi.string()
+          eventId: Joi.string().length(24)
         }
       }
     }
   },
   {
     method: 'PUT',
-    path: '/api/event/{eventId}/attendees',
+    path: '/api/event/{eventId}/attendees/{userId}',
     handler: require('./controllers/event.ctrl').joinEvent,
     config: {
-      auth: 'session'
+      auth: 'session',
+      validate: {
+        query: {
+          eventId: Joi.string().length(24),
+          userId: Joi.string().length(24)
+        }
+      },
+      response: {
+        schema: {
+          eventId: Joi.string().length(24),
+          user: Joi.object(),
+          joined: Joi.boolean()
+        }
+      }
     }
   },
   {
     method: 'DELETE',
-    path: '/api/event/{eventId}/attendees',
+    path: '/api/event/{eventId}/attendees/{userId}',
     handler: require('./controllers/event.ctrl').leaveEvent,
     config: {
-      auth: 'session'
+      auth: 'session',
+      validate: {
+        query: {
+          eventId: Joi.string().length(24),
+          userId: Joi.string().length(24)
+        }
+      },
+      response: {
+        schema: {
+          eventId: Joi.string().length(24),
+          userId: Joi.string().length(24),
+          left: Joi.boolean()
+        }
+      }
     }
   }
 ]);

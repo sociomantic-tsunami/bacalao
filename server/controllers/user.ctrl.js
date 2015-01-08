@@ -10,6 +10,7 @@ module.exports = {
     var _id = request.auth.credentials._id;
     var fields = '_id firstName lastName gender picture email service serviceUserId';
     User.findOne({ _id : _id }, fields).lean().exec(function(err, user) {
+      user._id = user._id.toString();
       return reply(user);
     });
   },
@@ -18,6 +19,4 @@ module.exports = {
     request.auth.session.clear();
     return reply.redirect('/');
   }
-
-
 };

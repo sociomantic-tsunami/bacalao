@@ -12,8 +12,12 @@ var expect = Code.expect;
 
 
 var testUserId = '54a154d2d779a50feaedde57';
+var randomId = '54a154d2d79af507aeedde57';
+var testEventId;
 
-lab.experiment("Basic HTTP Tests", function() {
+lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
+    // TODO create in the before hook a test user in the DB and
+    // use that user in the credential object for all DB operations
 
     it("endpoint / returns 200 ", function(done) {
         var options = {
@@ -168,6 +172,7 @@ lab.experiment("Basic HTTP Tests", function() {
             payload: {
                 attendees: [testUserId],
                 creator: testUserId,
+                cid: 'TESTCID',
                 details: 'TEST EVENT',
                 maxAttendees: 10,
                 time: new Date(1420070400000),
@@ -182,24 +187,110 @@ lab.experiment("Basic HTTP Tests", function() {
 
 
         server.inject(options, function(response) {
-            console.log(response);
+            testEventId = response.result._id;
             expect(response.statusCode).to.equal(200);
             expect(response.result).to.be.an.object();
+            expect(response.result).to.only.include([
+                '_id', 'cid', 'time', 'venue', 'maxAttendees', 'creator', 'attendees', 'details'
+            ]);
+            expect(response.result.attendees).to.have.length(1);
+            expect(response.result.creator).to.be.an.object();
+
+            expect(response.result.cid).to.equal('TESTCID');
+            expect(response.result.details).to.equal('TEST EVENT');
+            expect(response.result.maxAttendees).to.equal(10);
+            expect(response.result.venue).to.be.an.object();
+            expect(response.result.venue.name).to.equal('TEST VENUE');
+            expect(response.result.venue.url).to.equal('TESTURL');
+            expect(response.result.venue.formatted_address).to.equal('TEST ADDRESS');
+            expect(response.result.venue.place_id).to.equal('TESTID');
+
             done();
         });
     });
 
-    it("POST /api/event with other attendees or creator from the credential fails", function(done) {
+    it("POST /api/event returns forbidden 403 with random attendee", function(done) {
+        var options = {
+            method: "POST",
+            url: "/api/event",
+            credentials: {
+                _id: testUserId
+            },
+            payload: {
+                attendees: [randomId],
+                creator: testUserId,
+                cid: 'TESTCID',
+                details: 'TEST EVENT',
+                maxAttendees: 10,
+                time: new Date(1420070400000),
+                venue: {
+                    name: 'TEST VENUE',
+                    url: 'TESTURL',
+                    formatted_address: 'TEST ADDRESS',
+                    place_id: 'TESTID'
+                }
+            }
+        };
 
-        // server.inject(options, function(response) {
-        //     done();
-        // });
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(403);
+            done();
+        });
     });
 
-    it("DEL /api/event/eventIds removes an event", function(done) {
+    it("POST /api/event returns forbidden 403 with different creator", function(done) {
+        var options = {
+            method: "POST",
+            url: "/api/event",
+            credentials: {
+                _id: testUserId
+            },
+            payload: {
+                attendees: [testUserId],
+                creator: randomId,
+                cid: 'TESTCID',
+                details: 'TEST EVENT',
+                maxAttendees: 10,
+                time: new Date(1420070400000),
+                venue: {
+                    name: 'TEST VENUE',
+                    url: 'TESTURL',
+                    formatted_address: 'TEST ADDRESS',
+                    place_id: 'TESTID'
+                }
+            }
+        };
+
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(403);
+            done();
+        });
+    });
+
+
+    it("DELETE /api/event/{eventId}/attendees/{userId} returns 403 with different user", function(done) {
         var options = {
             method: "DELETE",
-            url: "/api/event/54818efa6709ea9ed0cc511b",
+            url: '/api/event/' + testEventId + '/attendees/' + randomId,
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+        server.inject(options, function(response) {
+
+            expect(response.statusCode).to.equal(403);
+            done();
+        });
+    });
+
+
+    it("DELETE /api/event/{eventId}/attendees/{userId} leaves an event", function(done) {
+        var options = {
+            method: "DELETE",
+            url: '/api/event/' + testEventId + '/attendees/' + testUserId,
             credentials: {
                 _id: testUserId
             }
@@ -207,8 +298,73 @@ lab.experiment("Basic HTTP Tests", function() {
 
 
         server.inject(options, function(response) {
+
+            expect(response.statusCode).to.equal(200);
+            expect(response.result.left).to.be.true();
+            expect(response.result.eventId).to.equal(testEventId);
+            expect(response.result.userId).to.equal(testUserId);
+
+            done();
+        });
+    });
+
+    it("PUT /api/event/{eventId}/attendees/{userId} returns 403 with different user", function(done) {
+        var options = {
+            method: "PUT",
+            url: '/api/event/' + testEventId + '/attendees/' + randomId,
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(403);
+            done();
+        });
+    });
+
+
+    it("PUT /api/event/{eventId}/attendees/{userId} joins an event", function(done) {
+        var options = {
+            method: "PUT",
+            url: '/api/event/' + testEventId + '/attendees/' + testUserId,
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+
+        server.inject(options, function(response) {
+
+            expect(response.statusCode).to.equal(200);
+            expect(response.result.joined).to.be.true();
+            expect(response.result.eventId).to.equal(testEventId);
+            expect(response.result.user).to.be.an.object();
+
+            done();
+        });
+    });
+
+
+    it("POST /api/event with other attendees or creator from the credential fails");
+
+
+
+    it("DEL /api/event/eventId removes an event", function(done) {
+        var options = {
+            method: "DELETE",
+            url: "/api/event/" + testEventId,
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(200);
             expect(response.result).to.be.an.object();
-            expect(response.result).to.be.an.object();
+            expect(response.result.removed).to.be.true();
+            expect(response.result.eventId).to.equal(testEventId);
             done();
         });
     });

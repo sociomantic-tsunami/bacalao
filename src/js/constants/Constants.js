@@ -24,8 +24,8 @@ module.exports = {
     EVENT: '/api/event',
     DELETE_EVENT: '/api/event/[eventId]',
     EVENTS: '/api/events',
-    JOIN_EVENT: '/api/event/[eventId]/attendees',
-    LEAVE_EVENT: '/api/event/[eventId]/attendees'
+    JOIN_EVENT: '/api/event/[eventId]/attendees/[userId]',
+    LEAVE_EVENT: '/api/event/[eventId]/attendees/[userId]'
   }
 
 };

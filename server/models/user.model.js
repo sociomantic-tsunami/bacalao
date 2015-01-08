@@ -24,7 +24,7 @@ var userSchema = new Schema({
   autoIndex: false,
   toObject: { virtuals: false },
   toJSON: { virtuals: false },
-  id: false
+  id: true
 });
 
 

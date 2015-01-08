@@ -6,7 +6,7 @@ var clientConstants = require('../../src/js/constants/Constants');
 var errors = require('restify').errors;
 var moment = require('moment');
 var Boom = require('boom');
-
+var mongoose = require('mongoose');
 
 module.exports = {
 
@@ -25,11 +25,43 @@ module.exports = {
 
         reply(events);
       });
-
   },
 
+  // Upcoming events for the logged in user
+  getUpcomingEvents: function(request, reply) {
+    var userId = request.auth.credentials._id;
+    var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
+
+    Event
+      .find(
+        { time: { '$gte': roundHourAgo },
+          attendees : userId },
+        'title venue time details attendees maxAttendees creator')
+      .sort({ time: 'asc'})
+      .populate('attendees', 'firstName lastName picture')
+      .populate('creator', 'firstName lastName picture')
+      .exec(function (err, events) {
+        if(err) {
+          return reply(Boom.badImplementation(err));
+        }
+
+        reply(events);
+      });
+  },
+
+
+
   createEvent: function (request, reply) {
+      var userId = request.auth.credentials._id;
       // check the creator === request.auth.id
+      if(request.payload.creator !== userId) {
+        return reply(Boom.forbidden('You can only create an event as your self'));
+      }
+
+      if(request.payload.attendees[0] !== userId) {
+        return reply(Boom.forbidden('You can only join as your self'));
+      }
+
       var saveParams = 'venue time maxAttendees creator attendees details'.split(' ');
       var resParams = saveParams.concat('_id', 'cid');
       var paramsToSave = _.pick(request.payload, saveParams);
@@ -49,10 +81,11 @@ module.exports = {
             }
             var response = _.pick(newEvent, resParams);
             response.cid = request.payload.cid;
+            response._id = response._id.toString();
+
             return reply(response);
             // makes more sense to use this - socket.broadcast.emit('hi');
             // which doesn't send to this socket.
-            // TODO - use this once sockets are integrated with sessions
             // req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response,
             //   'cid'));
 
@@ -65,32 +98,26 @@ module.exports = {
 
 
   deleteEvent: function (request, reply) {
-    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-    //     return next(new errors.NotAuthorizedError('You can only join as your self'));
-    // }
     var userId = request.auth.credentials._id;
-
 
     Event.findById(request.params.eventId, 'creator attendees', function(err, event) {
         if(err) {
-          request.log(err);
           return reply(Boom.badImplementation());
         }
 
         if(event.attendees.length > 1 ||
-          (event.attendees.length === 1 && event.attendees[0] !== userId) ) {
+          (event.attendees.length === 1 && event.attendees[0].toString() !== userId) ) {
           return reply(new Boom.badData('Cannot delete an event with attendees'));
         }
 
         event.remove(function(err, event){
           if(err) {
-            request.log(err);
-            return reply(Boom.badImplementation());
+            return reply(Boom.badImplementation(err));
           }
 
           var response = {
             removed: true,
-            eventId: event._id
+            eventId: event.id
           };
 
           return reply(response);
@@ -101,73 +128,61 @@ module.exports = {
 
   },
 
-  joinEvent: function (req, res, next) {
-    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-    //     return next(new errors.NotAuthorizedError('You can only join as your self'));
-    // }
+  joinEvent: function (request, reply) {
+    var userId = request.auth.credentials._id;
 
-    if(!req.params.eventId || req.params.eventId === 'undefined') {
-        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
+    if(request.params.userId !== userId) {
+      return reply(Boom.forbidden('You can only join an event as your self'));
     }
 
-
     Event.update(
-      { _id: req.params.eventId },
-      { $addToSet: { attendees: req.params.userId }},
-      // function(err, numberAffected){
-      function(err, numberAffected, raw){
+      { _id: request.params.eventId },
+      { $addToSet: { attendees: request.params.userId }},
+      function(err, numberAffected){
         if(err) {
-          req.log.error(err);
-          return next(new restify.errors.InternalError);
+          return reply(Boom.badImplementation(err));
         }
 
-        req.log.info('user: ' + req.params.userId + ' joined event:' + req.params.eventId);
-        User.findById(req.params.userId, 'firstName lastName picture', function(err, user) {
+        User.findById(request.params.userId, 'firstName lastName picture', function(err, user) {
           if(err) {
-            req.log.error(err);
-            return next(new restify.errors.InternalError);
+            return reply(Boom.badImplementation(err));
           }
+
           var response = {
-            eventId: req.params.eventId,
+            joined: true,
+            eventId: request.params.eventId,
             user: user
           };
-          res.json(response);
-          req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
-        });
-        return next();
 
+          // req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
+          return reply(response);
+        });
       });
   },
 
 
-  leaveEvent: function(req, res, next) {
-    // if(!sessionUtils.isUserMatchingSession(req, req.params.userId)) {
-    //     return next(new errors.NotAuthorizedError('You can only laeve as your self'));
-    // }
+  leaveEvent: function(request, reply) {
+    var userId = request.auth.credentials._id;
 
-    if(!req.params.eventId || req.params.eventId === 'undefined') {
-        return next(new errors.UnprocessableEntityError('Event Id is invalid'));
+    if(request.params.userId !== userId) {
+      return reply(Boom.forbidden('You can only leave an event as your self'));
     }
 
-
     Event.update(
-      { _id: req.params.eventId },
-      { $pull: { attendees: req.params.userId }},
-      // function(err, numberAffected){
-      function(err, numberAffected, raw){
+      { _id: request.params.eventId },
+      { $pull: { attendees: request.params.userId }},
+      function(err, numberAffected){
         if(err) {
-          req.log.error(err);
-          return next(new restify.errors.InternalError);
+          return reply(Boom.badImplementation(err));
         }
 
-        req.log.info('user: ' + req.params.userId + ' left event:' + req.params.eventId);
         var response = {
-          eventId: req.params.eventId,
-          userId: req.params.userId
+          left: true,
+          eventId: request.params.eventId,
+          userId: request.params.userId
         };
-        res.json(response);
-        req.socketio.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
-        return next();
+        // req.socketio.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
+        return reply(response);
       });
   }
 

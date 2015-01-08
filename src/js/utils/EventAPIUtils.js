@@ -23,6 +23,12 @@ module.exports = {
 
 
   createEvent: function(event) {
+    if(event.venue && event.venue.geometry) {
+      event.venue.geometry.location = {
+        lat: event.venue.geometry.location.lat(),
+        long: event.venue.geometry.location.lng()
+      };
+    }
 
     request
       .post(Endpoints.EVENT)
@@ -55,12 +61,14 @@ module.exports = {
     if(!eventId || !userId) {
       console.error('invalid eventId/userId');
     }
-    var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
+    var url = Endpoints.JOIN_EVENT;
+
+    url = url.replace('[eventId]', eventId);
+    url = url.replace('[userId]', userId);
 
     request
       .put(url)
       .type('json')
-      .send({userId : userId})
       .on('error', function(err) {
         console.error('API Error', err);
       })
@@ -74,13 +82,15 @@ module.exports = {
     if(!eventId || !userId) {
       console.error('invalid eventId/userId');
     }
-    var url = Endpoints.JOIN_EVENT.replace('[eventId]', eventId);
 
+    var url = Endpoints.LEAVE_EVENT;
+
+    url = url.replace('[eventId]', eventId);
+    url = url.replace('[userId]', userId);
 
     request
       .del(url)
       .type('json')
-      .send({userId : userId})
       .on('error', function(err) {
         console.error('API Error', err);
       })
