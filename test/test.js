@@ -173,9 +173,9 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
                 attendees: [testUserId],
                 creator: testUserId,
                 cid: 'TESTCID',
-                details: 'TEST EVENT',
+                details: 'TESTEVENT',
                 maxAttendees: 10,
-                time: new Date(1420070400000),
+                time: new Date(2020, 0),
                 venue: {
                     name: 'TEST VENUE',
                     url: 'TESTURL',
@@ -197,13 +197,36 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
             expect(response.result.creator).to.be.an.object();
 
             expect(response.result.cid).to.equal('TESTCID');
-            expect(response.result.details).to.equal('TEST EVENT');
+            expect(response.result.details).to.equal('TESTEVENT');
             expect(response.result.maxAttendees).to.equal(10);
             expect(response.result.venue).to.be.an.object();
             expect(response.result.venue.name).to.equal('TEST VENUE');
             expect(response.result.venue.url).to.equal('TESTURL');
             expect(response.result.venue.formatted_address).to.equal('TEST ADDRESS');
             expect(response.result.venue.place_id).to.equal('TESTID');
+
+            done();
+        });
+    });
+
+
+
+    it("GET /api/me/upcoming returns an array containing upcoming events", function(done) {
+        var options = {
+            method: "GET",
+            url: '/api/me/upcoming',
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+
+        server.inject(options, function(response) {
+
+            expect(response.statusCode).to.equal(200);
+            expect(response.result).to.be.an.array();
+            console.log(response.result);
+            expect(response.result).to.include(testEventId);
 
             done();
         });
