@@ -15,6 +15,21 @@ module.exports = {
     });
   },
 
+  updateUserLocation: function(request, reply) {
+    var _id = request.auth.credentials._id;
+
+    User.update(
+      { _id: _id },
+      { location: request.payload },
+      function(err, numberAffected) {
+        if(err || numberAffected === 0) {
+          return reply(Boom.badImplementation(err));
+        }
+
+        return reply();
+      });
+  },
+
   logout: function(request, reply) {
     request.auth.session.clear();
     return reply.redirect('/');

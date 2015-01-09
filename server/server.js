@@ -125,6 +125,23 @@ server.route([
     }
   },
   {
+    method: 'PUT',
+    path: '/api/me/location',
+    handler: require('./controllers/user.ctrl').updateUserLocation,
+    config: {
+      auth: 'session',
+      validate: {
+        payload: {
+          latitude:   Joi.number().required(),
+          longitude:  Joi.number().required()
+        }
+      },
+      // response: {
+      //   schema: false
+      // }
+    }
+  },
+  {
     method: 'GET',
     path: '/api/events',
     config: {

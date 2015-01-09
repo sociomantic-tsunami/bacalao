@@ -18,6 +18,10 @@ var userSchema = new Schema({
   serviceUserId: { type: String, index: true },
   accessToken:  String,
   tokenExpiration:  Date,
+  location: {
+    latitude:   Number,
+    longitude:  Number
+  },
   created: { type: Date, default: Date.now },
   updated: Date
 }, {

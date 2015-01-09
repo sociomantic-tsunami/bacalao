@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var ActionTypes = require('../constants/Constants').ActionTypes;
+var UserAPIUtils = require('./UserAPIUtils');
 
 var _hasGeolocation = navigator && navigator.geolocation;
 
@@ -9,10 +10,18 @@ var GeoLocationUtils = {
 
   init: function() {
     this.getLocation(function(position) {
+      // sanitize the geoposition object
+      var location = {
+        latitude:   position.coords.latitude,
+        longitude:  position.coords.longitude
+      };
+
       AppDispatcher.handleInitAction({
         type: ActionTypes.GOT_LOCATION,
-        position: position
+        position: location
       });
+
+      UserAPIUtils.updateUserLocation(location);
     });
   },
 

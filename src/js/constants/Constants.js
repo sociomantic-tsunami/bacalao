@@ -21,6 +21,7 @@ module.exports = {
   Endpoints: {
     LOGOUT: '/auth/logout',
     ME: '/api/me',
+    UPDATE_LOCATION: '/api/me/location',
     EVENT: '/api/event',
     DELETE_EVENT: '/api/event/[eventId]',
     EVENTS: '/api/events',
