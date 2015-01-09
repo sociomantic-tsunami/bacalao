@@ -36,16 +36,14 @@ module.exports = {
       .find(
         { time: { '$gte': roundHourAgo },
           attendees : userId },
-        'title venue time details attendees maxAttendees creator')
+        '_id')
       .sort({ time: 'asc'})
-      .populate('attendees', 'firstName lastName picture')
-      .populate('creator', 'firstName lastName picture')
       .exec(function (err, events) {
         if(err) {
           return reply(Boom.badImplementation(err));
         }
 
-        reply(events);
+        reply(_.pluck(events,'_id'));
       });
   },
 
