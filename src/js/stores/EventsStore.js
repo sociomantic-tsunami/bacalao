@@ -13,6 +13,18 @@ var lastAddedIndex = -1;
 
 var EventsStore = _.extend({}, EventEmitter.prototype, {
 
+  /**
+   * Get the event object by _id
+   *
+   * Method searches the array for matching event.
+   *
+   * @param   string  eventId   the event _id
+   * @return  mixed   event object or undefined if not found
+   */
+  getById: function(eventId) {
+    return _.findWhere(_nodes.array, { _id : eventId });
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
