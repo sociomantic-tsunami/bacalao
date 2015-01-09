@@ -21,6 +21,19 @@ module.exports = {
       });
   },
 
+  getUpcomingEvents: function(){
+    request
+      .get(Endpoints.UPCOMING)
+      .type('json')
+      .send()
+      .on('error', function(err) {
+        console.error('API error', err);
+      })
+      .end(function(res) {
+        _.defer(EventServerActionCreators.receiveUpcoming, res.body);
+      });
+  },
+
 
   createEvent: function(event) {
     if(event.venue && event.venue.geometry) {

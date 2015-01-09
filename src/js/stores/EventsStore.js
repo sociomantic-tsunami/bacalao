@@ -9,6 +9,7 @@ var moment = require('moment');
 var CHANGE_EVENT = 'change';
 
 var _nodes = new Asorted({ sortBy: 'time' });
+var _upcomingEvents;
 var lastAddedIndex = -1;
 
 var EventsStore = _.extend({}, EventEmitter.prototype, {
@@ -38,6 +39,10 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _nodes.array;
+  },
+
+  getUpcoming: function() {
+    return _upcomingEvents;
   },
 
   getLastCreatedForAPI: function() {
@@ -70,6 +75,11 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       });
       // _nodes.insert.apply(_nodes, toAdd);
       _.each(toAdd, _nodes.insert, _nodes);
+      EventsStore.emitChange();
+      break;
+
+    case ActionTypes.RECEIVE_UPCOMING_EVENTS:
+      _upcomingEvents = action.upcomingEvents;
       EventsStore.emitChange();
       break;
 

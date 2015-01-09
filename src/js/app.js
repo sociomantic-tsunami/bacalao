@@ -28,6 +28,7 @@ SocketUtils.init();
 GeoLocationUtils.init();
 UserAPIUtils.getUserInfo();
 EventAPIUtils.getAllEvents();
+EventAPIUtils.getUpcomingEvents();
 
 
 var getReactContainer = function() {

@@ -14,6 +14,7 @@ require('../../sass/topbar.scss');
 var getAppState = function () {
   return {
     events: EventsStore.getAll(),
+    upcomingEvents: EventsStore.getUpcoming(),
     user: UserStore.getUser()
   };
 };
@@ -32,11 +33,10 @@ var App = React.createClass({
   },
 
   render: function() {
-
     return (
       <div>
         <Navbar user={this.state.user} />
-        <RouteHandler user={this.state.user} events={this.state.events} />
+        <RouteHandler user={this.state.user} events={this.state.events} upcomingEvents={this.state.upcomingEvents} />
       </div>
     );
   },

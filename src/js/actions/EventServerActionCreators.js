@@ -12,6 +12,13 @@ module.exports = {
     });
   },
 
+  receiveUpcoming: function(upcomingEvents) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.RECEIVE_UPCOMING_EVENTS,
+      upcomingEvents : upcomingEvents
+    });
+  },
+
 
   createdEvent : function(event) {
     AppDispatcher.handleServerAction({

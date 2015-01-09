@@ -4,6 +4,7 @@ module.exports = {
 
   ActionTypes: keyMirror({
     RECEIVE_RAW_EVENTS: null,
+    RECEIVE_UPCOMING_EVENTS: null,
     ROUTE_CHANGE: null,
     GOT_LOCATION: null,
     INIT_USER: null,
@@ -26,7 +27,8 @@ module.exports = {
     DELETE_EVENT: '/api/event/[eventId]',
     EVENTS: '/api/events',
     JOIN_EVENT: '/api/event/[eventId]/attendees/[userId]',
-    LEAVE_EVENT: '/api/event/[eventId]/attendees/[userId]'
+    LEAVE_EVENT: '/api/event/[eventId]/attendees/[userId]',
+    UPCOMING : '/api/me/upcoming'
   }
 
 };
