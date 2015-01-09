@@ -36,14 +36,14 @@ module.exports = {
       .find(
         { time: { '$gte': roundHourAgo },
           attendees : userId },
-        '_id')
+        '_id id')
       .sort({ time: 'asc'})
       .exec(function (err, events) {
         if(err) {
           return reply(Boom.badImplementation(err));
         }
-
-        reply(_.pluck(events,'_id'));
+        // reply with an array of strings (hence the use of id)
+        reply(_.pluck(events,'id'));
       });
   },
 

@@ -148,7 +148,7 @@ server.route([
         query: false
       },
       response: {
-        schema: Joi.array()
+        schema: Joi.array().includes(Joi.string().length(24))
       }
     }
   },
