@@ -225,7 +225,6 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
 
             expect(response.statusCode).to.equal(200);
             expect(response.result).to.be.an.array();
-            console.log(response.result);
             expect(response.result).to.include(testEventId);
 
             done();
@@ -323,7 +322,6 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
         server.inject(options, function(response) {
 
             expect(response.statusCode).to.equal(200);
-            expect(response.result.left).to.be.true();
             expect(response.result.eventId).to.equal(testEventId);
             expect(response.result.userId).to.equal(testUserId);
 
@@ -360,7 +358,6 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
         server.inject(options, function(response) {
 
             expect(response.statusCode).to.equal(200);
-            expect(response.result.joined).to.be.true();
             expect(response.result.eventId).to.equal(testEventId);
             expect(response.result.user).to.be.an.object();
 

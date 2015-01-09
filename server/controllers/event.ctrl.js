@@ -147,7 +147,6 @@ module.exports = {
           }
 
           var response = {
-            joined: true,
             eventId: request.params.eventId,
             user: user
           };
@@ -175,7 +174,6 @@ module.exports = {
         }
 
         var response = {
-          left: true,
           eventId: request.params.eventId,
           userId: request.params.userId
         };

@@ -211,8 +211,7 @@ server.route([
       response: {
         schema: {
           eventId: Joi.string().length(24),
-          user: Joi.object(),
-          joined: Joi.boolean()
+          user: Joi.object()
         }
       }
     }
@@ -232,8 +231,7 @@ server.route([
       response: {
         schema: {
           eventId: Joi.string().length(24),
-          userId: Joi.string().length(24),
-          left: Joi.boolean()
+          userId: Joi.string().length(24)
         }
       }
     }
