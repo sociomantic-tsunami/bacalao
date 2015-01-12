@@ -1,10 +1,8 @@
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
-var Button = require('react-bootstrap').Button;
-
 var ReactRouterBootstrap = require('react-router-bootstrap');
-// var NavItemLink = ReactRouterBootstrap.NavItemLink;
 var ButtonLink = ReactRouterBootstrap.ButtonLink;
+
 
 require('../../sass/AddEventButton.scss');
 

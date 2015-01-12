@@ -1,9 +1,9 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
-var Event = require('./Event.react');
-var AddEventButton = require('./AddEventButton.react');
-var UpcomingEvents = require('./UpcomingEvents.react');
+var Event = require('./Event.react.jsx');
+var AddEventButton = require('./AddEventButton.react.jsx');
+var UpcomingEvents = require('./UpcomingEvents.react.jsx');
 
 require('../../sass/outline.scss');
 

@@ -8,7 +8,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.js$/, loader: 'jsx-loader' }, // loaders can take parameters as a querystring
+      { test: /\.jsx$/, loader: 'jsx-loader' }, // loaders can take parameters as a querystring
       {
         test: /\.scss$/,
         // loader: "style-loader!css-loader!sass-loader?outputStyle=expanded&includePaths[]="

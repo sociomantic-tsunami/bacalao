@@ -4,7 +4,7 @@ var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
-var JoinLeaveButton = require('./JoinLeaveButton.react');
+var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment');
 

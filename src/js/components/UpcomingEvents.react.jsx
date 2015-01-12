@@ -2,8 +2,8 @@ var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var EventsStore = require('../stores/EventsStore');
-var UpcomingEvent = require('./UpcomingEvent.react');
-// var JoinLeaveButton = require('./JoinLeaveButton.react');
+var UpcomingEvent = require('./UpcomingEvent.react.jsx');
+// var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
 
 var getUpcomingEvent = function(eventId) {
   return <UpcomingEvent

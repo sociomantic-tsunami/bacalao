@@ -1,15 +1,12 @@
-var Events = require('./Events.react');
-var Navbar = require('./Navbar.react');
-var NewEvent = require('./NewEventForm.react');
+var Events = require('./Events.react.jsx');
+var Navbar = require('./Navbar.react.jsx');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 
-
 require('../../sass/app.scss');
-require('../../sass/topbar.scss');
 
 var getAppState = function () {
   return {

@@ -4,7 +4,7 @@
  * Bootstrapping of data and initialization of the main app view.
  */
 
-var router = require('./router');
+var router = require('./router.jsx');
 var React = require('react');
 var SocketUtils = require('./utils/SocketUtils');
 var GeoLocationUtils = require('./utils/GeoLocationUtils');
@@ -41,5 +41,5 @@ var getReactContainer = function() {
 router.run(function(Handler, routerState) {
     // Dispatch an action
     RouterActionCreators.routeChange(routerState);
-    React.render(<Handler />, getReactContainer());
+    React.render(Handler, getReactContainer());
 });

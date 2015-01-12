@@ -1,11 +1,10 @@
 var React = require('react/addons');
 var Router = require('react-router');
-var User = require('./User.react');
+var User = require('./User.react.jsx');
 var ReactPropTypes = React.PropTypes;
 var RouteHandler = Router.RouteHandler;
 
 require('../../sass/topbar.scss');
-
 
 
 var Navbar = React.createClass({
