@@ -10,10 +10,10 @@ var eventSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   // comments: [{ body: String, date: Date }],
   venue: {
-    place_id: { type: String, required: true },
     name: { type: String, required: true },
-    formatted_address: { type: String, required: true },
-    url: { type: String, required: true },
+    place_id: { type: String },
+    formatted_address: { type: String},
+    url: { type: String },
     international_phone_number: { type: String },
     geometry: {
       location: {
