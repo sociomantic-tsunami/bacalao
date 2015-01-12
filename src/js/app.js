@@ -2,10 +2,7 @@
  * Entrypoint to the client side application
  *
  * Bootstrapping of data and initialization of the main app view.
- * @jsx React.DOM
  */
-
-// This file bootstraps the entire application.
 
 var router = require('./router');
 var React = require('react');

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = require('react/addons');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
