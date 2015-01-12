@@ -3,6 +3,8 @@ var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var EventsStore = require('../stores/EventsStore');
 var UpcomingEvent = require('./UpcomingEvent.react.jsx');
+require('../../sass/upcoming.scss');
+
 
 var getUpcomingEvent = function(eventId) {
   var event = EventsStore.getById(eventId);

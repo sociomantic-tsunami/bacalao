@@ -2,6 +2,7 @@ var Events = require('./Events.react.jsx');
 var Navbar = require('./Navbar.react.jsx');
 var React = require('react/addons');
 var EventsStore = require('../stores/EventsStore');
+var UpcomingStore = require('../stores/UpcomingStore');
 var UserStore = require('../stores/UserStore');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -11,7 +12,7 @@ require('../../sass/app.scss');
 var getAppState = function () {
   return {
     events: EventsStore.getAll(),
-    upcomingEvents: EventsStore.getUpcoming(),
+    upcomingEvents: UpcomingStore.getUpcoming(),
     user: UserStore.getUser()
   };
 };
@@ -26,6 +27,7 @@ var App = React.createClass({
   componentDidMount: function() {
     EventsStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
+    UpcomingStore.addChangeListener(this._onChange);
   },
 
   render: function() {

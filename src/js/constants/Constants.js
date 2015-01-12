@@ -2,6 +2,9 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = {
 
+
+  CHANGE_EVENT: 'change',
+
   ActionTypes: keyMirror({
     RECEIVE_RAW_EVENTS: null,
     RECEIVE_UPCOMING_EVENTS: null,

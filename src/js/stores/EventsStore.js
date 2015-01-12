@@ -1,15 +1,13 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ActionTypes = require('../constants/Constants').ActionTypes;
+var Constants = require('../constants/Constants');
+var ActionTypes = Constants.ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var UserStore = require('./UserStore');
 var _ = require('underscore');
 var Asorted = require('Asorted');
 var moment = require('moment');
 
-var CHANGE_EVENT = 'change';
-
 var _nodes = new Asorted({ sortBy: 'time' });
-var _upcomingEvents = [];
 var lastAddedIndex = -1;
 
 var EventsStore = _.extend({}, EventEmitter.prototype, {
@@ -27,14 +25,14 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    this.emit(CHANGE_EVENT);
+    this.emit(Constants.CHANGE_EVENT);
   },
 
   /**
    * @param {function} callback
    */
   addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
+    this.on(Constants.CHANGE_EVENT, callback);
   },
 
   getAll: function() {
@@ -42,7 +40,6 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
   },
 
   getUpcoming: function() {
-    return _upcomingEvents;
   },
 
   getLastCreatedForAPI: function() {
@@ -75,11 +72,6 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
       });
       // _nodes.insert.apply(_nodes, toAdd);
       _.each(toAdd, _nodes.insert, _nodes);
-      EventsStore.emitChange();
-      break;
-
-    case ActionTypes.RECEIVE_UPCOMING_EVENTS:
-      _upcomingEvents = action.upcomingEvents;
       EventsStore.emitChange();
       break;
 

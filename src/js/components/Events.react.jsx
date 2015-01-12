@@ -9,19 +9,20 @@ require('../../sass/outline.scss');
 
 
 var getEvent = function(user, event) {
-  return <Event
+  return (<Event
             key={event._id || event.cid}
             user={user}
             event={event}
-          />
-}
+          />);
+};
 
 
 var Events = React.createClass({
 
   propTypes: {
    events: ReactPropTypes.array.isRequired,
-   user: ReactPropTypes.object.isRequired
+   user: ReactPropTypes.object.isRequired,
+   upcomingEvents : ReactPropTypes.array.isRequired
   },
 
   render: function() {

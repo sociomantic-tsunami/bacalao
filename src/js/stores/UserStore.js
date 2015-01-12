@@ -1,9 +1,8 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var ActionTypes = require('../constants/Constants').ActionTypes;
+var Constants = require('../constants/Constants');
+var ActionTypes = Constants.ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
-
-var CHANGE_EVENT = 'change';
 
 var _user = {
   loggedIn : false,
@@ -12,14 +11,14 @@ var _user = {
 var UserStore = _.extend({}, EventEmitter.prototype, {
 
   emitChange: function() {
-    this.emit(CHANGE_EVENT);
+    this.emit(Constants.CHANGE_EVENT);
   },
 
   /**
    * @param {function} callback
    */
   addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
+    this.on(Constants.CHANGE_EVENT, callback);
   },
 
   isLoggedIn: function() {
