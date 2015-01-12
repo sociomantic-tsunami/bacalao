@@ -9,7 +9,7 @@ var moment = require('moment');
 var CHANGE_EVENT = 'change';
 
 var _nodes = new Asorted({ sortBy: 'time' });
-var _upcomingEvents;
+var _upcomingEvents = [];
 var lastAddedIndex = -1;
 
 var EventsStore = _.extend({}, EventEmitter.prototype, {
