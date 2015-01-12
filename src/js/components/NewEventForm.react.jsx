@@ -118,7 +118,7 @@ var NewEventForm = React.createClass({
       var place = this.autocomplete.getPlace();
 
       // forbid places that don't exist on google maps
-      if(!place.place_id) {
+      if(!place.name) {
         return;
       }
 

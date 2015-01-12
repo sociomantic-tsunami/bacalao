@@ -26,7 +26,6 @@ var App = React.createClass({
   componentDidMount: function() {
     EventsStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
-
   },
 
   render: function() {
