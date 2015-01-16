@@ -17,7 +17,8 @@ module.exports = {
     JOINED_EVENT: null,
     LEAVE_EVENT: null,
     LEFT_EVENT: null,
-    REMOVED_EVENT: null,
+    DELETE_EVENT: null,
+    DELETED_EVENT: null,
     GOT_USER_INFO: null
   }),
 

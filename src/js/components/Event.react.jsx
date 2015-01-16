@@ -5,6 +5,7 @@ var _ = require('underscore');
 var Tooltip = require('react-bootstrap').Tooltip;
 var Badge = require('react-bootstrap').Badge;
 var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
+var DeleteEventButton = require('./DeleteEventButton.react.jsx');
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment');
 
@@ -36,13 +37,9 @@ var EventRow = React.createClass({
 
     var attendees = _.map(this.props.event.attendees, getAttendee);
 
-
-
-
     var maxAttendees = <Badge></Badge>;
 
     return (
-
         <div className="event__box">
           <div className="event__box--buttons">
             <JoinLeaveButton
@@ -52,6 +49,15 @@ var EventRow = React.createClass({
                attendees={this.props.event.attendees}
                _onUserJoin={this._onUserJoin}
                _onUserLeave={this._onUserLeave}
+            />
+          </div>
+
+          <div className="event__box--buttons">
+            <DeleteEventButton
+               user={this.props.user}
+               creator={this.props.event.creator}
+               attendees={this.props.event.attendees}
+               _onEventDeleted={this._onEventDeleted}
             />
           </div>
 
@@ -141,6 +147,14 @@ var EventRow = React.createClass({
     }
     EventActionCreators.leaveEvent(this.props.event._id);
   },
+
+  _onEventDeleted: function(event) {
+    if(!this.props.event._id) {
+      console.error('cant delete before its saved on the server')
+      return;
+    }
+    EventActionCreators.deleteEvent(this.props.event._id);
+  }
 });
 
 module.exports = EventRow;

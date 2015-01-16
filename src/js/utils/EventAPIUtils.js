@@ -65,7 +65,7 @@ module.exports = {
         console.error('API Error', err);
       })
       .end(function(res) {
-        // EventServerActionCreators.deletedEvent(res.body);
+        EventServerActionCreators.deletedEvent(res.body);
       });
   },
 

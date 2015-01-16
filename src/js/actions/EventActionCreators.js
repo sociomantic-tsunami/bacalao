@@ -31,6 +31,15 @@ module.exports = {
     });
 
     EventAPIUtils.createEvent(EventsStore.getLastCreatedForAPI());
+  },
+
+  deleteEvent: function(eventId) {
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.DELETE_EVENT,
+      eventId: eventId
+    });
+
+    EventAPIUtils.deleteEvent(eventId)
   }
 
 

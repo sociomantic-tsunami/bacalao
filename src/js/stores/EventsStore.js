@@ -39,9 +39,6 @@ var EventsStore = _.extend({}, EventEmitter.prototype, {
     return _nodes.array;
   },
 
-  getUpcoming: function() {
-  },
-
   getLastCreatedForAPI: function() {
     if(lastAddedIndex === -1) {
       console.error('No element found');
@@ -171,6 +168,15 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
             break;
           }
         }
+      break;
+
+    // from the server
+    // action.event = { eventId: ... }
+    // remove the event
+    case ActionTypes.DELETED_EVENT:
+      _nodes.remove(action.event);
+        EventsStore.emitChange();
+        return;
       break;
 
     default:

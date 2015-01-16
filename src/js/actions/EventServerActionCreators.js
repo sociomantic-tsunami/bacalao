@@ -39,6 +39,13 @@ module.exports = {
       type: ActionTypes.LEFT_EVENT,
       event: event
     });
+  },
+
+  deletedEvent : function(event) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.DELETED_EVENT,
+      event: event
+    });
   }
 
 };
