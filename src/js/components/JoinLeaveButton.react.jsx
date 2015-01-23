@@ -15,9 +15,9 @@ var JoinLeaveButton = React.createClass({
   },
 
   render: function() {
-    this.props.hasUserJoined = this.hasUserJoined();
+    this.props.isAttending = this.isAttending();
 
-    if(this.props.hasUserJoined) {
+    if(this.props.isAttending) {
       return <Button disabled={this.isDisabled()} bsSize="small" bsStyle="danger" onClick={this.props._onUserLeave}>Leave</Button>;
     } else {
       return <Button disabled={this.isDisabled()} bsSize="small" bsStyle="info" onClick={this.props._onUserJoin}>Join</Button>;
@@ -25,7 +25,7 @@ var JoinLeaveButton = React.createClass({
   },
 
 
-  hasUserJoined : function() {
+  isAttending : function() {
     if(this.props.isUpcoming) {
       return true;
     }
@@ -49,7 +49,7 @@ var JoinLeaveButton = React.createClass({
     }
 
     if(this.props.attendees.length >= this.props.maxAttendees &&
-      !this.props.hasUserJoined) {
+      !this.props.isAttending) {
       return true;
     }
 
