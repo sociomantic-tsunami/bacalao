@@ -26,8 +26,9 @@ var JoinLeaveButton = React.createClass({
 
 
   hasUserJoined : function() {
-    if(this.props.isUpcoming)
+    if(this.props.isUpcoming) {
       return true;
+    }
 
     if(this.props.user.loggedIn === false) {
       return false;
