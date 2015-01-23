@@ -43,7 +43,6 @@ var EventRow = React.createClass({
         <div className="event__box">
           <div className="event__box--buttons">
             <JoinLeaveButton
-               key={this.props.key}
                user={this.props.user}
                maxAttendees={this.props.event.maxAttendees}
                attendees={this.props.event.attendees}

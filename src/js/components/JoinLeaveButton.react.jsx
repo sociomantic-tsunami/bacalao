@@ -9,6 +9,7 @@ var JoinLeaveButton = React.createClass({
     user: ReactPropTypes.object.isRequired,
     maxAttendees: ReactPropTypes.number.isRequired,
     attendees: ReactPropTypes.array.isRequired,
+    isUpcoming: React.PropTypes.bool,
     _onUserLeave: ReactPropTypes.func.isRequired,
     _onUserJoin: ReactPropTypes.func.isRequired
   },
@@ -25,6 +26,9 @@ var JoinLeaveButton = React.createClass({
 
 
   hasUserJoined : function() {
+    if(this.props.isUpcoming)
+      return true;
+
     if(this.props.user.loggedIn === false) {
       return false;
     }
@@ -39,7 +43,7 @@ var JoinLeaveButton = React.createClass({
 
   // Disable the join/leave if the user is not logged in or if the maxAttendees has been reached
   isDisabled: function() {
-    if(!this.props.user.loggedIn) {
+    if(this.props.user && !this.props.user.loggedIn) {
       return true;
     }
 
