@@ -30,7 +30,6 @@ var Events = React.createClass({
 
     return (
       <div className="events__spread">
-        <h4>Events</h4>
         <div className="events__columns">
             {events}
         </div>
