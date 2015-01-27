@@ -39,7 +39,7 @@ module.exports = {
       eventId: eventId
     });
 
-    EventAPIUtils.deleteEvent(eventId)
+    EventAPIUtils.deleteEvent(eventId);
   }
 
 
