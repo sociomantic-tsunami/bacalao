@@ -30,7 +30,7 @@
     "react-bootstrap": "~0.13.0",
     "react-router": "^0.11.6",
     "react-router-bootstrap": "^0.7.2",
-    "sass-loader": "~0.2.0",
+    "sass-loader": "^0.2.0",
     "socket.io": "^1.1.0",
     "socket.io-client": "^1.1.0",
     "statehood": "^2.0.0",
@@ -55,8 +55,8 @@
     "webpack": "~1.4.8"
   },
   "scripts": {
-    "dev": "nodemon -w server/ server/server.js --development | bunyan & webpack -w --colors",
-    "devmap": "nodemon -w server/ server/server.js --development | bunyan & webpack -d -w --colors",
+    "dev": "nodemon -I -w server/ server/server.js --development | bunyan & webpack -w --colors",
+    "devmap": "nodemon -I -w server/ server/server.js --development | bunyan & webpack -d -w --colors",
     "watch": "webpack -w -d --colors",
     "build": "webpack -p --colors --display-modules",
     "start": "node server/server.js --production",
