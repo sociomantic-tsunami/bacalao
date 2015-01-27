@@ -26,11 +26,8 @@ var DeleteEventButton = React.createClass({
   // show the button if the user logged in is the creator of the event
   // and if he's the only one attending
   isVisible : function() {
-    if( this.props.user._id == this.props.creator._id &&
-      this.props.attendees.length == 1 &&
-      this.props.attendees[0]._id == this.props.creator._id )
-    {
-      return true;
+    if( this.props.user._id == this.props.creator._id) {
+      return (this.props.attendees.length === 0 || (this.props.attendees.length === 1 && this.props.attendees[0]._id === this.props.creator._id) );
     }
 
     return false;
