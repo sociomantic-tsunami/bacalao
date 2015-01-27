@@ -3,39 +3,51 @@ var Constants = require('../constants/Constants');
 var Endpoints = Constants.Endpoints;
 var request = require('superagent');
 var _ = require('underscore');
+var Q = require('q');
 
 
 
 module.exports = {
 
   getAllEvents: function() {
+    var deferred = Q.defer();
+
     request
       .get(Endpoints.EVENTS)
       .type('json')
       .send()
-      .on('error', function(err) {
-        console.error('API Error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         _.defer(EventServerActionCreators.receiveAll, res.body);
       });
   },
 
-  getUpcomingEvents: function(){
+  getUpcomingEvents: function() {
+    var deferred = Q.defer();
+
     request
       .get(Endpoints.UPCOMING)
       .type('json')
       .send()
-      .on('error', function(err) {
-        console.error('API error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         _.defer(EventServerActionCreators.receiveUpcoming, res.body);
       });
   },
 
 
   createEvent: function(event) {
+    var deferred = Q.defer();
     if(event.venue && event.venue.geometry) {
       event.venue.geometry.location = {
         lat: event.venue.geometry.location.lat(),
@@ -47,24 +59,31 @@ module.exports = {
       .post(Endpoints.EVENT)
       .type('json')
       .send(event)
-      .on('error', function(err) {
-        console.error('API Error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         EventServerActionCreators.createdEvent(res.body);
       });
   },
 
 
   deleteEvent: function(eventId) {
+    var deferred = Q.defer();
     var url = Endpoints.DELETE_EVENT.replace('[eventId]', eventId);
 
     request
       .del(url)
-      .on('error', function(err) {
-        console.error('API Error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         EventServerActionCreators.deletedEvent(res.body);
       });
   },
@@ -74,18 +93,21 @@ module.exports = {
     if(!eventId || !userId) {
       console.error('invalid eventId/userId');
     }
+    var deferred = Q.defer();
     var url = Endpoints.JOIN_EVENT;
-
     url = url.replace('[eventId]', eventId);
     url = url.replace('[userId]', userId);
 
     request
       .put(url)
       .type('json')
-      .on('error', function(err) {
-        console.error('API Error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         EventServerActionCreators.joinedEvent(res.body);
       });
   },
@@ -95,7 +117,7 @@ module.exports = {
     if(!eventId || !userId) {
       console.error('invalid eventId/userId');
     }
-
+    var deferred = Q.defer();
     var url = Endpoints.LEAVE_EVENT;
 
     url = url.replace('[eventId]', eventId);
@@ -104,10 +126,13 @@ module.exports = {
     request
       .del(url)
       .type('json')
-      .on('error', function(err) {
-        console.error('API Error', err);
-      })
-      .end(function(res) {
+      .end(function(err, res) {
+        err = err || res.error;
+        if(err) {
+          console.error('API Error', err);
+          return deferred.reject(new Error(err));
+        }
+        deferred.resolve(res.body);
         EventServerActionCreators.leftEvent(res.body);
       });
   }

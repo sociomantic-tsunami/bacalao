@@ -46,6 +46,9 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
   switch(action.type) {
 
     case ActionTypes.INIT_USER:
+      if(!action.user._id) {
+        console.error('User info is missing _id');
+      }
       _.extend(_user, action.user);
       UserStore.emitChange();
       break;

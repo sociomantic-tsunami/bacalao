@@ -21,8 +21,7 @@ var Events = React.createClass({
 
   propTypes: {
    events: ReactPropTypes.array.isRequired,
-   user: ReactPropTypes.object.isRequired,
-   upcomingEvents : ReactPropTypes.array.isRequired
+   user: ReactPropTypes.object.isRequired
   },
 
   render: function() {
@@ -33,9 +32,7 @@ var Events = React.createClass({
         <div className="events__columns">
             {events}
         </div>
-        <UpcomingEvents
-          upcomingEvents={this.props.upcomingEvents}
-        />
+        <UpcomingEvents />
         <AddEventButton
           onClick={this.onAddEvent}
           isLoggedIn={this.props.user.loggedIn} />

@@ -370,6 +370,23 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
 
 
 
+    it("DEL /api/event/eventId with a different creator fails", function(done) {
+        var options = {
+            method: "DELETE",
+            url: "/api/event/" + testEventId,
+            credentials: {
+                _id: randomId
+            }
+        };
+
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(403);
+            done();
+        });
+    });
+
+
     it("DEL /api/event/eventId removes an event", function(done) {
         var options = {
             method: "DELETE",
@@ -385,6 +402,22 @@ lab.experiment("Basic HTTP Tests", { timeout : 3000 }, function() {
             expect(response.result).to.be.an.object();
             expect(response.result.removed).to.be.true();
             expect(response.result.eventId).to.equal(testEventId);
+            done();
+        });
+    });
+
+    it("DEL /api/event/eventId returns 404", function(done) {
+        var options = {
+            method: "DELETE",
+            url: "/api/event/" + testEventId,
+            credentials: {
+                _id: testUserId
+            }
+        };
+
+
+        server.inject(options, function(response) {
+            expect(response.statusCode).to.equal(404);
             done();
         });
     });

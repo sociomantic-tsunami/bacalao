@@ -3,7 +3,9 @@ var Constants = require('../constants/Constants');
 var ActionTypes = Constants.ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
+var UserStore = require('./UserStore');
 
+// Array of event ids
 var _upcomingEvents = [];
 
 
@@ -41,6 +43,11 @@ UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.CREATED_EVENT:
+      if(action.event.creator._id === UserStore.getUserId()) {
+        _upcomingEvents.push(action.event._id);
+        UpcomingStore.emitChange();
+      }
+
       break;
 
     case ActionTypes.CREATE_EVENT:

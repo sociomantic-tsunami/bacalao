@@ -145,7 +145,7 @@ var NewEventForm = React.createClass({
 
   _create: function() {
     EventActionCreators.createEvent(_.clone(this.state));
-    this.replaceState(this.getInitialState());
+    // this.replaceState(this.getInitialState());
     this.props.onCreate && this.props.onCreate();
     this.transitionTo('dashboard');
   }

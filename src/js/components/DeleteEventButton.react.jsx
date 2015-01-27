@@ -15,7 +15,7 @@ var DeleteEventButton = React.createClass({
   {
     if(this.isVisible()){
       return (
-        <Button bsSize="small" bsStyle="" onClick={this.props._onEventDeleted}>
+        <Button bsSize="small" onClick={this.props._onEventDeleted}>
           Delete</Button>
       );
     }

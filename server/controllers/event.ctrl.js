@@ -103,8 +103,16 @@ module.exports = {
           return reply(Boom.badImplementation());
         }
 
-        if(event.attendees.length > 1 ||
-          (event.attendees.length === 1 && event.attendees[0].toString() !== userId) ) {
+        if(!event) {
+          return reply(Boom.notFound('Event not found'));
+        }
+
+        if(event.creator.toString() !== userId) {
+          return reply(Boom.forbidden('Only the creator can delete an event'));
+        }
+
+        if((event.attendees.length > 1 ||
+            (event.attendees.length === 1 && event.attendees[0].toString() !== userId) )) {
           return reply(new Boom.badData('Cannot delete an event with attendees'));
         }
 
