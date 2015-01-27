@@ -112,7 +112,7 @@ server.route([
       },
       response: {
         schema: {
-          _id: Joi.string(),
+          _id: Joi.string().required(),
           firstName: Joi.string(),
           lastName: Joi.string(),
           email: Joi.string().email(),
