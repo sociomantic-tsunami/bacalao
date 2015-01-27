@@ -81,11 +81,8 @@ module.exports = {
             response.cid = request.payload.cid;
             response._id = response._id.toString();
 
+            request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
             return reply(response);
-            // makes more sense to use this - socket.broadcast.emit('hi');
-            // which doesn't send to this socket.
-            // req.socketio.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response,
-            //   'cid'));
 
           });
 
@@ -126,8 +123,8 @@ module.exports = {
             eventId: event.id
           };
 
+          request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
           return reply(response);
-          // req.socketio.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
 
         });
     });
@@ -159,7 +156,7 @@ module.exports = {
             user: user
           };
 
-          // req.socketio.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
+          request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
           return reply(response);
         });
       });
@@ -185,7 +182,7 @@ module.exports = {
           eventId: request.params.eventId,
           userId: request.params.userId
         };
-        // req.socketio.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
+        request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
         return reply(response);
       });
   }

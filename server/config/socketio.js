@@ -8,7 +8,7 @@ exports.register = function(server, options, next) {
 
     var def = new statehood.Definitions(config.statehood);
 
-    next();
+
 
     io.set('authorization', function (handshakeData, accept) {
       var cookie = handshakeData.headers.cookie;
@@ -31,18 +31,20 @@ exports.register = function(server, options, next) {
     var connections = 0;
     io.sockets.on('connection', function (socket) {
       connections++;
-      server.log(['socket'], 'new connection. open connections: ' + connections);
+      server.log(['socket'], 'new connection. open socket connections: ' + connections);
 
       socket.on('disconnect', function () {
         connections--;
-        server.log(['socket'], 'closed connection. open connections: ' + connections);
+        server.log(['socket'], 'closed connection. open socket connections: ' + connections);
       });
     });
 
+    server.expose('io', io);
+    next();
 };
 
 
 exports.register.attributes = {
-  name: 'socketHapi',
+  name: 'socketio',
   version: '0.1'
 };
