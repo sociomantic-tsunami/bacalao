@@ -44,7 +44,9 @@ UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.CREATED_EVENT:
       if(action.event.creator._id === UserStore.getUserId()) {
-        _upcomingEvents.push(action.event._id);
+        if(!_.contains(_upcomingEvents, action.event._id)) {
+          _upcomingEvents.push(action.event._id);
+        }
         UpcomingStore.emitChange();
       }
 
