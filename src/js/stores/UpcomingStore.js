@@ -63,6 +63,7 @@ UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
 
     case ActionTypes.JOINED_EVENT:
       _upcomingEvents.push(action.event.eventId);
+      _upcomingEvents = _.uniq(_upcomingEvents);
       UpcomingStore.emitChange();
       break;
 
