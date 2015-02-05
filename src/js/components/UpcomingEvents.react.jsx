@@ -28,6 +28,9 @@ var UpcomingEvents = React.createClass({
     UpcomingStore.addChangeListener(this._onChange);
   },
 
+  componentWillUnmount: function() {
+    UpcomingStore.removeChangeListener(this._onChange);
+  },
 
   _onChange: function() {
     this.setState(this._getState())

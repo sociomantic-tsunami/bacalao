@@ -21,6 +21,13 @@ var UserStore = _.extend({}, EventEmitter.prototype, {
     this.on(Constants.CHANGE_EVENT, callback);
   },
 
+  /**
+   * @param {function} callback
+   */
+  removeChangeListener: function(callback) {
+    this.removeListener(Constants.CHANGE_EVENT, callback);
+  },
+
   isLoggedIn: function() {
     return _user.loggedIn;
   },

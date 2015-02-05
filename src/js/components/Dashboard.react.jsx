@@ -17,6 +17,11 @@ var Dashboard = React.createClass({
     UserStore.addChangeListener(this._onChange);
   },
 
+  componentWillUnmount: function() {
+    EventsStore.removeChangeListener(this._onChange);
+    UserStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
     return (
       <div>
