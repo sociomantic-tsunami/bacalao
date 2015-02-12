@@ -3,7 +3,6 @@ var User = require('../models/user.model');
 var _ = require('underscore');
 var Q = require('q');
 var clientConstants = require('../../src/js/constants/Constants');
-var errors = require('restify').errors;
 var moment = require('moment');
 var Boom = require('boom');
 var mongoose = require('mongoose');
