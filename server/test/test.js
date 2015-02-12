@@ -1,6 +1,6 @@
 var Lab = require("lab");
 var Code = require("code");
-var server = require("../server/server.js");
+var server = require("../server.js");
 var lab = exports.lab = Lab.script();
 
 // shortcuts

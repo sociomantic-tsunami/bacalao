@@ -60,6 +60,6 @@
     "watch": "webpack -w -d --colors",
     "build": "webpack -p --colors --display-modules",
     "start": "node server/server.js --production",
-    "test": "./node_modules/lab/bin/lab -c"
+    "test": "./node_modules/lab/bin/lab -c server/test"
   }
 }
