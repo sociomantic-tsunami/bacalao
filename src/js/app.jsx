@@ -11,7 +11,7 @@ var GeoLocationUtils = require('./utils/GeoLocationUtils');
 var RouterActionCreators = require('./actions/RouterActionCreators');
 var UserAPIUtils = require('./utils/UserAPIUtils');
 var EventAPIUtils = require('./utils/EventAPIUtils');
-require('../../sass/app.scss');
+require('../sass/app.scss');
 
 
 
