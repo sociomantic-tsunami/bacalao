@@ -4,7 +4,7 @@ var ActionTypes = Constants.ActionTypes;
 var EventEmitter = require('events').EventEmitter;
 var UserStore = require('./UserStore');
 var _ = require('underscore');
-var Asorted = require('Asorted');
+var Asorted = require('asorted');
 var moment = require('moment');
 
 var _nodes = new Asorted({ sortBy: 'time' });

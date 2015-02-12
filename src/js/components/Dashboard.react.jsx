@@ -5,9 +5,8 @@ var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-require('../../sass/app.scss');
 
-var App = React.createClass({
+var Dashboard = React.createClass({
 
   getInitialState: function() {
     return this._getState();
@@ -44,4 +43,4 @@ var App = React.createClass({
 
 });
 
-module.exports = App;
+module.exports = Dashboard;
