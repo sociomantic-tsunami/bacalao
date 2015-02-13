@@ -13,8 +13,11 @@ Setup
 5. Run `npm run-script dev` to watch and compile static assets and run the server
 
 
-* For easy logging install bunyan globally (npm install -g bunyan)
- and run `node server.js | bunyan`
+* For easy logging install bunyan globally `npm install -g bunyan`
+
+* Make you have `nodemon` and [webpack](https://github.com/webpack/docs/wiki/cli#installation) installed globally.
+
+* Watching files is something that is sometimes limited in number by the OS. This can cause some weirdness with all of these dev tools. [Refer to this](http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc) if you get a `watch ENOSPC` error.
 
 
 Conventions
