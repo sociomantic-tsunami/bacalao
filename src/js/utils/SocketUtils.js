@@ -9,10 +9,6 @@ var SocketUtils = {
   init: function() {
     _socket = socketio();
 
-    if(UserStore.isLoggedIn()) {
-      //TODO join room
-    }
-
     _socket.on(Constants.ActionTypes.CREATED_EVENT, function(data) {
       EventServerActionCreators.createdEvent(data);
     });
