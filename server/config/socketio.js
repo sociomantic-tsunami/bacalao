@@ -4,27 +4,23 @@ var statehood = require('statehood');
 var _ = require('underscore');
 
 exports.register = function(server, options, next) {
-    var io = socketIO(server.listener); // socket server listener
+    // configure the cookie
+
+    var io = socketIO(server.listener, { cookiePath: '/' }); // socket server listener
 
     var def = new statehood.Definitions(config.statehood);
 
-
-
-    io.set('authorization', function (handshakeData, accept) {
-      var cookie = handshakeData.headers.cookie;
+    io.use(function (socket, next) {
+      var cookie = socket.handshake.headers.cookie;
       if(cookie) {
         def.parse(cookie, function(err, state, failed) {
-          // console.log('session', state.session);
           if(state && state.session && state.session._id) {
-            return accept(null, true);
+            return next();
           }
         });
       } else {
-        return accept('No session cookie.', false);
+        return next(new Error('No session cookie.'));
       }
-
-      return accept(null, false);
-
     });
 
     // Debugging for socket.io
@@ -32,7 +28,6 @@ exports.register = function(server, options, next) {
     io.sockets.on('connection', function (socket) {
       connections++;
       server.log(['socket'], 'new connection. open socket connections: ' + connections);
-
       socket.on('disconnect', function () {
         connections--;
         server.log(['socket'], 'closed connection. open socket connections: ' + connections);
