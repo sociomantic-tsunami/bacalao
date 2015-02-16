@@ -6,7 +6,7 @@ var _ = require('underscore');
 exports.register = function(server, options, next) {
     // configure the cookie
 
-    var io = socketIO(server.listener, { cookiePath: '/' }); // socket server listener
+    var io = socketIO(server.listener); // socket server listener
 
     var def = new statehood.Definitions(config.statehood);
 
