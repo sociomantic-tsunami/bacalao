@@ -1,5 +1,6 @@
 var EventServerActionCreators = require('../actions/EventServerActionCreators');
 var Constants = require('../constants/Constants');
+var SocketUtils = require('./SocketUtils');
 var Endpoints = Constants.Endpoints;
 var request = require('superagent');
 var _ = require('underscore');
@@ -11,7 +12,6 @@ module.exports = {
 
   getAllEvents: function() {
     var deferred = Q.defer();
-
     request
       .get(Endpoints.EVENTS)
       .type('json')
@@ -58,6 +58,7 @@ module.exports = {
     request
       .post(Endpoints.EVENT)
       .type('json')
+      .set('X-Socket-ID', SocketUtils.getSocketId())
       .send(event)
       .end(function(err, res) {
         err = err || res.error;
@@ -77,6 +78,7 @@ module.exports = {
 
     request
       .del(url)
+      .set('X-Socket-ID', SocketUtils.getSocketId())
       .end(function(err, res) {
         err = err || res.error;
         if(err) {
@@ -101,6 +103,7 @@ module.exports = {
     request
       .put(url)
       .type('json')
+      .set('X-Socket-ID', SocketUtils.getSocketId())
       .end(function(err, res) {
         err = err || res.error;
         if(err) {
@@ -126,6 +129,7 @@ module.exports = {
     request
       .del(url)
       .type('json')
+      .set('X-Socket-ID', SocketUtils.getSocketId())
       .end(function(err, res) {
         err = err || res.error;
         if(err) {

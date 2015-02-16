@@ -10,7 +10,9 @@ var mongoose = require('mongoose');
 module.exports = {
 
   getEvents: function (request, reply) {
+
     var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
+
 
     Event
       .find({ time: { '$gte': roundHourAgo } }, 'title venue time details attendees maxAttendees creator')
@@ -80,9 +82,14 @@ module.exports = {
             response.cid = request.payload.cid;
             response._id = response._id.toString();
 
-            request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
-            return reply(response);
+            reply(response);
 
+
+            var socketId = request.headers['x-socket-id'];
+            var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
+
+            socket && socket.broadcast.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
+            return;
           });
 
 
@@ -122,9 +129,14 @@ module.exports = {
             eventId: event.id
           };
 
-          request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
-          return reply(response);
+          reply(response);
+          request.server.plugins.socketio.io.emit();
 
+          var socketId = request.headers['x-socket-id'];
+          var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
+
+          socket && socket.broadcast.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
+          return;
         });
     });
 
@@ -155,8 +167,13 @@ module.exports = {
             user: user
           };
 
-          request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
-          return reply(response);
+          reply(response);
+
+          var socketId = request.headers['x-socket-id'];
+          var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
+
+          socket && socket.broadcast.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
+          return;
         });
       });
   },
@@ -181,8 +198,13 @@ module.exports = {
           eventId: request.params.eventId,
           userId: request.params.userId
         };
-        request.server.plugins.socketio.io.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
-        return reply(response);
+        reply(response);
+
+          var socketId = request.headers['x-socket-id'];
+          var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
+
+          socket && socket.broadcast.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
+          return;
       });
   }
 

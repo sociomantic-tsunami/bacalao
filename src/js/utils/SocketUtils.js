@@ -3,11 +3,12 @@ var Constants = require('../constants/Constants');
 var EventServerActionCreators = require('../actions/EventServerActionCreators');
 var UserStore = require('../stores/UserStore');
 
-var _socket;
+var _socket = null;
 
 var SocketUtils = {
+
   init: function() {
-    _socket = socketio();
+      _socket = socketio();
 
     _socket.on(Constants.ActionTypes.CREATED_EVENT, function(data) {
       EventServerActionCreators.createdEvent(data);
@@ -25,7 +26,10 @@ var SocketUtils = {
     _socket.on(Constants.ActionTypes.REMOVED_EVENT, function(event) {
       EventServerActionCreators.deletedEvent(event);
     });
+  },
 
+  getSocketId: function() {
+    return _socket && _socket.io && _socket.io.engine && _socket.io.engine.id;
   }
 };
 
