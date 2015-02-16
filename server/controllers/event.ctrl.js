@@ -135,7 +135,7 @@ module.exports = {
           var socketId = request.headers['x-socket-id'];
           var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
 
-          socket && socket.broadcast.emit(clientConstants.ActionTypes.REMOVED_EVENT, response);
+          socket && socket.broadcast.emit(clientConstants.ActionTypes.DELETED_EVENT, response);
           return;
         });
     });

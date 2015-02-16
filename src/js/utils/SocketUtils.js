@@ -23,7 +23,7 @@ var SocketUtils = {
       EventServerActionCreators.leftEvent(event);
     });
 
-    _socket.on(Constants.ActionTypes.REMOVED_EVENT, function(event) {
+    _socket.on(Constants.ActionTypes.DELETED_EVENT, function(event) {
       EventServerActionCreators.deletedEvent(event);
     });
   },
