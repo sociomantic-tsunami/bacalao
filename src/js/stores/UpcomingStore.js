@@ -77,6 +77,9 @@ UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
 
 
     case ActionTypes.LEFT_EVENT:
+      if(UserStore.getUserId() !== action.event.userId) {
+        return;
+      }
       _upcomingEvents = _.without(_upcomingEvents, action.event.eventId);
       UpcomingStore.emitChange();
       break;
