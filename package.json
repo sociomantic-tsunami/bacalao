@@ -51,10 +51,10 @@
     "webpack": "~1.4.8"
   },
   "scripts": {
-    "dev": "nodemon -I -w server/ server/server.js --development | bunyan & webpack -w --colors",
-    "devmap": "nodemon -I -w server/ server/server.js --development | bunyan & webpack -d -w --colors",
-    "watch": "webpack -w -d --colors",
-    "build": "webpack -p --colors --display-modules",
+    "dev": "nodemon -I -w server/ server/server.js --development | bunyan & node node_modules/webpack/bin/webpack.js -w --colors --progress",
+    "devmap": "nodemon -I -w server/ server/server.js --development | bunyan & node node_modules/webpack/bin/webpack.js -d -w --colors --progress",
+    "watch": "node node_modules/webpack/bin/webpack.js -p --colors --display-modules -w -d --colors --progress",
+    "build": "node node_modules/webpack/bin/webpack.js -p --colors --display-modules --progress",
     "start": "node server/server.js --production",
     "test": "./node_modules/lab/bin/lab -c server/test"
   }
