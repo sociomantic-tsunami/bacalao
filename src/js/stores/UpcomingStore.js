@@ -40,6 +40,7 @@ var UpcomingStore = _.extend({}, EventEmitter.prototype, {
 
 UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
   var action = payload.action;
+  var tempUserId;
 
   switch(action.type) {
     case ActionTypes.RECEIVE_RAW_EVENTS:
@@ -70,7 +71,8 @@ UpcomingStore.dispatchToken = AppDispatcher.register(function(payload) {
       break;
 
     case ActionTypes.JOINED_EVENT:
-      if(UserStore.getUserId() !== action.event.userId) {
+      tempUserId = action.event.user && action.event.user._id;
+      if(UserStore.getUserId() !== tempUserId) {
         return;
       }
       _upcomingEvents.push(action.event.eventId);
