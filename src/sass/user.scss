@@ -1,6 +1,14 @@
+// @import "_bacalao_init";
+
 .user
 {
     position : relative;
+    color: #fff;
+
+    a 
+    {
+        color: red;
+    }
 }
 
 .user--current-user
@@ -8,13 +16,3 @@
   display: inline-block;
 }
 
-.user--login-button,
-.user--logout-button
-{
-    background-color: #6B6B6B;
-
-    &:hover
-    {
-        background-color: #B6B1B1;
-    }
-}

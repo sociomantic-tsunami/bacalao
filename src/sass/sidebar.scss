@@ -1,0 +1,24 @@
+.sidebar
+{
+    background-color:   #289bc8;
+    margin-right:       20px;
+    float:              left;
+    width:              270px;
+
+}
+
+.app-title, .app-user, .app-new-event
+{
+    float: left;
+}
+
+.app-user
+{
+	position: absolute;
+	right:10px;
+}
+
+.app-new-event
+{
+	margin-left: 12px;
+}

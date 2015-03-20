@@ -3,7 +3,6 @@ var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Event = require('./Event.react.jsx');
 var AddEventButton = require('./AddEventButton.react.jsx');
-var UpcomingEvents = require('./UpcomingEvents.react.jsx');
 
 require('../../sass/outline.scss');
 
@@ -32,7 +31,6 @@ var Events = React.createClass({
         <div className="events__columns">
             {events}
         </div>
-        <UpcomingEvents />
         <AddEventButton
           onClick={this.onAddEvent}
           isLoggedIn={this.props.user.loggedIn} />

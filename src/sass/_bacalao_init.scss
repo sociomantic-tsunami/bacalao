@@ -1,0 +1,325 @@
+//----------------------------------------------------------------------------//
+//  
+//  
+//  $BACALAO FONTS
+//  
+//  
+//----------------------------------------------------------------------------//
+/**
+ * @license
+ * MyFonts Webfont Build ID 2903494, 2014-10-16T12:41:30-0400
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: ProximaNova-LightIt by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/light-it/
+ *
+ * Webfont: ProximaNova-Light by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/light/
+ *
+ * Webfont: ProximaNova-RegularIt by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/regular-it/
+ *
+ * Webfont: ProximaNova-SemiboldIt by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/semibold-it/
+ *
+ * Webfont: ProximaNova-Semibold by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/semibold/
+ *
+ * Webfont: ProximaNova-BoldIt by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/bold-it/
+ *
+ * Webfont: ProximaNova-Regular by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/regular/
+ *
+ * Webfont: ProximaNova-Bold by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/bold/
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=2903494
+ * Licensed pageviews: 1,000,000
+ * Webfonts copyright: Copyright (c) Mark Simonson, 2005. All rights reserved.
+ *
+ * Copyright 2014 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+// @import url("//hello.myfonts.net/count/2c4dc6");
+
+@font-face {
+    font-family: 'ProximaNova-RegularIt';
+    src: url('webfonts/2C4DC6_2_0.eot');
+    src: url('webfonts/2C4DC6_2_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_2_0.woff2') format('woff2'),url('webfonts/2C4DC6_2_0.woff') format('woff'),url('webfonts/2C4DC6_2_0.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ProximaNova-Semibold';
+    src: url('webfonts/2C4DC6_4_0.eot');
+    src: url('webfonts/2C4DC6_4_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_4_0.woff2') format('woff2'),url('webfonts/2C4DC6_4_0.woff') format('woff'),url('webfonts/2C4DC6_4_0.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ProximaNova-Regular';
+    src: url('webfonts/2C4DC6_6_0.eot');
+    src: url('webfonts/2C4DC6_6_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_6_0.woff2') format('woff2'),url('webfonts/2C4DC6_6_0.woff') format('woff'),url('webfonts/2C4DC6_6_0.ttf') format('truetype');
+}
+
+//------------------------------------//
+//    $FONT DEFINITIONS
+//------------------------------------//
+
+.ProximaNova-RegularIt
+{
+    font-family: ProximaNova-RegularIt;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ProximaNova-Semibold
+{
+    font-family: ProximaNova-Semibold;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ProximaNova-Regular
+{
+    font-family: ProximaNova-Regular;
+    font-weight: normal;
+    font-style: normal;
+}
+//----------------------------------------------------------------------------//
+//  $BACALAO FONTS
+//----------------------------------------------------------------------------//
+
+
+
+
+
+
+//----------------------------------------------------------------------------//
+//  
+//  
+//  $BACALAO COLORS
+//  
+//  
+//----------------------------------------------------------------------------//
+
+$white:                     #fff;
+$white--one:                darken( #fff, 1 ); //#fcfcfc
+$white--ten:                darken( #fff, 10 ); //#e6e6e6
+$blue:                      #289bc8;
+$teal:                      #28a0b4;
+$red:                       #e64b6e;
+$slate-grey:                #788791;
+$river-bed-blue:            #414b55;
+
+$module--header:            $white--one;
+$module--header-date:       $teal;
+$module--border:            $white--ten;
+
+$text--white:               $white;
+$text--light:               $slate-grey;
+$text--dark:                $river-bed-blue;
+$text--available:           $blue;
+$text--address:             $blue;
+$text--act-now:             $red;
+
+$button--join:              $blue;
+$button--leave:             $red;
+//----------------------------------------------------------------------------//
+//  $END BACALAO COLORS
+//----------------------------------------------------------------------------//
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------//
+//  
+//  
+//  $BACALAO MIXINS
+//  
+//  
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//    BlACK SHADOW
+//----------------------------------------------------------------------------//
+@mixin black-box-shadow
+{
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+
+//----------------------------------------------------------------------------//
+//    REM MIXIN FOR FONT SIZING FALLBACKS
+//----------------------------------------------------------------------------//
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin rem-fallback($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $pxValues: #{$pxValues + $value*10}px;
+
+    @if $i < $max {
+      $pxValues: #{$pxValues + " "};
+    }
+  }
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $remValues: #{$remValues + $value}rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + " "};
+    }
+  }
+
+  #{$property}: $pxValues;
+  #{$property}: $remValues;
+}
+
+
+//----------------------------------------------------------------------------//
+//    $LETTERSPACING MIXIN
+//----------------------------------------------------------------------------//
+@mixin letterspacing( $kerning ) 
+{
+    $letter-spacing: ( $kerning * .001 );
+
+    @include rem-fallback( letter-spacing, $letter-spacing );
+
+}
+
+//----------------------------------------------------------------------------//
+//  $BREAKPOINT_MIXIN
+//
+//  inspiration: https://medium.com/@timknight/creating-a-dead-simple-sass-mixin-to-handle-responsive-breakpoints-889927b37740
+//
+//  @author Wolf Niederhoffer   <wolfgang.niederhoffer@sociomantic.com>
+//  @author Josh Wilson         <josh.wilsion@sociomantic.com>
+//----------------------------------------------------------------------------//
+
+@mixin breakpoint($min: 0, $max: 0) {
+  $type-min: type-of($min);
+  $type-max: type-of($max);
+
+  @if $type-min == string
+  {
+    // @debug "'#{$min}   #{type}'";
+
+    // <320
+    @if $min == shrimp
+    {
+      @media (max-width: 20em) { @content; }
+    }
+
+    // >320
+    @else if $min == crab
+    {
+      @media (min-width: 20.1em) { @content; }
+    }
+
+    // >480
+    @else if $min == tuna
+    {
+      @media (min-width: 30.1em) { @content; }
+    }
+
+    // >768
+    @else if $min == shark
+    {
+      @media (min-width: 48em) { @content; }
+    }
+
+    // > = 980
+    @else if $min == whale
+    {
+      @media (min-width: 61.25em) { @content; }
+    }
+
+    // Otherwise pass a warning to the compiler as to the appropriate options
+    @else {
+      @warn "'#{$min}' Doesn't go here. The breakpoint mixin supports the following attributes: shrimp, crab, tuna, shark, whale";
+    }
+  }
+
+  @else if $type-max == string {
+    // @debug "'#{$min}   #{type}'";
+
+    // <320
+    @if $max == shrimp
+    {
+      @media (max-width: 20em) { @content; }
+    }
+
+    // <320
+    @else if $max == crab
+    {
+      @media (max-width: 20.1em) { @content; }
+    }
+
+    // <480
+    @else if $max == tuna
+    {
+      @media (max-width: 30.1em) { @content; }
+    }
+
+    // >768
+    @else if $max == shark
+    {
+      @media (max-width: 48em) { @content; }
+    }
+
+    // >980
+    @else if $max == whale
+    {
+      @media (max-width: 61.25em) { @content; }
+    }
+
+    @else
+    {
+      @warn "'#{$max}' Doesn't go here. The breakpoint mixin supports the following attributes: shrimp, crab, tuna, shark, whale";
+    }
+  }
+
+
+  @else if $type-min == number {
+    // Allow for custom parameters for min and max size
+    $query: "all" !default;
+    @if      $min != 0 and $max != 0
+    {
+        $query: "(min-width: #{$min}) and (max-width: #{$max})";
+    } // set both min and max
+
+    @else if $min != 0 and $max == 0
+    {
+        $query: "(min-width: #{$min})";
+    } // set just min
+
+    @else if $min == 0 and $max != 0
+    {
+        $query: "(max-width: #{$max})";
+    } // set just max
+
+    @media #{$query} { @content; }
+  }
+}
+//----------------------------------------------------------------------------//
+//  $END BACALAO MIXINS
+//----------------------------------------------------------------------------//

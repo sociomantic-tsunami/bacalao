@@ -1,13 +1,14 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var User = require('./User.react.jsx');
+var UpcomingEvents = require('./UpcomingEvents.react.jsx');
 var ReactPropTypes = React.PropTypes;
 var RouteHandler = Router.RouteHandler;
 
-require('../../sass/topbar.scss');
+require('../../sass/sidebar.scss');
 
 
-var Navbar = React.createClass({
+var Sidebar = React.createClass({
 
   propTypes: {
    user: ReactPropTypes.object.isRequired
@@ -16,16 +17,12 @@ var Navbar = React.createClass({
 
   render: function() {
     return (
-      <nav className="navbar bacalao--navbar">
-        <div className="container-fluid">
-          <a className="navbar-brand">Bacalao</a>
-          <div className="nav navbar-nav navbar-right">
+        <div className="sidebar">
             <User user={this.props.user} />
-          </div>
+            <UpcomingEvents />
         </div>
-      </nav>
     );
   }
 });
 
-module.exports = Navbar;
+module.exports = Sidebar;
