@@ -4,3 +4,16 @@
     margin: 0;
     list-style: none
 }
+
+%bacalo__content
+{
+    box-sizing:             border-box;
+    padding:                10px;
+}
+
+%bacalao__header
+{
+    @extend %bacalo__content;
+    width:                  100%;
+    border-bottom:          1px solid #e6e6e6;
+}

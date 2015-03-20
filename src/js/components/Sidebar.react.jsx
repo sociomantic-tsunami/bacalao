@@ -18,8 +18,12 @@ var Sidebar = React.createClass({
   render: function() {
     return (
         <div className="sidebar">
-            <User user={this.props.user} />
-            <UpcomingEvents />
+            <div className="sidebar__header">
+                <User user={this.props.user} />
+            </div>
+            <div className="sidebar__content">
+                <UpcomingEvents />
+            </div>
         </div>
     );
   }

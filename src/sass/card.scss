@@ -1,3 +1,6 @@
+@import "base.scss";
+
+
 %card
 {
     display:                block;
@@ -23,17 +26,14 @@
 
 %card__header
 {
+    @extend %bacalo__header;
     background-color:       #fafafa;
-    padding:                10px;
-    box-sizing:             border-box;
-    width:                  100%;
-    border-bottom:                 1px solid #e6e6e6;
-
 }
 
-%card__content
-{
-    box-sizing:             border-box;
-    padding:                10px;
+// %card__content
+// {
+//     @extend %bacalo__header;
+//     box-sizing:             border-box;
+//     padding:                10px;
 
-}
+// }

@@ -8,6 +8,7 @@
 .bacalao
 {
     margin:         27px auto;
+    width:          960px;
 }
 
 body
@@ -19,3 +20,15 @@ body
     @extend .ProximaNova-Semibold;
 }
 
+.sidebar
+{
+    float:              left;
+    width:              270px;
+}
+
+.events__columns
+{
+  padding:              20px 0 0 0;
+  width:                670px;
+  float:                right;
+}
