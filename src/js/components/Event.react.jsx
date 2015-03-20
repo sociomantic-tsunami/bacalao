@@ -15,7 +15,7 @@ require('../../sass/event.scss');
 var getAttendee = function(attendee) {
   return <img
     key={attendee._id || _.uniqueId('attendee-')}
-    className="event__box--atendees-avatar"
+    className="event-box--atendees-avatar"
     src={attendee.picture} />
 }
 
@@ -41,28 +41,29 @@ var EventRow = React.createClass({
     var maxAttendees = <Badge></Badge>;
 
     return (
-        <div className="event__box">
+        <div className="event-box">
 
-          <div className="event__box--header">
-              <div className="event__box--time">
+          <div className="event-box__header">
+              <div className="event-box__time">
                 {this.getTime()}
               </div>
-              <div className="event__box--location">
-                <h3 className="event__box--venue-name">
+              <div className="event-box__location">
+                <h3 className="event-box__venue-name">
                   <a target="_blank" href={this.props.event.venue.url}>{this.props.event.venue.name}</a>
                 </h3>
-                <span className="event__box--venue-address">
+                <span className="event-box__venue-address">
                   {this.props.event.venue.formatted_address}
                 </span>
               </div>
           </div>
-          <div className="event__box--details">
-            {this.props.event.details}
-          </div>
+          <div className="event-box__content">
+            <div className="event-box__details">
+              {this.props.event.details}
+            </div>
 
 
 
-            <div className="event__box--buttons">
+            <div className="event-box__buttons">
               <JoinLeaveButton
                  user={this.props.user}
                  maxAttendees={this.props.event.maxAttendees}
@@ -72,7 +73,7 @@ var EventRow = React.createClass({
               />
             </div>
 
-            <div className="event__box--buttons">
+            <div className="event-box__buttons">
               <DeleteEventButton
                  user={this.props.user}
                  creator={this.props.event.creator}
@@ -80,26 +81,30 @@ var EventRow = React.createClass({
                  _onEventDeleted={this._onEventDeleted}
               />
             </div>
+
+
+
+
+            <div className="event-box__atendees">
+                <span className="">Coming&nbsp;
+
+                {this.props.event.attendees.length}
+                {this.props.event.maxAttendees > 0 ? '/' : '' }{this.props.event.maxAttendees}
+                {maxAttendees}
+
+                </span>
+                <p>
+
+                </p>
+                <div className="event-box__atendee-pictures">
+                  {attendees}
+                </div>
+            </div>
           </div>
 
 
 
 
-          <div className="event__box--atendees">
-              <span className="">Coming&nbsp;
-
-              {this.props.event.attendees.length}
-              {this.props.event.maxAttendees > 0 ? '/' : '' }{this.props.event.maxAttendees}
-              {maxAttendees}
-
-              </span>
-              <p>
-
-              </p>
-              <div className="event__box--atendee-pictures">
-                {attendees}
-              </div>
-          </div>
         </div>
     );
   },

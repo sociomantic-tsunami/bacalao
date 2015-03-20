@@ -8,12 +8,11 @@
 }
 
 
-.event__box
+.event-box
 {
-
     @extend %card;
 
-    .event__box--details
+    .event-box__details
     {
 
       &::after
@@ -24,7 +23,21 @@
     }
 }
 
-.event__box--creator-avatar, .user--profile-pic
+
+.event-box__header
+{
+  @extend %card__header;
+}
+
+.event-box__content
+{
+  @extend %card__content;
+
+}
+
+
+.event-box__.event-box__creator-avatar,
+.user--profile-pic
 {
   float: left;
   height: 50px;
@@ -32,7 +45,7 @@
   border-radius: 50px;
 }
 
-.event__box--details__text
+.event-box__details__text
 {
   width: 460px;
   &::after
@@ -46,20 +59,20 @@
     margin-bottom:      4px;
 }
 
-.event__box--title
+.event-box__title
 {
     margin-top:          0;
 }
 
-.event__box--time,
-.event__box--organizer,
-.event__box--atendees
+.event-box__time,
+.event-box__organizer,
+.event-box__atendees
 {
     @extend .event-box--metadata;
 }
 
 
-.event__box--atendee-pictures
+.event-box__atendee-pictures
 {
   padding-top:        10px;
 
@@ -70,7 +83,7 @@
   }
 
 }
-.event__box--atendees-avatar
+.event-box__atendees-avatar
 {
   width:              35px;
   height:             35px;
@@ -86,12 +99,12 @@
     }
 }
 
-.event__box--buttons
+.event-box__buttons
 {
     float: right;
 }
 
-.event__box__icon
+.event-box__icon
 {
     margin-right: 7px;
 }
