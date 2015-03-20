@@ -15,7 +15,7 @@ require('../../sass/event.scss');
 var getAttendee = function(attendee) {
   return <img
     key={attendee._id || _.uniqueId('attendee-')}
-    className="event-box--atendees-avatar"
+    className="event-box__atendees-avatar"
     src={attendee.picture} />
 }
 
@@ -63,24 +63,6 @@ var EventRow = React.createClass({
 
 
 
-            <div className="event-box__buttons">
-              <JoinLeaveButton
-                 user={this.props.user}
-                 maxAttendees={this.props.event.maxAttendees}
-                 attendees={this.props.event.attendees}
-                 _onUserJoin={this._onUserJoin}
-                 _onUserLeave={this._onUserLeave}
-              />
-            </div>
-
-            <div className="event-box__buttons">
-              <DeleteEventButton
-                 user={this.props.user}
-                 creator={this.props.event.creator}
-                 attendees={this.props.event.attendees}
-                 _onEventDeleted={this._onEventDeleted}
-              />
-            </div>
 
 
 
@@ -100,8 +82,25 @@ var EventRow = React.createClass({
                   {attendees}
                 </div>
             </div>
-          </div>
+            <div className="event-box__buttons">
+              <JoinLeaveButton
+                 user={this.props.user}
+                 maxAttendees={this.props.event.maxAttendees}
+                 attendees={this.props.event.attendees}
+                 _onUserJoin={this._onUserJoin}
+                 _onUserLeave={this._onUserLeave}
+              />
+            </div>
 
+            <div className="event-box__buttons">
+              <DeleteEventButton
+                 user={this.props.user}
+                 creator={this.props.event.creator}
+                 attendees={this.props.event.attendees}
+                 _onEventDeleted={this._onEventDeleted}
+              />
+            </div>
+          </div>
 
 
 

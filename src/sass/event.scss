@@ -42,15 +42,6 @@
 
 
 
-.event-box .event-box__creator-avatar,
-.user--profile-pic
-{
-  float: left;
-  height: 50px;
-  width: 50px;
-  border-radius: 50px;
-}
-
 
 // .event-box--metadata
 // {
@@ -66,6 +57,23 @@
 //     @extend .event-box--metadata;
 // }
 
+.events__columns
+{
+  // padding:              20px 0 0 0;
+  // width:                670px;
+  // float:                right;
+}
+
+
+
+
+.event-box .event-box__creator-avatar,
+.user--profile-pic
+{
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+}
 
 .event-box__atendee-pictures
 {
@@ -85,9 +93,11 @@
   width:              35px;
   height:             35px;
   display:            block;
-  float:              left;
   border-radius:      35px;
-  margin-right: 5px;
+  margin-right:       5px;
+  display:            inline-block;
+  margin-right:       10px;
+  margin-bottom:      10px;
 
     &:hover
     {
