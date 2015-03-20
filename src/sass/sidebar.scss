@@ -5,6 +5,7 @@
 .sidebar
 {
     width:                      100%;
+    
     @extend %card;
 
     @include breakpoint( 'shark' )

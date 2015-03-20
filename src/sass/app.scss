@@ -15,8 +15,13 @@ body
 
     @include breakpoint( 'tuna' )
     {
-        max-width:          960px;
+        max-width:          768px;
         margin:             27px auto;
+    }
+
+    @include breakpoint( 'shark' )
+    {
+        max-width:          960px;
     }
 }
 
