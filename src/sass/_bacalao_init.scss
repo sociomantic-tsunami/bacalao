@@ -51,43 +51,43 @@
 /* @import must be at top of file, otherwise CSS will not work */
 // @import url("//hello.myfonts.net/count/2c4dc6");
 
-@font-face {
-    font-family: 'ProximaNova-RegularIt';
-    src: url('webfonts/2C4DC6_2_0.eot');
-    src: url('webfonts/2C4DC6_2_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_2_0.woff2') format('woff2'),url('webfonts/2C4DC6_2_0.woff') format('woff'),url('webfonts/2C4DC6_2_0.ttf') format('truetype');
-}
+// @font-face {
+//     font-family: 'ProximaNova-RegularIt';
+//     src: url('../webfonts/2C4DC6_2_0.eot');
+//     src: url('../webfonts/2C4DC6_2_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/2C4DC6_2_0.woff2') format('woff2'),url('../webfonts/2C4DC6_2_0.woff') format('woff'),url('../webfonts/2C4DC6_2_0.ttf') format('truetype');
+// }
 
-@font-face {
-    font-family: 'ProximaNova-Semibold';
-    src: url('webfonts/2C4DC6_4_0.eot');
-    src: url('webfonts/2C4DC6_4_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_4_0.woff2') format('woff2'),url('webfonts/2C4DC6_4_0.woff') format('woff'),url('webfonts/2C4DC6_4_0.ttf') format('truetype');
-}
+// @font-face {
+//     font-family: 'ProximaNova-Semibold';
+//     src: url('../webfonts/2C4DC6_4_0.eot');
+//     src: url('../webfonts/2C4DC6_4_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/2C4DC6_4_0.woff2') format('woff2'),url('../webfonts/2C4DC6_4_0.woff') format('woff'),url('../webfonts/2C4DC6_4_0.ttf') format('truetype');
+// }
 
-@font-face {
-    font-family: 'ProximaNova-Regular';
-    src: url('webfonts/2C4DC6_6_0.eot');
-    src: url('webfonts/2C4DC6_6_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2C4DC6_6_0.woff2') format('woff2'),url('webfonts/2C4DC6_6_0.woff') format('woff'),url('webfonts/2C4DC6_6_0.ttf') format('truetype');
-}
+// @font-face {
+//     font-family: 'ProximaNova-Regular';
+//     src: url('../webfonts/2C4DC6_6_0.eot');
+//     src: url('../webfonts/2C4DC6_6_0.eot?#iefix') format('embedded-opentype'),url('../webfonts/2C4DC6_6_0.woff2') format('woff2'),url('../webfonts/2C4DC6_6_0.woff') format('woff'),url('../webfonts/2C4DC6_6_0.ttf') format('truetype');
+// }
 
 //------------------------------------//
 //    $FONT DEFINITIONS
 //------------------------------------//
 
-.ProximaNova-RegularIt
+%ProximaNova-RegularIt
 {
     font-family: ProximaNova-RegularIt;
     font-weight: normal;
     font-style: normal;
 }
 
-.ProximaNova-Semibold
+%ProximaNova-Semibold
 {
     font-family: ProximaNova-Semibold;
     font-weight: normal;
     font-style: normal;
 }
 
-.ProximaNova-Regular
+%ProximaNova-Regular
 {
     font-family: ProximaNova-Regular;
     font-weight: normal;

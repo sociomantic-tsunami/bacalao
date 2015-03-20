@@ -1,27 +1,52 @@
-// @import "_bacalao_init";
-
-.node-content
-{
-    display:        inline;
-}
-
-.bacalao
-{
-    margin:         27px auto;
-    width:          960px;
-}
+@import "_bacalao_init";
 
 body
 {
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    @extend .ProximaNova-Semibold;
+    // -webkit-background-size: cover;
+    // -moz-background-size: cover;
+    // -o-background-size: cover;
+    // background-size: cover;
+    // @extend %ProximaNova-Semibold;
 }
+
+// .node-content
+// {
+//     display:        inline;
+// }
+
+.bacalao
+{
+    width:                  100%;
+    @include breakpoint( 'tuna' )
+    {
+        max-width:          960px;
+        margin:             27px auto;
+    }
+}
+
+
 
 .sidebar
 {
-    float:              left;
-    width:              270px;
+    width:                      100%;
+
+    @include breakpoint( 'shark' )
+    {
+        width:                  30%;
+        display: inline-block;
+    }
 }
+
+.events__spread
+{
+    width:                      100%;
+
+    @include breakpoint( 'shark' )
+    {
+        width:                  63%;
+        display: inline-block;
+    }
+}
+
+
+
