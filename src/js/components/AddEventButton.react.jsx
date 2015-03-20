@@ -3,8 +3,7 @@ var ReactPropTypes = React.PropTypes;
 var ReactRouterBootstrap = require('react-router-bootstrap');
 var ButtonLink = ReactRouterBootstrap.ButtonLink;
 
-
-require('../../sass/AddEventButton.scss');
+require('../../sass/add_event.scss');
 
 var AddEventButton = React.createClass({
 
@@ -17,10 +16,8 @@ var AddEventButton = React.createClass({
       <ButtonLink
         to="new-event"
         disabled={!this.props.isLoggedIn}
-        className="add-event-button"
-        bsSize="large"
-        bsStyle="success">
-          +
+        className="add-event__button"
+        >
       </ButtonLink>
     );
   }

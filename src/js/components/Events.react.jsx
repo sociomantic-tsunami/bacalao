@@ -2,10 +2,6 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
 var Event = require('./Event.react.jsx');
-var AddEventButton = require('./AddEventButton.react.jsx');
-
-require('../../sass/outline.scss');
-
 
 var getEvent = function(user, event) {
   return (<Event
@@ -29,9 +25,6 @@ var Events = React.createClass({
     return (
         <div className="main">  
                 {events}
-            <AddEventButton
-                onClick={this.onAddEvent}
-                isLoggedIn={this.props.user.loggedIn} />
         </div>
     );
 

@@ -9,7 +9,7 @@ var DeleteEventButton = require('./DeleteEventButton.react.jsx');
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment');
 
-require('../../sass/event.scss');
+require('../../sass/events.scss');
 
 
 var getAttendee = function(attendee) {
@@ -48,10 +48,10 @@ var EventRow = React.createClass({
                 {this.getTime()}
               </div>
               <div className="event-box__location">
-                <h3 className="event-box__venue-name">
+                <h3 className="venue-name">
                   <a target="_blank" href={this.props.event.venue.url}>{this.props.event.venue.name}</a>
                 </h3>
-                <span className="event-box__venue-address">
+                <span className="venue-address">
                   {this.props.event.venue.formatted_address}
                 </span>
               </div>
@@ -67,7 +67,7 @@ var EventRow = React.createClass({
 
 
 
-            <div className="event-box__atendees">
+            <div className="event-box__attendees">
                 <span className="">Coming&nbsp;
 
                 {this.props.event.attendees.length}
@@ -82,23 +82,21 @@ var EventRow = React.createClass({
                   {attendees}
                 </div>
             </div>
-            <div className="event-box__buttons">
-              <JoinLeaveButton
-                 user={this.props.user}
-                 maxAttendees={this.props.event.maxAttendees}
-                 attendees={this.props.event.attendees}
-                 _onUserJoin={this._onUserJoin}
-                 _onUserLeave={this._onUserLeave}
-              />
-            </div>
+            <div className="button__container">
+                  <JoinLeaveButton
+                     user={this.props.user}
+                     maxAttendees={this.props.event.maxAttendees}
+                     attendees={this.props.event.attendees}
+                     _onUserJoin={this._onUserJoin}
+                     _onUserLeave={this._onUserLeave}
+                  />
 
-            <div className="event-box__buttons">
-              <DeleteEventButton
-                 user={this.props.user}
-                 creator={this.props.event.creator}
-                 attendees={this.props.event.attendees}
-                 _onEventDeleted={this._onEventDeleted}
-              />
+                  <DeleteEventButton
+                     user={this.props.user}
+                     creator={this.props.event.creator}
+                     attendees={this.props.event.attendees}
+                     _onEventDeleted={this._onEventDeleted}
+                  />
             </div>
           </div>
 

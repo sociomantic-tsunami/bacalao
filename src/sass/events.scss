@@ -1,4 +1,5 @@
 @import "card.scss";
+@import "event_base.scss";
 
 
 
@@ -29,42 +30,11 @@
   @extend %bacalao__content;
 }
 
-
-.event-box__details
+.event-box__time,
+.event-box__location
 {
-    // @include breakpoint( 'crab' )
-    // {
-    //     // rulesGoHere
-    // }
+    display: inline-block;
 }
-
-
-
-
-
-
-// .event-box--metadata
-// {
-//     margin-bottom:      4px;
-// }
-
-
-
-// .event-box__time,
-// .event-box__organizer,
-// .event-box__atendees
-// {
-//     @extend .event-box--metadata;
-// }
-
-.events__columns
-{
-  // padding:              20px 0 0 0;
-  // width:                670px;
-  // float:                right;
-}
-
-
 
 
 .event-box .event-box__creator-avatar,
@@ -75,7 +45,7 @@
   border-radius: 50px;
 }
 
-.event-box__atendee-pictures
+.event-box__attendee-pictures
 {
   padding-top:        10px;
 
@@ -88,7 +58,7 @@
 }
 
 
-.event-box__atendees-avatar
+.event-box__attendees-avatar
 {
   width:              35px;
   height:             35px;
@@ -107,14 +77,6 @@
 }
 
 
-
-
-
-
-.event-box__buttons
-{
-
-}
 
 .event-box__icon
 {

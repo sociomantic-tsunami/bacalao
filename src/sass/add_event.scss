@@ -1,0 +1,20 @@
+.add-event__button
+{
+    background-color:   #fff;
+    border-radius:      10px;
+    width:              20px;
+    height:             20px;
+    float:              right;
+    margin-top:         15px;
+    padding:            0;
+    z-index:            9999;
+
+    &:before
+    {
+        content:        '+';
+        display:        inline-block;
+        font-size:      26px;
+        line-height:    14px;
+        color:          #289bc8;   
+    }
+}

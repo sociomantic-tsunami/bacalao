@@ -22,18 +22,7 @@ body
 
 
 
-.sidebar
-{
-    width:                      100%;
 
-    @include breakpoint( 'shark' )
-    {
-        width:                  31%;
-        display:                inline-block;
-        margin-right:           20px;
-        vertical-align:         top;
-    }
-}
 
 .main
 {

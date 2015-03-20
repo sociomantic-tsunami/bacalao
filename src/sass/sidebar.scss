@@ -1,5 +1,20 @@
+
 @import "card.scss";
 
+
+.sidebar
+{
+    width:                      100%;
+    @extend %card;
+
+    @include breakpoint( 'shark' )
+    {
+        width:                  31%;
+        display:                inline-block;
+        margin-right:           20px;
+        vertical-align:         top;
+    }
+}
 
 .sidebar__header
 {

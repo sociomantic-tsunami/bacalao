@@ -4,7 +4,8 @@ var _ = require('underscore');
 var EventsStore = require('../stores/EventsStore');
 var UpcomingEvent = require('./UpcomingEvent.react.jsx');
 var UpcomingStore = require('../stores/UpcomingStore');
-require('../../sass/upcoming.scss');
+
+require('../../sass/upcoming_events.scss');
 
 
 var getUpcomingEvent = function(eventId) {
@@ -46,11 +47,9 @@ var UpcomingEvents = React.createClass({
     var upcomingEvents = _.map(this.state.upcomingEvents, getUpcomingEvent);
 
     return (
-        <div className="upcoming_events__spread">
+        <div className="upcoming-events">
           <h4>Upcoming</h4>
-          <div className="upcoming_events_columns">
             {upcomingEvents}
-          </div>
         </div>
     );
   }
