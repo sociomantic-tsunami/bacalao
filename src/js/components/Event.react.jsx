@@ -11,6 +11,7 @@ var moment = require('moment');
 
 require('../../sass/event.scss');
 
+
 var getAttendee = function(attendee) {
   return <img
     key={attendee._id || _.uniqueId('attendee-')}
