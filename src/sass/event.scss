@@ -30,6 +30,18 @@
 }
 
 
+.event-box__details
+{
+    // @include breakpoint( 'crab' )
+    // {
+    //     // rulesGoHere
+    // }
+}
+
+
+
+
+
 .event-box .event-box__creator-avatar,
 .user--profile-pic
 {
@@ -39,31 +51,20 @@
   border-radius: 50px;
 }
 
-.event-box__details__text
-{
-  width: 460px;
-  &::after
-  {
-    display: table;
-    clear: both;
-  }
-}
-.event-box--metadata
-{
-    margin-bottom:      4px;
-}
 
-.event-box__title
-{
-    margin-top:          0;
-}
+// .event-box--metadata
+// {
+//     margin-bottom:      4px;
+// }
 
-.event-box__time,
-.event-box__organizer,
-.event-box__atendees
-{
-    @extend .event-box--metadata;
-}
+
+
+// .event-box__time,
+// .event-box__organizer,
+// .event-box__atendees
+// {
+//     @extend .event-box--metadata;
+// }
 
 
 .event-box__atendee-pictures
@@ -77,6 +78,8 @@
   }
 
 }
+
+
 .event-box__atendees-avatar
 {
   width:              35px;
@@ -93,9 +96,14 @@
     }
 }
 
+
+
+
+
+
 .event-box__buttons
 {
-    float: right;
+
 }
 
 .event-box__icon
