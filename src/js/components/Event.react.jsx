@@ -43,26 +43,22 @@ var EventRow = React.createClass({
     return (
         <div className="event__box">
 
+          <div className="event__box--header">
+              <div className="event__box--time">
+                {this.getTime()}
+              </div>
+              <div className="event__box--location">
+                <h3 className="event__box--venue-name">
+                  <a target="_blank" href={this.props.event.venue.url}>{this.props.event.venue.name}</a>
+                </h3>
+                <span className="event__box--venue-address">
+                  {this.props.event.venue.formatted_address}
+                </span>
+              </div>
+          </div>
           <div className="event__box--details">
-            <div className="event__box--details__text">
-                <div className="event__box--venue">
-                  <h3 className="event__box--venue-name">
-                    <a target="_blank" href={this.props.event.venue.url}>{this.props.event.venue.name}</a>
-                  </h3>
-                  <span className="event__box--venue-address">
-                    {this.props.event.venue.formatted_address}
-                  </span>
-                  <span className="event__box--venue-phone-number">
-                    {this.props.event.venue.international_phone_number}
-                  </span>
-                </div>
-                <div className="event__box--time">
-                  {this.getTime()}
-                </div>
-                <div className="event__box--details">
-                  {this.props.event.details}
-                </div>
-            </div>
+            {this.props.event.details}
+          </div>
 
 
 
