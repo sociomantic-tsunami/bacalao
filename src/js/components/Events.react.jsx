@@ -27,14 +27,12 @@ var Events = React.createClass({
     var events = _.map(this.props.events, _.partial(getEvent, this.props.user));
 
     return (
-      <div className="events__spread">
-        <div className="events__columns">
-            {events}
+        <div className="main">  
+                {events}
+            <AddEventButton
+                onClick={this.onAddEvent}
+                isLoggedIn={this.props.user.loggedIn} />
         </div>
-        <AddEventButton
-          onClick={this.onAddEvent}
-          isLoggedIn={this.props.user.loggedIn} />
-      </div>
     );
 
   }

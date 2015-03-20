@@ -1,3 +1,6 @@
+@import "card.scss";
+
+
 .sidebar__header
 {
     @extend %card__header;
@@ -6,7 +9,7 @@
 
 .sidebar__content
 {
-    @extend %bacalao__content;
+    @extend %card__content;
 }
 
 

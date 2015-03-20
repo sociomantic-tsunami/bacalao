@@ -9,14 +9,10 @@ body
     // @extend %ProximaNova-Semibold;
 }
 
-// .node-content
-// {
-//     display:        inline;
-// }
-
 .bacalao
 {
     width:                  100%;
+
     @include breakpoint( 'tuna' )
     {
         max-width:          960px;
@@ -32,19 +28,21 @@ body
 
     @include breakpoint( 'shark' )
     {
-        width:                  30%;
-        display: inline-block;
+        width:                  31%;
+        display:                inline-block;
+        margin-right:           20px;
+        vertical-align:         top;
     }
 }
 
-.events__spread
+.main
 {
     width:                      100%;
 
     @include breakpoint( 'shark' )
     {
-        width:                  63%;
-        display: inline-block;
+        width:                  64%;
+        display:                inline-block;
     }
 }
 

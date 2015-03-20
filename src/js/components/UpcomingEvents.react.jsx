@@ -47,7 +47,7 @@ var UpcomingEvents = React.createClass({
 
     return (
         <div className="upcoming_events__spread">
-          <h4>Upcoming Events</h4>
+          <h4>Upcoming</h4>
           <div className="upcoming_events_columns">
             {upcomingEvents}
           </div>
