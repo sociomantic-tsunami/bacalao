@@ -6,7 +6,6 @@ var UpcomingEvent = require('./UpcomingEvent.react.jsx');
 var UpcomingStore = require('../stores/UpcomingStore');
 require('../../sass/upcoming.scss');
 
-
 var getUpcomingEvent = function(eventId) {
   var event = EventsStore.getById(eventId);
   if(!event) {

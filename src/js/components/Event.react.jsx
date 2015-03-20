@@ -42,29 +42,8 @@ var EventRow = React.createClass({
 
     return (
         <div className="event__box">
-          <div className="event__box--buttons">
-            <JoinLeaveButton
-               user={this.props.user}
-               maxAttendees={this.props.event.maxAttendees}
-               attendees={this.props.event.attendees}
-               _onUserJoin={this._onUserJoin}
-               _onUserLeave={this._onUserLeave}
-            />
-          </div>
-
-          <div className="event__box--buttons">
-            <DeleteEventButton
-               user={this.props.user}
-               creator={this.props.event.creator}
-               attendees={this.props.event.attendees}
-               _onEventDeleted={this._onEventDeleted}
-            />
-          </div>
-
-
 
           <div className="event__box--details">
-          <img src={this.props.event.creator.picture} className="event__box--creator-avatar" />
             <div className="event__box--details__text">
                 <div className="event__box--venue">
                   <h3 className="event__box--venue-name">
@@ -84,6 +63,27 @@ var EventRow = React.createClass({
                   {this.props.event.details}
                 </div>
             </div>
+
+
+
+            <div className="event__box--buttons">
+              <JoinLeaveButton
+                 user={this.props.user}
+                 maxAttendees={this.props.event.maxAttendees}
+                 attendees={this.props.event.attendees}
+                 _onUserJoin={this._onUserJoin}
+                 _onUserLeave={this._onUserLeave}
+              />
+            </div>
+
+            <div className="event__box--buttons">
+              <DeleteEventButton
+                 user={this.props.user}
+                 creator={this.props.event.creator}
+                 attendees={this.props.event.attendees}
+                 _onEventDeleted={this._onEventDeleted}
+              />
+            </div>
           </div>
 
 
@@ -101,7 +101,7 @@ var EventRow = React.createClass({
 
               </p>
               <div className="event__box--atendee-pictures">
-              {attendees}
+                {attendees}
               </div>
           </div>
         </div>
