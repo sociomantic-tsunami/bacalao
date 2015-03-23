@@ -38,6 +38,9 @@ var UpcomingEvent = React.createClass({
           <div className="time">
             {this.getTime()}
           </div>
+          <div className="time--from-now">
+            {this.getTimeFromNow()}
+          </div>
           <div className="button__container">
             <JoinLeaveButton
               isUpcoming={true}
@@ -59,6 +62,9 @@ var UpcomingEvent = React.createClass({
           <div className="time">
             {this.getTime()}
           </div>
+          <div className="time--from-now">
+            {this.getTimeFromNow()}
+          </div>
           <div className="details">
             {this.props.upcomingEvent.details}
           </div>
@@ -68,8 +74,13 @@ var UpcomingEvent = React.createClass({
   },
 
   getTime: function() {
-    var time = moment(this.props.upcomingEvent.time).fromNow();
+    var time = moment(this.props.upcomingEvent.time).format( 'h:mm' );
     return time;
+  },
+
+  getTimeFromNow: function() {
+    var timeFromNow = moment(this.props.upcomingEvent.time).fromNow();
+    return timeFromNow;
   },
 
   _onUserLeave: function(event) {

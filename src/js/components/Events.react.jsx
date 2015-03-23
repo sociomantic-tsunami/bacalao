@@ -21,7 +21,7 @@ var Events = React.createClass({
 
   render: function() {
     var events = _.map(this.props.events, _.partial(getEvent, this.props.user));
-
+    console.log(events);
     return (
         <div className="main">  
                 {events}

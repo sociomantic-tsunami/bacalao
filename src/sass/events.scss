@@ -30,12 +30,26 @@
   @extend %bacalao__content;
 }
 
-.event-box__time,
+.event-box__time__container,
 .event-box__location
 {
-    display: inline-block;
+    display:        inline-block;
 }
 
+.event-box__time__container
+{
+    @include rem-fallback( width, 9.8 );
+
+    &:after 
+    {
+         @include module__separator( 40px )   
+    }
+}
+
+.event-box__location
+{
+    @include rem-fallback( padding-left, 2.9 );
+}
 
 .event-box .event-box__creator-avatar,
 .user--profile-pic

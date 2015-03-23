@@ -19,7 +19,7 @@ var getAttendee = function(attendee) {
     src={attendee.picture} />
 }
 
-var EventRow = React.createClass({
+var Event = React.createClass({
 
   propTypes: {
     key: ReactPropTypes.string,
@@ -44,8 +44,13 @@ var EventRow = React.createClass({
         <div className="event-box">
 
           <div className="event-box__header">
-              <div className="event-box__time">
-                {this.getTime()}
+              <div className="event-box__time__container">
+                  <div className="time">
+                    {this.getTime()}
+                  </div>
+                  <div className="time--from-now">
+                    {this.getTimeFromNow()}
+                  </div>
               </div>
               <div className="event-box__location">
                 <h3 className="venue-name">
@@ -106,12 +111,15 @@ var EventRow = React.createClass({
     );
   },
 
-
   getTime: function() {
-    var time = moment(this.props.event.time).fromNow();
+    var time = moment(this.props.event.time).format( 'h:mm' );
     return time;
   },
 
+  getTimeFromNow: function() {
+    var timeFromNow = moment(this.props.event.time).fromNow();
+    return timeFromNow;
+  },
 
   getOrganizer : function(user) {
     return [user.firstName, user.lastName].join(' ');
@@ -155,4 +163,4 @@ var EventRow = React.createClass({
   }
 });
 
-module.exports = EventRow;
+module.exports = Event;
