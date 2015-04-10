@@ -3,6 +3,8 @@
   "port": 8080,
   "facebookAppID": "blabla",
   "facebookAppSecret": "blabla",
+  "yammerAppId": "blabla",
+  "yammerAppSecret": "blabla",
   "cookieKey": "session",
   "cookieSecret": "ReallyLongEncryptionKey"
 }
