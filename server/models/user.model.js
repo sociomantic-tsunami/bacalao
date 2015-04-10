@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var _ = require('underscore');
 
 
-var services = 'facebook window google'.split(' ');
+var services = 'facebook yammer'.split(' ');
 var gender = 'male female'.split(' ');
 
 
@@ -16,6 +16,7 @@ var userSchema = new Schema({
   picture: String,
   service: { type: String, enum: services },
   serviceUserId: { type: String, index: true },
+  networkId: String,
   accessToken:  String,
   tokenExpiration:  Date,
   location: {

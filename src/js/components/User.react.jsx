@@ -33,7 +33,7 @@ var User = React.createClass({
   },
 
   _getImgSrc: function() {
-    return "http://graph.facebook.com/" + this.props.user.serviceUserId + "/picture";
+    return this.props.user.picture;
   }
 
 });
