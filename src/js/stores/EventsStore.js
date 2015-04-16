@@ -110,7 +110,7 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
     case ActionTypes.CREATE_EVENT:
         lastAddedIndex = _nodes.insert({
           cid: _.uniqueId('event_' + Date.now() + '_'),
-          time: moment(action.event.time, 'HH:mm').toDate(),
+          time: action.event.time,
           venue: action.event.venue,
           details: action.event.details,
           maxAttendees: action.event.maxAttendees || 0,

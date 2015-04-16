@@ -117,7 +117,7 @@ var Event = React.createClass({
   },
 
   getTimeFromNow: function() {
-    var timeFromNow = moment(this.props.event.time).fromNow();
+    var timeFromNow = moment(this.props.event.time).calendar();
     return timeFromNow;
   },
 

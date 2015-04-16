@@ -8,7 +8,9 @@ var Input = require('react-bootstrap').Input;
 var Modal = require('react-bootstrap').Modal;
 var moment = require('moment');
 require('../../sass/new_event_form.scss');
+require('../../sass/react_widgets.scss');
 var Navigation = require('react-router').Navigation;
+DateTimePicker = require('react-widgets/lib/DateTimePicker');
 
 
 
@@ -37,16 +39,15 @@ var NewEventForm = React.createClass({
     var createButtonClasses = cx({
       'disabled': !(this.state.venue && this.state.details && this.props.user.loggedIn)
     });
-
+    var defaultTime = moment().add(1,'hours').startOf('hour').toDate();
 
 
     return (
       <Modal title="New Event" onRequestHide={this._close}>
-            <Input
-              type="time"
-              label="Time"
-              value={this.state.time}
-              onChange={this._onTimeChange} />
+            <DateTimePicker
+              defaultValue={defaultTime}
+              onChange={this._onTimeChange}
+            />
             <Input
               className="js-venue-search new-event__box--venue"
               type="text"
@@ -110,8 +111,8 @@ var NewEventForm = React.createClass({
 
   },
 
-  _onTimeChange: function(e) {
-    this.setState({ time: e.target.value });
+  _onTimeChange: function(date) {
+    this.setState({ time: date });
   },
 
   _onGoogleVenueChange: function() {
