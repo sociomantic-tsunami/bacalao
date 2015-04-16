@@ -66,6 +66,15 @@ server.route([
   },
   {
     method: 'GET',
+    path: '/fonts/{param*}',
+    handler: {
+      directory: {
+        path: 'public/fonts'
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/',
     config: {
       handler: function(request, reply) {
