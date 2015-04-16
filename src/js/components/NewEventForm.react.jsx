@@ -25,7 +25,7 @@ var NewEventForm = React.createClass({
 
   getInitialState: function() {
     return {
-      time: moment().add(1,'hours').startOf('hour').format('HH:mm'),
+      time: moment().add(1,'hours').startOf('hour').toDate(),
       details: '',
       venueSearch: '',
       venue: {},
@@ -39,13 +39,13 @@ var NewEventForm = React.createClass({
     var createButtonClasses = cx({
       'disabled': !(this.state.venue && this.state.details && this.props.user.loggedIn)
     });
-    var defaultTime = moment().add(1,'hours').startOf('hour').toDate();
 
 
     return (
       <Modal title="New Event" onRequestHide={this._close}>
+        <div className="new-event__box">
             <DateTimePicker
-              defaultValue={defaultTime}
+              defaultValue={this.state.time}
               onChange={this._onTimeChange}
             />
             <Input
@@ -61,13 +61,14 @@ var NewEventForm = React.createClass({
               value={this.state.maxAttendees}
               onChange={this._onMaxAttendeesChange} />
             <Input
-              type="text"
+              type="textarea"
               label="Details"
               value={this.state.details}
               onChange={this._onDetailsChange} />
             <Button bsSize="medium" bsStyle="info"
             className={createButtonClasses} onClick={this._create}>
             Create</Button>
+        </div>
       </Modal>
     );
   },
