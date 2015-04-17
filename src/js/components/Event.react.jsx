@@ -15,7 +15,7 @@ require('../../sass/events.scss');
 var getAttendee = function(attendee) {
   return <img
     key={attendee._id || _.uniqueId('attendee-')}
-    className="event-box__atendees-avatar"
+    className="event-box__attendees-avatar"
     src={attendee.picture} />
 }
 
@@ -83,7 +83,7 @@ var Event = React.createClass({
                 <p>
 
                 </p>
-                <div className="event-box__atendee-pictures">
+                <div className="event-box__attendee-pictures">
                   {attendees}
                 </div>
             </div>
