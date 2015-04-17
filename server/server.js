@@ -1,6 +1,7 @@
 /**
 * REST API server entry point
 */
+require("babel/register");
 var Hapi = require('hapi');
 var Good = require('good');
 var Joi = require('joi');
