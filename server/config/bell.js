@@ -7,6 +7,8 @@ var userCtrl = require('../controllers/user.ctrl');
 module.exports = function(server) {
   // inspired by https://github.com/jaw187/hapi-auth/blob/master/bell.js
   server.register([AuthCookie, Bell], function(err) {
+    if(err) { throw err; }
+
     server.auth.strategy('yammer', 'bell', config.yammerAuth);
     server.auth.strategy('facebook', 'bell', config.facebookAuth);
     server.auth.strategy('session', 'cookie', config.sessionAuth);
