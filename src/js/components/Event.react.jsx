@@ -12,10 +12,15 @@ var moment = require('moment');
 require('../../sass/events.scss');
 
 
-var getAttendee = function(attendee) {
+var getAttendee = function(creator, attendee) {
+  var classes = "event-box__attendees-avatar ";
+  if(creator._id === attendee._id) {
+    classes += 'event-box__attendees-avatar-creator';
+  }
+
   return <img
     key={attendee._id || _.uniqueId('attendee-')}
-    className="event-box__attendees-avatar"
+    className={classes}
     src={attendee.picture} />
 }
 
@@ -36,7 +41,7 @@ var Event = React.createClass({
 
   render: function() {
 
-    var attendees = _.map(this.props.event.attendees, getAttendee);
+    var attendees = _.map(this.props.event.attendees, _.partial(getAttendee, this.props.event.creator) );
 
     var maxAttendees = <Badge></Badge>;
 

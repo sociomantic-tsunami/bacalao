@@ -15,6 +15,9 @@ exports.register = function(server, options, next) {
       if(cookie) {
         def.parse(cookie, function(err, state, failed) {
           if(state && state.session && state.session._id) {
+            if(state.session.networkId) {
+              socket.networkId = state.session.networkId;
+            }
             return next();
           }
         });
@@ -26,6 +29,11 @@ exports.register = function(server, options, next) {
     // Debugging for socket.io
     var connections = 0;
     io.sockets.on('connection', function (socket) {
+      if(socket.networkId) {
+        console.log('socket.networkId: ' + socket.networkId);
+        socket.join(socket.networkId);
+      }
+
       connections++;
       server.log(['socket'], 'new connection. open socket connections: ' + connections);
       socket.on('disconnect', function () {

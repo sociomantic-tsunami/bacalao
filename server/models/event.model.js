@@ -7,6 +7,7 @@ var eventSchema = new Schema({
   creationDate: { type: Date, default: Date.now },
   attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   maxAttendees: { type: Number, required: false, default: 0 },
+  networkId: { type: String, default: 'public' },
   creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   // comments: [{ body: String, date: Date }],
   venue: {
@@ -27,6 +28,11 @@ var eventSchema = new Schema({
 }, {
     autoIndex: false,
     id: true
+});
+
+
+eventSchema.virtual('isPublic').get(function() {
+  return  this.networkId === 'public';
 });
 
 

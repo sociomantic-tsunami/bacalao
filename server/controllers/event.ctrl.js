@@ -12,10 +12,22 @@ module.exports = {
   getEvents: function (request, reply) {
 
     var roundHourAgo = moment().subtract(1, 'hour').startOf('hour').toDate();
+    var query = Event.find({ time: { '$gte': roundHourAgo } });
 
+    if(request.auth.credentials.service === 'yammer') {
+      console.log(request.auth.credentials.networkId);
+      // get network events or public ones without a network id
+      // query.or([{ networkId : request.auth.credentials.networkId }, { networkId: { exists: false } }]);
+      // query.or([{ networkId: { exists: false } }, { networkId : request.auth.credentials.networkId }]);
+      // query.where('networkId').equals(request.auth.credentials.networkId);
+      query.in('networkId', [ 'public', request.auth.credentials.networkId ]);
+    } else {
+      // only public events otherwise
+      query.where('networkId').equals('public');
+    }
 
-    Event
-      .find({ time: { '$gte': roundHourAgo } }, 'title venue time details attendees maxAttendees creator')
+    query
+      .select('title venue time details attendees maxAttendees creator')
       .sort({ time: 'asc'})
       .populate('attendees', 'firstName lastName picture')
       .populate('creator', 'firstName lastName picture')
@@ -61,13 +73,18 @@ module.exports = {
         return reply(Boom.forbidden('You can only join as your self'));
       }
 
+
+
       var saveParams = 'venue time maxAttendees creator attendees details'.split(' ');
       var resParams = saveParams.concat('_id', 'cid');
       var paramsToSave = _.pick(request.payload, saveParams);
 
+      if(request.auth.credentials.service === 'yammer') {
+        paramsToSave.networkId = request.auth.credentials.networkId;
+      }
+
       var newEvent = new Event(paramsToSave);
-      newEvent.save(function (err, newEvent)
-      {
+      newEvent.save(function (err, newEvent) {
         if(err) {
             return reply(Boom.badImplementation(err));
         }
@@ -87,8 +104,11 @@ module.exports = {
 
             var socketId = request.headers['x-socket-id'];
             var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
-
-            socket && socket.broadcast.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
+            if(newEvent.isPublic) {
+              socket && socket.broadcast.emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
+            } else {
+              socket && socket.broadcast.to(request.auth.credentials.networkId).emit(clientConstants.ActionTypes.CREATED_EVENT, _.omit(response, 'cid'));
+            }
             return;
           });
 
@@ -135,12 +155,19 @@ module.exports = {
           var socketId = request.headers['x-socket-id'];
           var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
 
-          socket && socket.broadcast.emit(clientConstants.ActionTypes.DELETED_EVENT, response);
+
+          if(event.isPublic) {
+            socket && socket.broadcast.emit(clientConstants.ActionTypes.DELETED_EVENT, response);
+          } else {
+            socket && socket.broadcast.to(request.auth.credentials.networkId)
+              .emit(clientConstants.ActionTypes.DELETED_EVENT, response);
+          }
           return;
         });
     });
 
   },
+
 
   joinEvent: function (request, reply) {
     var userId = request.auth.credentials._id;
@@ -148,6 +175,9 @@ module.exports = {
     if(request.params.userId !== userId) {
       return reply(Boom.forbidden('You can only join an event as your self'));
     }
+
+    // TODO if the event has a networkId only allow joining if
+    // the user is in the same networkId
 
     Event.update(
       { _id: request.params.eventId },
@@ -172,6 +202,7 @@ module.exports = {
           var socketId = request.headers['x-socket-id'];
           var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
 
+          // TODO if the event has a networkId only broadcast to the room of networkId
           socket && socket.broadcast.emit(clientConstants.ActionTypes.JOINED_EVENT, response);
           return;
         });
@@ -203,6 +234,7 @@ module.exports = {
           var socketId = request.headers['x-socket-id'];
           var socket = request.server.plugins.socketio.io.sockets.connected[socketId] || false;
 
+          // TODO if the event has a networkId only broadcast to the room of networkId
           socket && socket.broadcast.emit(clientConstants.ActionTypes.LEFT_EVENT, response);
           return;
       });
