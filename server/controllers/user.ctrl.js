@@ -1,8 +1,10 @@
 var User = require('../models/user.model');
+var CONSTANTS = require('../constants');
+var Joi = require('joi');
 var _ = require('underscore');
 var Boom = require('boom');
 
-module.exports = {
+var userCtrl = {
 
 
   getUser: function(request, reply) {
@@ -66,33 +68,42 @@ module.exports = {
       toSave.networkId =  credentials.profile.raw.network_id;
       toSave.picture =  credentials.profile.raw.mugshot_url_template
         .replace('{width}', '400').replace('{height}', '400');
-
     }
 
+      User.findOne(conditions, function(err, oldUser) {
+        if(err) {
+          throw err;
+        }
 
-    User.findOne(conditions, function(err, oldUser) {
-      if(err) {
-        throw err;
-      }
-
-      if(oldUser) {
-        // User has alredy registered
-          request.auth.session.set({
-              _id: oldUser._id
-          });
-        return reply.redirect('/app');
-      } else {
-        new User(toSave).save(function(err, newUser) {
-          if(err) {
-            throw err;
-          }
-
-            request.auth.session.set({
-                _id: newUser._id
-            });
+        if(oldUser) {
+            // User has alredy registered
+            userCtrl.createSessionCookie(request, oldUser);
           return reply.redirect('/app');
-        });
-      }
-    });
+        } else {
+          new User(toSave).save(function(err, newUser) {
+            if(err) {
+              throw err;
+            }
+
+            userCtrl.createSessionCookie(request, newUser);
+            return reply.redirect('/app');
+          });
+        }
+      });
+    },
+
+
+    createSessionCookie: function(request, user) {
+      var cookie = _.pick(user, '_id service networkId'.split(' ') );
+      cookie._id = cookie._id.toString();
+
+      Joi.validate(cookie, CONSTANTS.COOKIE_SCHEMA, function(err) {
+        if(err) { throw err; }
+
+        request.auth.session.set(cookie);
+      });
     }
 };
+
+
+module.exports = userCtrl;
