@@ -15,7 +15,6 @@ module.exports = {
     var query = Event.find({ time: { '$gte': roundHourAgo } });
 
     if(request.auth.credentials.service === 'yammer') {
-      console.log(request.auth.credentials.networkId);
       // get network events or public ones without a network id
       // query.or([{ networkId : request.auth.credentials.networkId }, { networkId: { exists: false } }]);
       // query.or([{ networkId: { exists: false } }, { networkId : request.auth.credentials.networkId }]);
