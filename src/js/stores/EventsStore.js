@@ -181,9 +181,13 @@ EventsStore.dispatchToken = AppDispatcher.register(function(payload) {
     // action.event = { eventId: ... }
     // remove the event
     case ActionTypes.DELETED_EVENT:
-      _nodes.remove(action.event);
-        EventsStore.emitChange();
-        return;
+      for (i = _nodes.array.length - 1; i >= 0; i--) {
+        if(_nodes.array[i]._id === action.event.eventId) {
+          _nodes.array.splice(i, 1);
+        }
+      }
+      EventsStore.emitChange();
+      return;
       break;
 
     default:
