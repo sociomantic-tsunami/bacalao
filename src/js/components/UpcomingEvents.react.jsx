@@ -34,13 +34,13 @@ var UpcomingEvents = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(this._getState())
+    this.setState(this._getState());
   },
 
   _getState: function() {
     return {
       upcomingEvents: UpcomingStore.getUpcoming()
-    }
+    };
   },
 
   render: function () {

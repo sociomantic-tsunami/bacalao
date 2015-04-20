@@ -1,15 +1,13 @@
 // @import "_bacalao_init";
 
-.user
+.user, .user--logout
 {
-    position :      relative;
     color:          #fff;
-    width:          92%;
+}
 
-    a 
-    {
-        color: red;
-    }
+.user--logout
+{
+    text-decoration: underline;
 }
 
 .user--current-user
@@ -21,5 +19,5 @@
 
 .user--profile-pic
 {
-
+    margin-right: 7px
 }

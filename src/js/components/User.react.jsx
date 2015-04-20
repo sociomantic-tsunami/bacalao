@@ -18,10 +18,11 @@ var User = React.createClass({
             <div className="user--current-user">
               <img className="user--profile-pic" src={this._getImgSrc()} />
               <span className="user--name">{this.props.user.firstName}</span>
+              <span> | </span>
+              <a href={Constants.Endpoints.LOGOUT} className="user--logout" >
+                  Logout
+              </a>
             </div>
-            <a href={Constants.Endpoints.LOGOUT} className="user--logout" >
-                Logout
-            </a>
           </div>
         );
     } else {
