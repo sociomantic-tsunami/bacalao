@@ -2,27 +2,34 @@ var EventActionCreators = require('../actions/EventActionCreators');
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var _ = require('underscore');
-var Tooltip = require('react-bootstrap').Tooltip;
-var Badge = require('react-bootstrap').Badge;
+var ReactBootstrap = require('react-bootstrap');
+var Tooltip = ReactBootstrap.Tooltip;
+var Badge = ReactBootstrap.Badge;
 var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
 var DeleteEventButton = require('./DeleteEventButton.react.jsx');
-var Glyphicon = require('react-bootstrap').Glyphicon;
 var moment = require('moment');
+var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+var Tooltip = ReactBootstrap.Tooltip;
+
 
 require('../../sass/events.scss');
 
 
 var getAttendee = function(creator, attendee) {
   var classes = "event-box__attendees-avatar ";
+  var tooltip = <Tooltip>{[attendee.firstName, attendee.lastName].join(' ')}</Tooltip>;
+
   if(creator._id === attendee._id) {
     classes += 'event-box__attendees-avatar-creator';
   }
 
-  return <img
+  return (<OverlayTrigger placement='top' overlay={tooltip} delayHide={100}>
+    <img
     key={attendee._id || _.uniqueId('attendee-')}
     className={classes}
     src={attendee.picture} />
-}
+  </OverlayTrigger>);
+};
 
 var Event = React.createClass({
 
