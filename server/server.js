@@ -45,15 +45,6 @@ server.register({
   }
 });
 
-// var io = require('socket.io')(server.server);
-
-// inject the global socket.io obect to all requests
-// server.use(function(req, res, next) {
-//   req.socketio = io;
-//   next();
-// });
-
-
 server.route([
   {
     method: 'GET',
