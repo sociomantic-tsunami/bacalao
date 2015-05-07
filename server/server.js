@@ -51,7 +51,7 @@ server.route([
     path: '/public/{param*}',
     handler: {
       directory: {
-        path: './public',
+        path: __dirname + '/../public',
         listing: true
       }
     }
@@ -61,7 +61,7 @@ server.route([
     path: '/fonts/{param*}',
     handler: {
       directory: {
-        path: 'public/fonts'
+        path: __dirname + '/../public/fonts'
       }
     }
   },
@@ -73,7 +73,7 @@ server.route([
         if(request.auth.isAuthenticated) {
             return reply.redirect('/app');
         }
-        reply.file('./public/landing.html');
+        reply.file(__dirname + '/../public/landing.html');
       },
       auth: {
         mode: 'try',
@@ -86,7 +86,7 @@ server.route([
     path: '/app',
     config: {
       handler: function(request, reply) {
-        reply.file('./public/index.html');
+        reply.file(__dirname + '/../public/index.html');
       },
       auth: {
         strategy: 'session'
