@@ -58,7 +58,7 @@ var NewEventForm = React.createClass({
             <Input
               type="number"
               label="Max Attendees"
-              min="1"
+              min="0"
               value={this.state.maxAttendees}
               onChange={this._onMaxAttendeesChange} />
             <Input
@@ -139,10 +139,7 @@ var NewEventForm = React.createClass({
   },
 
   _onMaxAttendeesChange: function(e) {
-    if ( e.target.value == 0 ) {
-      this.setState({ maxAttendees: parseInt(1, 10) });
-    }
-    else if ( e.target.value % 1 === 0 ) {
+    if ( e.target.value % 1 === 0 ) {
       this.setState({ maxAttendees: parseInt(e.target.value, 10) });
     } else {
       this.setState({ maxAttendees: Math.floor(e.target.value)});
