@@ -40,8 +40,12 @@ var JoinLeaveButton = React.createClass({
 
   // Disable the join/leave if the user is not logged in or if the maxAttendees has been reached
   isDisabled: function() {
+    if(this.props.maxAttendees === 0) {
+      return false;
+    }
+
     if(this.props.attendees.length >= this.props.maxAttendees &&
-      !this.props.isAttending) {
+      !this.isAttending()) {
       return true;
     }
 

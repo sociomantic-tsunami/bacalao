@@ -23,9 +23,8 @@ var getAttendee = function(creator, attendee) {
     classes += 'event-box__attendees-avatar-creator';
   }
 
-  return (<OverlayTrigger placement='top' overlay={tooltip} delayHide={100}>
+  return (<OverlayTrigger key={attendee._id || _.uniqueId('attendee-')} placement='top' overlay={tooltip} delayHide={100}>
     <img
-    key={attendee._id || _.uniqueId('attendee-')}
     className={classes}
     src={attendee.picture} />
   </OverlayTrigger>);
@@ -49,8 +48,6 @@ var Event = React.createClass({
   render: function() {
 
     var attendees = _.map(this.props.event.attendees, _.partial(getAttendee, this.props.event.creator) );
-
-    var maxAttendees = <Badge></Badge>;
 
     return (
         <div className="event-box">
@@ -79,22 +76,14 @@ var Event = React.createClass({
             </div>
 
 
-
-
-
-
-
             <div className="event-box__attendees">
                 <span className="">Coming&nbsp;
 
                 {this.props.event.attendees.length}
-                {this.props.event.maxAttendees > 0 ? '/' : '' }{this.props.event.maxAttendees}
-                {maxAttendees}
+                {this.props.event.maxAttendees > 0 ? '/'+this.props.event.maxAttendees : '' }
 
                 </span>
-                <p>
 
-                </p>
                 <div className="event-box__attendee-pictures">
                   {attendees}
                 </div>
