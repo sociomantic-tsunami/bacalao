@@ -1,6 +1,36 @@
 @import "event_base.scss";
 
+$border-size: 0.1em;
+$border-color: #FF0000;
 
 .upcoming-event
 {
 }
+
+.warning
+{
+    color : $border-color;
+    border: 1px solid $border-color;
+    padding: 10px;
+    animation: pulse 2s;
+    animation-iteration-count: 5;
+    -webkit-animation: pulse 2s;
+    -webkit-animation-iteration-count: 5;
+}
+
+@-webkit-keyframes pulse {
+  0%   { box-shadow: 0 0 0 #{$border-size * 0.8} $border-color; }
+  25%  { box-shadow: 0 0 0 #{$border-size * 0.2} $border-color; }
+  50%  { box-shadow: 0 0 0 #{$border-size * 1.5} $border-color; }
+  75%  { box-shadow: 0 0 0 #{$border-size * 0.8} $border-color; }
+  100% { box-shadow: 0 0 0 #{$border-size * 1.2} $border-color; }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 #{$border-size * 0.8} $border-color; }
+  25%  { box-shadow: 0 0 0 #{$border-size * 0.2} $border-color; }
+  50%  { box-shadow: 0 0 0 #{$border-size * 1.5} $border-color; }
+  75%  { box-shadow: 0 0 0 #{$border-size * 0.8} $border-color; }
+  100% { box-shadow: 0 0 0 #{$border-size * 1.2} $border-color; }
+}
+
