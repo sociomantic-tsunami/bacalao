@@ -1,7 +1,7 @@
 {
   "dburi": "mongodb://...",
   "port": 8080,
-  "facebookAppID": "blabla",
+  "facebookAppId": "blabla",
   "facebookAppSecret": "blabla",
   "yammerAppId": "blabla",
   "yammerAppSecret": "blabla",
