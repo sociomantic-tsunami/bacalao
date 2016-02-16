@@ -1,11 +1,9 @@
 /**
 * REST API server entry point
 */
-require("babel/register");
+// require('babel-register');
 var Hapi = require('hapi');
-var Good = require('good');
 var Joi = require('joi');
-var configExample = require('../config.example.json');
 var config = require('./config/config.js');
 var mongoose = require('mongoose');
 var userCtrl = require('./controllers/user.ctrl');
@@ -19,31 +17,34 @@ if (cmdlineEnv === '-p' || cmdlineEnv.toUpperCase() === '--PRODUCTION') {
   process.env.NODE_ENV = 'development';
 }
 
-// TODO - replace this with joi schema validation
-// _.each(configExample, function(val, k) {
-//   if(!config[k]) {
-//     console.log('config.json missing configuration key: %s', k);
-//     process.exit(1);
-//   }
-// });
-
 // create server instance
-var server = new Hapi.Server({ connections: { router: {stripTrailingSlash: true }}});
-server.log(['environment'], process.env.NODE_ENV);
-server.connection({ port: config.port, labels: 'app' });
+var server = new Hapi.Server({ connections: { router: { stripTrailingSlash: true } } });
+server.connection({ port: config.port });
+
+server.register( [ require('inert'), require('./config/socketio') ],
+  (err) => { if (err) { console.log('Failed to load a plugin:', err); }
+});
 
 
-server.register({ register: require('lout') }, function(err) { });
+// TODO: fix bug with lout
+// server.register(require('lout'));
+
+
+server.register({
+  register: require('good'),
+  options: {
+    reporters: [{
+        reporter: require('good-console'),
+        events: { log: '*', response: '*' }
+    }]
+  }
+}, (err) => { if (err) { throw err; } });
+
+server.log(['status'], 'current NODE_ENV: ' + process.env.NODE_ENV);
+
 
 require('./config/bell')(server);
 
-server.register({
-  register: require('./config/socketio')
-}, function(err) {
-  if(err) {
-    throw err;
-  }
-});
 
 server.route([
   {
@@ -120,7 +121,7 @@ server.route([
           service: Joi.string(),
           picture: Joi.string(),
           gender: Joi.string(),
-          serviceUserId: Joi.string(),
+          serviceUserId: Joi.string()
         }
       }
     }
@@ -166,7 +167,7 @@ server.route([
         query: false
       },
       response: {
-        schema: Joi.array().includes(Joi.string().length(24))
+        schema: Joi.array().items(Joi.string().length(24))
       }
     }
   },
@@ -178,7 +179,7 @@ server.route([
       auth: 'session',
       validate: {
         payload: {
-          attendees: Joi.array().includes(Joi.string()),
+          attendees: Joi.array().items(Joi.string()),
           cid: Joi.string(),
           creator: Joi.string().required(),
           details: Joi.string(),
@@ -257,26 +258,11 @@ server.route([
 ]);
 
 
-
-server.register({
-  register: Good,
-  options: {
-    reporters: [{
-        reporter: require('good-console'),
-        args:[{ log: '*', response: '*' }]
-    }]
-  }
-}, function (err) {
-    if (err) {
-      throw err;
-    }
-  });
-
-
 mongoose.connection.on('error', server.log.bind(server, ['status'], 'DB connection error:'));
 mongoose.connection.once('open', server.log.bind(server, 'status', 'Connceted to mongodb'));
 mongoose.connect(config.dburi);
-server.start(server.log.bind(server, ['status'], 'Server started @' + config.port));
 
+
+server.start(() => { server.log(['status'], 'Server started: ' + server.info.uri) });
 
 module.exports = server;
