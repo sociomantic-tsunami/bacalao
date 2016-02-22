@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 var User = require('./User.react.jsx');
 var UpcomingEvents = require('./UpcomingEvents.react.jsx');

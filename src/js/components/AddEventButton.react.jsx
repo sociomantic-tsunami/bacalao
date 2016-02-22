@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var ReactRouterBootstrap = require('react-router-bootstrap');
 var ButtonLink = ReactRouterBootstrap.ButtonLink;

@@ -1,6 +1,6 @@
 var Events = require('./Events.react.jsx');
 var Sidebar = require('./Sidebar.react.jsx');
-var React = require('react/addons');
+var React = require('react');
 var EventsStore = require('../stores/EventsStore');
 var UserStore = require('../stores/UserStore');
 var Router = require('react-router');

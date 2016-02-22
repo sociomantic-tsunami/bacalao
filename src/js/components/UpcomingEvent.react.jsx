@@ -1,5 +1,5 @@
 var EventActionCreators = require('../actions/EventActionCreators');
-var React = require('react/addons');
+var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
 var moment = require('moment');

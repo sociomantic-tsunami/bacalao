@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var Constants = require('../constants/Constants');
 

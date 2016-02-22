@@ -19,6 +19,7 @@
     "inert": "^3.2.0",
     "joi": "^8.0.1",
     "keymaster": "~1.6.2",
+    "keymirror": "^0.1.1",
     "lout": "^8.0.0",
     "moment": "^2.8.3",
     "mongoose": "^4.4.3",

@@ -2,7 +2,7 @@
  * Landing Page Component
  * Stateless Component
  */
-var React = require('react/addons');
+var React = require('react');
 var Button = require('react-bootstrap').Button;
 
 var LandingComponent = React.createClass({

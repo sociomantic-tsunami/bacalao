@@ -39,8 +39,10 @@ var getReactContainer = function() {
 };
 
 
-router.run(function(Handler, routerState) {
-    // Dispatch an action
-    RouterActionCreators.routeChange(routerState);
-    React.render(<Handler />, getReactContainer());
-});
+// router.run(function(Handler, routerState) {
+//     // Dispatch an action
+//     RouterActionCreators.routeChange(routerState);
+//     React.render(<Handler />, getReactContainer());
+// });
+
+React.render(<router />)
