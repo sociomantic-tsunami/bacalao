@@ -20,3 +20,13 @@ export const LEFT_EVENT = 'LEFT_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const DELETED_EVENT = 'DELETED_EVENT';
 export const GOT_USER_INFO = 'GOT_USER_INFO';
+
+
+export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
+
+// Resets the currently visible error message.
+export function resetErrorMessage() {
+  return {
+    type: RESET_ERROR_MESSAGE
+  }
+}

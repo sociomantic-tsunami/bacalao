@@ -1,4 +1,4 @@
-import * as ActionTypes from '../actions'
+import * as ActionTypes from '../actions/actions'
 import merge from 'lodash/merge'
 import { routeReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'

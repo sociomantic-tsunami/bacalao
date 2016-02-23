@@ -1,27 +1,42 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+var React = require('react');
+var ReactPropTypes = React.PropTypes;
+var Constants = require('../constants/Constants');
 
-export default class User extends Component {
-  render() {
-    const { login, avatarUrl, name } = this.props.user
+// require('../../sass/_bacalao_init.scss');
+// require('../../sass/user.scss');
 
-    return (
-      <div className="User">
-        <Link to={`/${login}`}>
-          <img src={avatarUrl} width="72" height="72" />
-          <h3>
-            {login} {name && <span>({name})</span>}
-          </h3>
-        </Link>
-      </div>
-    )
+var User = React.createClass({
+
+  propTypes: {
+    user: ReactPropTypes.object.isRequired
+  },
+
+  render: function() {
+    if(this.props.user.loggedIn) {
+        return (
+          <div className="user">
+            <div className="user--current-user">
+              <img className="user--profile-pic" src={this._getImgSrc()} />
+              <span className="user--name">{this.props.user.firstName}</span>
+              <span> | </span>
+              <a href={Constants.Endpoints.LOGOUT} className="user--logout" >
+                  Logout
+              </a>
+            </div>
+          </div>
+        );
+    } else {
+      return(
+        <div className="user">
+        </div>
+      );
+    }
+  },
+
+  _getImgSrc: function() {
+    return this.props.user.picture;
   }
-}
 
-User.propTypes = {
-  user: PropTypes.shape({
-    login: PropTypes.string.isRequired,
-    avatarUrl: PropTypes.string.isRequired,
-    name: PropTypes.string
-  }).isRequired
-}
+});
+
+module.exports = User;

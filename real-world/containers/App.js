@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import Explore from '../components/Explore'
-import { resetErrorMessage } from '../actions'
+import { browserHistory } from 'react-router'
+import { resetErrorMessage } from '../actions/actions'
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
     this.handleDismissClick = this.handleDismissClick.bind(this)
   }
 
@@ -17,7 +15,7 @@ class App extends Component {
   }
 
   handleChange(nextValue) {
-    this.props.push(`/${nextValue}`)
+    browserHistory.push(`/${nextValue}`)
   }
 
   renderErrorMessage() {
@@ -27,6 +25,7 @@ class App extends Component {
     }
 
     return (
+
       <p style={{ backgroundColor: '#e99', padding: 10 }}>
         <b>{errorMessage}</b>
         {' '}
@@ -42,8 +41,7 @@ class App extends Component {
     const { children, inputValue } = this.props
     return (
       <div>
-        <Explore value={inputValue}
-                 onChange={this.handleChange} />
+        <Sidebar user={this.state.user} />
         <hr />
         {this.renderErrorMessage()}
         {children}
@@ -56,20 +54,18 @@ App.propTypes = {
   // Injected by React Redux
   errorMessage: PropTypes.string,
   resetErrorMessage: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
   inputValue: PropTypes.string.isRequired,
   // Injected by React Router
   children: PropTypes.node
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     errorMessage: state.errorMessage,
-    inputValue: state.routing.location.pathname.substring(1)
+    inputValue: ownProps.location.pathname.substring(1)
   }
 }
 
 export default connect(mapStateToProps, {
-  resetErrorMessage,
-  push
+  resetErrorMessage
 })(App)

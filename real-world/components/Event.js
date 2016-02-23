@@ -1,53 +1,32 @@
-var EventActionCreators = require('../actions/EventActionCreators');
-var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var _ = require('underscore');
-var ReactBootstrap = require('react-bootstrap');
-var Tooltip = ReactBootstrap.Tooltip;
-var Badge = ReactBootstrap.Badge;
-var JoinLeaveButton = require('./JoinLeaveButton.react.jsx');
-var DeleteEventButton = require('./DeleteEventButton.react.jsx');
-var moment = require('moment');
-var OverlayTrigger = ReactBootstrap.OverlayTrigger;
-var Tooltip = ReactBootstrap.Tooltip;
+import React, { Component, PropTypes } from 'react'
+import * as _ from 'underscore';
+import JoinLeaveButton from './JoinLeaveButton'
+import DeleteEventButton from './DeleteEventButton'
+import * as moment from 'moment'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+
+// var EventActionCreators = require('../actions/EventActionCreators');
+// require('../../sass/events.scss'); //TODO: SASS
 
 
-require('../../sass/events.scss');
-
-
-var getAttendee = function(creator, attendee) {
-  var classes = "event-box__attendees-avatar ";
-  var tooltip = <Tooltip>{[attendee.firstName, attendee.lastName].join(' ')}</Tooltip>;
+let getAttendee = (creator, attendee) => {
+  let { fname, lname } = attendee;
+  let classes = "event-box__attendees-avatar "
+  let tooltip = <Tooltip>{ `${fname} ${lname}` }</Tooltip>
 
   if(creator._id === attendee._id) {
-    classes += 'event-box__attendees-avatar-creator';
+    classes += 'event-box__attendees-avatar-creator'
   }
 
   return (<OverlayTrigger key={attendee._id || _.uniqueId('attendee-')} placement='top' overlay={tooltip} delayHide={100}>
-    <img
-    className={classes}
-    src={attendee.picture} />
-  </OverlayTrigger>);
-};
+    <img className={classes} src={attendee.picture} />
+  </OverlayTrigger>)
+}
 
-var Event = React.createClass({
+export default class Event extends Component {
+  render() {
 
-  propTypes: {
-    key: ReactPropTypes.string,
-    user: ReactPropTypes.object.isRequired,
-    event: React.PropTypes.shape({
-      maxAttendees: ReactPropTypes.number.isRequired,
-      time: ReactPropTypes.object.isRequired,
-      details: ReactPropTypes.string.isRequired,
-      venue: ReactPropTypes.object.isRequired,
-      creator: ReactPropTypes.object.isRequired,
-      attendees: ReactPropTypes.array.isRequired
-    })
-  },
-
-  render: function() {
-
-    var attendees = _.map(this.props.event.attendees, _.partial(getAttendee, this.props.event.creator) );
+    var attendees = _.map(this.props.event.attendees, _.partial(getAttendee, this.props.event.creator) )
 
     return (
         <div className="event-box">
@@ -105,63 +84,75 @@ var Event = React.createClass({
                   />
             </div>
           </div>
-
-
-
         </div>
-    );
+    )
+  }
+
+  getTime() {
+    var time = moment(this.props.event.time).format( 'h:mm' )
+    return time
   },
 
-  getTime: function() {
-    var time = moment(this.props.event.time).format( 'h:mm' );
-    return time;
+  getTimeFromNow() {
+    var timeFromNow = moment(this.props.event.time).calendar()
+    return timeFromNow
   },
 
-  getTimeFromNow: function() {
-    var timeFromNow = moment(this.props.event.time).calendar();
-    return timeFromNow;
+  getOrganizer(user) {
+    return [user.firstName, user.lastName].join(' ')
   },
 
-  getOrganizer : function(user) {
-    return [user.firstName, user.lastName].join(' ');
-  },
-
-  hasUserJoined : function() {
+  hasUserJoined() {
     if(this.props.user.loggedIn === false) {
-      return false;
+      return false
     }
 
     for (var i = this.props.event.attendees.length - 1; i >= 0; i--) {
       if(this.props.event.attendees[i]._id == this.props.user._id) {
-        return true;
+        return true
       }
-    };
-    return false;
+    }
+    return false
   },
 
-  _onUserJoin: function(event) {
+  _onUserJoin(event) {
     if(!this.props.event._id) {
       console.error('cant join before its saved on the server')
-      return;
+      return
     }
-    EventActionCreators.joinEvent(this.props.event._id);
+    // dispatch action
+    // EventActionCreators.joinEvent(this.props.event._id);
   },
 
-  _onUserLeave: function(event) {
+  _onUserLeave(event) {
     if(!this.props.event._id) {
       console.error('cant leave before its saved on the server')
-      return;
+      return
     }
-    EventActionCreators.leaveEvent(this.props.event._id);
+    // dispatch action
+    // EventActionCreators.leaveEvent(this.props.event._id);
   },
 
-  _onEventDeleted: function(event) {
+  _onEventDeleted(event) {
     if(!this.props.event._id) {
       console.error('cant delete before its saved on the server')
-      return;
+      return
     }
-    EventActionCreators.deleteEvent(this.props.event._id);
+    // dispatch action
+    // EventActionCreators.deleteEvent(this.props.event._id);
   }
-});
+}
 
-module.exports = Event;
+
+Event.propTypes = {
+  key: ReactPropTypes.string,
+  user: ReactPropTypes.object.isRequired,
+  event: React.PropTypes.shape({
+    maxAttendees: ReactPropTypes.number.isRequired,
+    time: ReactPropTypes.object.isRequired,
+    details: ReactPropTypes.string.isRequired,
+    venue: ReactPropTypes.object.isRequired,
+    creator: ReactPropTypes.object.isRequired,
+    attendees: ReactPropTypes.array.isRequired
+  })
+}

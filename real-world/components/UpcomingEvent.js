@@ -84,11 +84,11 @@ var UpcomingEvent = React.createClass({
   },
 
   _onUserLeave: function(event) {
-    if(!this.props.upcomingEvent._id) {
-      console.error('cant leave before its saved on the server')
-      return;
-    }
-    EventActionCreators.leaveEvent(this.props.upcomingEvent._id);
+    // if(!this.props.upcomingEvent._id) {
+    //   console.error('cant leave before its saved on the server')
+    //   return;
+    // }
+    // EventActionCreators.leaveEvent(this.props.upcomingEvent._id);
   },
 
 });
