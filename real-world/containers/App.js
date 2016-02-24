@@ -59,13 +59,23 @@ App.propTypes = {
   children: PropTypes.node
 }
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
     errorMessage: state.errorMessage,
-    inputValue: ownProps.location.pathname.substring(1)
+    inputValue: ownProps.location.pathname.substring(1),
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(id))
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps, {
   resetErrorMessage
 })(App)

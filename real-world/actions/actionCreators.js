@@ -7,39 +7,39 @@ export const USER_SUCCESS = 'USER_SUCCESS'
 export const USER_FAILURE = 'USER_FAILURE'
 
 
-joinEvent = (eventId) => {
+export const joinEvent = (eventId) => {
   return {
     type: ActionTypes.JOIN_EVENT,
     eventId
   };
-  EventAPIUtils.joinEvent(eventId, UserStore.getUserId());
+  // EventAPIUtils.joinEvent(eventId, UserStore.getUserId());
 };
 
-leaveEvent = (eventId) => {
+export const leaveEvent = (eventId) => {
   return {
     type: ActionTypes.LEAVE_EVENT,
     eventId
   };
-  EventAPIUtils.leaveEvent(eventId, UserStore.getUserId());
+  // EventAPIUtils.leaveEvent(eventId, UserStore.getUserId());
 };
 
 
-createEvent = (event) => {
+export const createEvent = (event) => {
   return {
     type: ActionTypes.CREATE_EVENT,
     event
   };
 
-  EventAPIUtils.createEvent(EventsStore.getLastCreatedForAPI());
+  // EventAPIUtils.createEvent(EventsStore.getLastCreatedForAPI());
 };
 
-deleteEvent = (eventId) => {
+export const deleteEvent = (eventId) => {
   return {
     type: ActionTypes.DELETE_EVENT,
     eventId
   };
 
-  EventAPIUtils.deleteEvent(eventId);
+  // EventAPIUtils.deleteEvent(eventId);
 };
 
 

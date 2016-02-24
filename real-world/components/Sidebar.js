@@ -6,7 +6,7 @@ import User from './User'
 require('../../sass/sidebar.scss');
 
 
-export default const Sidebar = () => {
+export default const Sidebar = ({ user, events, upcomingUser }) => {
   return (
       <div className="sidebar">
           <div className="sidebar__header">

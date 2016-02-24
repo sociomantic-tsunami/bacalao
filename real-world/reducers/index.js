@@ -1,16 +1,7 @@
 import * as ActionTypes from '../actions/actions'
 import merge from 'lodash/merge'
-import { routeReducer } from 'react-router-redux'
+import { routerReducer as routing } from 'react-router-redux'
 import { combineReducers } from 'redux'
-
-// Updates an entity cache in response to any action with response.entities.
-function entities(state = { users: {}, repos: {} }, action) {
-  if (action.response && action.response.entities) {
-    return merge({}, state, action.response.entities)
-  }
-
-  return state
-}
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
@@ -25,10 +16,65 @@ function errorMessage(state = null, action) {
   return state
 }
 
+
+const events = (state = [], action) => {
+  const { type, response, error } = action
+  switch (type) {
+    case FETCH_EVENTS:
+      if(error) {
+        return state
+      }
+      if(response) {
+        return response
+      }
+
+    default:
+      return state
+  }
+}
+
+const upcoming = (state = [], action) => {
+  const { type, response, error } = action
+  switch (type) {
+    case FETCH_UPCOMING_EVENTS:
+      if(error) {
+        console.log(error)
+        return state
+      }
+      if(response) {
+        return response
+      }
+
+    default:
+      return state
+  }
+}
+
+
+const user = (state = {}, action) => {
+  const { type, response, error } = action
+  switch (type) {
+    case FETCH_USER:
+      if(error) {
+        console.log(error)
+        return state
+      }
+      if(response) {
+        return response
+      }
+
+    default:
+      return state
+  }
+}
+
+
+
 const rootReducer = combineReducers({
-  entities,
+  events,
+  upcoming,
   errorMessage,
-  routing: routeReducer
+  routing
 })
 
 

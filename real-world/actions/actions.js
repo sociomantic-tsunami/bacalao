@@ -6,9 +6,10 @@
 // and received is when it returns
 
 
-export const RECEIVE_RAW_EVENTS = 'RECEIVE_RAW_EVENTS';
-export const RECEIVE_UPCOMING_EVENTS = 'RECEIVE_UPCOMING_EVENTS';
-export const ROUTE_CHANGE = 'ROUTE_CHANGE';
+export const FETCH_EVENTS = 'FETCH_EVENTS';
+export const FETCH_UPCOMING_EVENTS = 'FETCH_UPCOMING_EVENTS';
+export const FETCH_USER = 'FETCH_USER';
+
 export const GOT_LOCATION = 'GOT_LOCATION';
 export const INIT_USER = 'INIT_USER';
 export const CREATE_EVENT = 'CREATE_EVENT';
@@ -19,7 +20,6 @@ export const LEAVE_EVENT = 'LEAVE_EVENT';
 export const LEFT_EVENT = 'LEFT_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const DELETED_EVENT = 'DELETED_EVENT';
-export const GOT_USER_INFO = 'GOT_USER_INFO';
 
 
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
