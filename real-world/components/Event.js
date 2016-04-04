@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 import JoinLeaveButton from './JoinLeaveButton'
 import DeleteEventButton from './DeleteEventButton'
 import * as moment from 'moment'
-import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // var EventActionCreators = require('../actions/EventActionCreators');
 // require('../../sass/events.scss'); //TODO: SASS
@@ -91,16 +91,16 @@ export default class Event extends Component {
   getTime() {
     var time = moment(this.props.event.time).format( 'h:mm' )
     return time
-  },
+  }
 
   getTimeFromNow() {
     var timeFromNow = moment(this.props.event.time).calendar()
     return timeFromNow
-  },
+  }
 
   getOrganizer(user) {
     return [user.firstName, user.lastName].join(' ')
-  },
+  }
 
   hasUserJoined() {
     if(this.props.user.loggedIn === false) {
@@ -113,7 +113,7 @@ export default class Event extends Component {
       }
     }
     return false
-  },
+  }
 
   _onUserJoin(event) {
     if(!this.props.event._id) {
@@ -121,8 +121,8 @@ export default class Event extends Component {
       return
     }
     // dispatch action
-    // EventActionCreators.joinEvent(this.props.event._id);
-  },
+    // TODO EventActionCreators.joinEvent(this.props.event._id);
+  }
 
   _onUserLeave(event) {
     if(!this.props.event._id) {
@@ -130,8 +130,8 @@ export default class Event extends Component {
       return
     }
     // dispatch action
-    // EventActionCreators.leaveEvent(this.props.event._id);
-  },
+    // TODO EventActionCreators.leaveEvent(this.props.event._id);
+  }
 
   _onEventDeleted(event) {
     if(!this.props.event._id) {
@@ -139,20 +139,20 @@ export default class Event extends Component {
       return
     }
     // dispatch action
-    // EventActionCreators.deleteEvent(this.props.event._id);
+    // TODO EventActionCreators.deleteEvent(this.props.event._id);
   }
 }
 
 
 Event.propTypes = {
-  key: ReactPropTypes.string,
-  user: ReactPropTypes.object.isRequired,
+  key: PropTypes.string,
+  user: PropTypes.object.isRequired,
   event: React.PropTypes.shape({
-    maxAttendees: ReactPropTypes.number.isRequired,
-    time: ReactPropTypes.object.isRequired,
-    details: ReactPropTypes.string.isRequired,
-    venue: ReactPropTypes.object.isRequired,
-    creator: ReactPropTypes.object.isRequired,
-    attendees: ReactPropTypes.array.isRequired
+    maxAttendees: PropTypes.number.isRequired,
+    time: PropTypes.object.isRequired,
+    details: PropTypes.string.isRequired,
+    venue: PropTypes.object.isRequired,
+    creator: PropTypes.object.isRequired,
+    attendees: PropTypes.array.isRequired
   })
 }

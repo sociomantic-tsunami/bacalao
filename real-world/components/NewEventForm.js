@@ -1,29 +1,17 @@
-var EventActionCreators = require('../actions/EventActionCreators');
-var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var _ = require('underscore');
-var Badge = require('react-bootstrap').Badge;
-var Button = require('react-bootstrap').Button;
-var Input = require('react-bootstrap').Input;
-var Modal = require('react-bootstrap').Modal;
-var moment = require('moment');
-require('../../sass/new_event_form.scss');
-require('../../sass/react_widgets.scss');
-var Navigation = require('react-router').Navigation;
-DateTimePicker = require('react-widgets/lib/DateTimePicker');
+import React, { Component, PropTypes } from 'react'
+import { Button, Input, Modal } from 'react-bootstrap'
+import moment from 'moment'
+import * as _ from 'underscore'
+import { Link } from 'react-router'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+
+// require('../../sass/new_event_form.scss');
+// require('../../sass/react_widgets.scss');
 
 
+class NewEventForm extends Component {
 
-var NewEventForm = React.createClass({
-
-  mixins: [Navigation],
-
-  propTypes: {
-   user: ReactPropTypes.object.isRequired,
-   onCreate: ReactPropTypes.func
-  },
-
-  getInitialState: function() {
+  getInitialState() {
     return {
       time: moment().add(1,'hours').startOf('hour').toDate(),
       details: '',
@@ -31,10 +19,10 @@ var NewEventForm = React.createClass({
       venue: {},
       maxAttendees: ''
     };
-  },
+  }
 
 
-  render: function() {
+  render() {
     var cx = React.addons.classSet;
     var createButtonClasses = cx({
       'disabled': !(this.state.venue && this.state.details && this.props.user.loggedIn)
@@ -71,19 +59,19 @@ var NewEventForm = React.createClass({
         </div>
       </Modal>
     );
-  },
+  }
 
 
-  _close: function(e) {
+  _close(e) {
     this.transitionTo('dashboard');
-  },
+  }
 
 
-  _getVenueEl: function() {
+  _getVenueEl() {
     return this.getDOMNode().getElementsByClassName('js-venue-search')[0];
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     var venueEl = this._getVenueEl();
     var autocompleteOpts = {
       types: ['establishment']
@@ -103,20 +91,20 @@ var NewEventForm = React.createClass({
     // Listen for the event fired when the user selects an item from the
     // pick list. Retrieve the matching places for that item.
     google.maps.event.addListener(this.autocomplete, 'place_changed', this._onGoogleVenueChange);
-  },
+  }
 
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.autocomplete.unbindAll();
     google.maps.event.clearInstanceListeners(this._getVenueEl());
 
-  },
+  }
 
-  _onTimeChange: function(date) {
+  _onTimeChange(date) {
     this.setState({ time: date });
-  },
+  }
 
-  _onGoogleVenueChange: function() {
+  _onGoogleVenueChange() {
       var place = this.autocomplete.getPlace();
 
       // forbid places that don't exist on google maps
@@ -125,33 +113,39 @@ var NewEventForm = React.createClass({
       }
 
       this.setState({ venue: place });
-  },
+  }
 
-  _onVenueSearchChange: function(e) {
+  _onVenueSearchChange(e) {
     this.setState({ venueSearch: e.target.value });
     // stub function. Venue changes are handled by _onGoogleVenueChange
-  },
+  }
 
 
-  _onDetailsChange: function(e) {
+  _onDetailsChange(e) {
     this.setState({ details: e.target.value });
-  },
+  }
 
-  _onMaxAttendeesChange: function(e) {
+  _onMaxAttendeesChange(e) {
     if ( e.target.value % 1 === 0 ) {
       this.setState({ maxAttendees: parseInt(e.target.value, 10) });
     } else {
       this.setState({ maxAttendees: Math.floor(e.target.value)});
     }
-  },
+  }
 
-  _create: function() {
-    EventActionCreators.createEvent(_.clone(this.state));
+  _create() {
+    // TODO EventActionCreators.createEvent(_.clone(this.state));
     // this.replaceState(this.getInitialState());
     this.props.onCreate && this.props.onCreate();
     this.transitionTo('dashboard');
   }
 
-});
+}
+
+
+NewEventForm.propTypes = {
+ user: PropTypes.object.isRequired,
+ onCreate: PropTypes.func
+};
 
 module.exports = NewEventForm;

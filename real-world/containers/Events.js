@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { leaveEvent } from '../actions'
+import { leaveEvent, joinEvent, deleteEvent } from '../actions'
 
-import Event from '../components/Event.react.jsx'
+import Event from '../components/Event.js'
 
 
 const mapStateToProps = (state) => {
@@ -30,14 +30,19 @@ const mapDispatchToProps = (dispatch) => {
 let Events = ({ events, user }) => {
   return (
     <div className="main">
+      <List renderItem={this.renderEvent}
+                items={zip(starredRepos, starredRepoOwners)}
+                onLoadMoreClick={this.handleLoadMoreClick}
+                loadingLabel={`Loading ${login}’s starred...`}
+                {...starredPagination} />
       { events.map(event => <Event user={user} event={event} />) }
     </div>
   )
 }
 
 Events.propTypes = {
-  events: ReactPropTypes.array.isRequired,
-  user: ReactPropTypes.object.isRequired
+  events: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 

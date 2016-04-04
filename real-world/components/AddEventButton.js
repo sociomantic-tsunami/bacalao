@@ -6,7 +6,7 @@ import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 // import '../../sass/add_event.scss'; //TODO: SASS
 
 export default class AddEventButton extends Component {
-  render: function() {
+  render () {
     var tooltip = <Tooltip>Create a new event</Tooltip>;
 
     return (

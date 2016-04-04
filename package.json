@@ -16,6 +16,7 @@
     "good": "^6.6.0",
     "good-console": "^5.3.1",
     "hapi": "^13.0.0",
+    "hapi-auth-cookie": "^6.1.1",
     "inert": "^3.2.0",
     "joi": "^8.0.1",
     "keymaster": "~1.6.2",
@@ -26,6 +27,7 @@
     "q": "~1.4.1",
     "react": "^0.14.7",
     "react-bootstrap": "^0.28.3",
+    "react-dom": "^0.14.7",
     "react-router": "^2.0.0",
     "react-router-bootstrap": "^0.20.1",
     "react-widgets": "^3.1.7",
@@ -33,29 +35,53 @@
     "socket.io-client": "^1.1.0",
     "statehood": "^4.0.0",
     "superagent": "^1.7.2",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "vision": "^4.0.1"
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
     "envify": "~2.0.1",
+    "eslint": "^2.5.1",
+    "eslint-plugin-react": "^4.2.3",
     "json-loader": "~0.5.1",
-    "jsx-loader": "~0.13.0",
     "lab": "^8.2.0",
     "node-sass": "^3.4.2",
     "nodemon": "^1.8.1",
     "sass-loader": "^3.1.2",
+    "standard": "^6.0.8",
     "statics": "~0.1.0",
     "style-loader": "~0.8.1",
     "uglify-js": "~2.4.15",
     "watchify": "^1.0.6",
     "webpack": "^1.12.13"
   },
+  "eslintConfig": {
+    "plugins": [
+      "react"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+      }
+    }
+  },
   "scripts": {
-    "dev": "nodemon -I -w server/ server/server.js --development | bunyan & node node_modules/webpack/bin/webpack.js -w --colors --progress",
+    "dev": "nodemon -I -w server/ server/server.js --development ",
     "devmap": "nodemon -I -w server/ server/server.js --development | bunyan & node node_modules/webpack/bin/webpack.js -d -w --colors --progress",
     "watch": "node node_modules/webpack/bin/webpack.js -p --colors --display-modules -w -d --colors --progress",
     "build": "node node_modules/webpack/bin/webpack.js -p --colors --display-modules --progress",
     "start": "node server/server.js --production",
-    "test": "./node_modules/lab/bin/lab -c server/test"
+    "test": "standard && lab -c server/test"
   }
 }

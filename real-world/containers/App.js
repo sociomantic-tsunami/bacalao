@@ -4,21 +4,21 @@ import { browserHistory } from 'react-router'
 import { resetErrorMessage } from '../actions/actions'
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.handleDismissClick = this.handleDismissClick.bind(this)
   }
 
-  handleDismissClick(e) {
+  handleDismissClick (e) {
     this.props.resetErrorMessage()
     e.preventDefault()
   }
 
-  handleChange(nextValue) {
+  handleChange (nextValue) {
     browserHistory.push(`/${nextValue}`)
   }
 
-  renderErrorMessage() {
+  renderErrorMessage () {
     const { errorMessage } = this.props
     if (!errorMessage) {
       return null
