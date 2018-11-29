@@ -1,3 +1,9 @@
+NOTE
+====
+
+**This project is archived and not maintained anymore.**
+
+
 bacalao
 ===========
 
